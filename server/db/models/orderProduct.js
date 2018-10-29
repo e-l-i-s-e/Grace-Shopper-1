@@ -1,22 +1,22 @@
 const db = require('../db')
 const Sequelize = require ('sequelize')
 
-const User = db.define('user', {
-    firstName: {
+const OrderProduct = db.define('orderProduct', {
+    quantity: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
             isEmpty: false
         }
     },
-    lastName: {
+    price: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
             isEmpty: false
         }
     },
-    password: {
+    date: {
         type: Sequelize.STRING,
         allowNull: false,
         // get() {
@@ -34,18 +34,4 @@ const User = db.define('user', {
     },
 })
 
-module.exports = User
-
-
-//   salt: {
-//     type: Sequelize.STRING,
-//     // Making `.salt` act like a function hides it when serializing to JSON.
-//     // This is a hack to get around Sequelize's lack of a "private" option.
-//     get() {
-//       return () => this.getDataValue('salt')
-//     }
-//   },
-//   googleId: {
-//     type: Sequelize.STRING
-//   }
-// })
+module.exports = OrderProduct
