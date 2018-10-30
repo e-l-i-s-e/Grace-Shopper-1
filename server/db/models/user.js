@@ -41,6 +41,15 @@ const User = db.define('user', {
 module.exports = User
 
 
+User.prototype.correctPassword = function(candidatePwd) {
+  if ( candidatePwd === this.password) {
+    return true
+  }
+
+  // when we add Oauth we need the code below:
+  //  return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+}
+
 //   salt: {
 //     type: Sequelize.STRING,
 //     // Making `.salt` act like a function hides it when serializing to JSON.
