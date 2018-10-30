@@ -2,6 +2,7 @@ const router =  require('express').Router();
 const { Product, Category } = require('../db/models');
 module.exports = router
 
+// GET /api/products
 router.get("/", async(req,res,next) => {
     try{
         const products = await Product.findAll()
@@ -11,13 +12,14 @@ router.get("/", async(req,res,next) => {
     }
 })
 
+// GET /api/products/:category
 router.get('/:category', async(req,res,next) => {
     try{
-        const categories = await Category.findById(req.params.category,{
-            attributes: ['content']
+        const category = await Category.findById(req.params.category,{
+            include: [Product]
         });
-        if(categories) {
-            res.send(categories)
+        if(category) {
+            res.send(category)
         } else {
             res.sendStatus(404)
         }
@@ -26,3 +28,21 @@ router.get('/:category', async(req,res,next) => {
     }
 })
 
+// GET /api/products/:category/productId
+router.get('/:category/:productId', async (req,res,next) => {
+    try{
+        const productId = await Product.findById(req.params.productId, {
+            where: {
+                categoryId: req.params.category
+            },
+            });
+            res.send(productId)
+            if(productId){
+                res.send(productId) 
+            } else {
+                res.sendStatus(404)
+            }
+    }catch(err){
+        next(err)
+    }
+})
