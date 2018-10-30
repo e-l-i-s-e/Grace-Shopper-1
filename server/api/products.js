@@ -26,3 +26,15 @@ router.get('/:category', async(req,res,next) => {
     }
 })
 
+router.post('/', async(req, res, next) => {
+    try{
+        const newProduct = await Product.create(req.body)
+        console("new product", newProduct)
+        res.json(newProduct)
+    }
+    catch (err){
+        console.error(err)
+        next(err)
+    }
+})
+
