@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
+import { gotAllProducts } from '../store/product'
 
 
 const ProductList = (props) => {
     const { products } = props;
+    console.log("products", products)
     return (
             <div>
                 <h2>Products</h2>
