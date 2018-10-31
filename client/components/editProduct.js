@@ -6,38 +6,31 @@ import { setEditProduct } from '../store/product'
 import EditProductForm from './editProductForm'
 
 class EditProduct extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             title: '',
             description: "",
             price: "",
             inventory: "",
-            imageUrl: "" ,
-            id: ""
-
+            imageUrl: "",
+            id: ''
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     }
     componentDidMount(){
-        this.setState({
-            title: 'FLOWER',
-            description: 'FLOWERY',
-            price: 1.00,
-            inventory: 1,
-            imageUrl: 'img.png',
-            id: 1
+      const product = this.props.history.location.state.product;
+      console.log('CDM Product', product)
+      this.setState({
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            inventory: product.inventory,
+            imageUrl: product.imageUrl,
+            id: product.id
         })
     }
-    //     this.setState({
-    //         title: this.props.title,
-    //         description: this.props.description,
-    //         price: this.props.price,
-    //         inventory: this.props.inventory,
-    //         imageUrl: this.props.imageUrl
-    //     })
-    // }
     handleChange(e){
         this.setState({
             [e.target.name]: e.target.value
@@ -49,6 +42,7 @@ class EditProduct extends Component {
 
     }
     render(){
+      console.log('EditProduct.js - props', this.props)
         return(
             <EditProductForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
         )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom'
 import { gotAllProducts } from '../store/product'
+import SingleProduct from './singleProduct'
 
 class Main extends Component {
   async componentDidMount(){
@@ -18,11 +18,7 @@ class Main extends Component {
                     {
                         products && products.map(product => {
                             return (
-                                <div key={product.id}>
-                                <li><Link to={`/products/${product.id}`}> {product.title}</Link></li>
-                                <img src={product.imageUrl} alt="" className="img-responsive" />
-                                </div>
-                                // <SingleProduct product={product} />
+                                <SingleProduct key={product.id} product={product} isAdmin={this.props.isAdmin} />
                             )
                         })
                     }
@@ -36,6 +32,7 @@ const mapStateToProps = (state) => {
   console.log('Mapping STATE to PROPS in Root: ', state)
   return {
     products: state.product,
+    isAdmin: state.user.isAdmin
   }
 }
 

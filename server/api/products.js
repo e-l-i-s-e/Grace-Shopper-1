@@ -24,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
         next(err)
     }
   });
-  
+
 // // GET /api/products/:category
 // router.get('/:category', async(req,res,next) => {
 //     try{
@@ -51,7 +51,7 @@ router.get('/:id', async (req, res, next) => {
 //             });
 //             res.send(productId)
 //             if(productId){
-//                 res.send(productId) 
+//                 res.send(productId)
 //             } else {
 //                 res.sendStatus(404)
 //             }
@@ -82,6 +82,7 @@ router.put('/edit/:productid', async(req, res, next) => {
             returning: true,
             plain: true
         });
+        console.log('EDITED PRODUCT IN API', editedProduct)
         res.json(editedProduct)
     }
     catch(err){
