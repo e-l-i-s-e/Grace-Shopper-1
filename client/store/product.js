@@ -9,10 +9,16 @@ const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const EDITED_PRODUCT = 'EDITED_PRODUCT'
 
+
 /**
  * INITIAL STATE
  */
+
 const defaultProduct = [];
+
+
+
+
 
 /**
  * ACTION CREATORS
@@ -25,6 +31,23 @@ const editProduct = (editedProduct) => ({type: EDITED_PRODUCT, editedProduct})
 /**
  * THUNK CREATORS
  */
+export const gotAllProducts = () => async dispatch => {
+  try {
+    const { data } = await axios.get('/api/products')
+    dispatch(getProduct(data));
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+/**
+ * REDUCER
+ */
+export default function(state = initialState, action) {
+  switch (action.type) {
+    case GET_PRODUCT:
+      return {...state, products: action.products}
+=======
 export const setNewProduct = (product) => {
     return async (dispatch) => {
         const { data } = await axios.post('/api/products', product)
