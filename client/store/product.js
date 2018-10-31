@@ -46,7 +46,6 @@ export const setNewProduct = (product) => {
 export const setEditProduct = (editedProduct) => {
   return async(dispatch) => {
     try{
-      console.log('EDITED PRODUCT', editedProduct);
       const {data} = await axios.put(`/api/products/edit/${editedProduct.id}`, editedProduct)
       dispatch(editProduct(data[1]))
       history.push('/adminHome')

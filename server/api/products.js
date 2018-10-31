@@ -6,7 +6,6 @@ module.exports = router
 router.get("/", async(req,res,next) => {
     try{
         const products = await Product.findAll()
-        console.log("LOOOKK HERE!!!!!!", products)
         res.json(products)
     } catch(err){
         next(err)
@@ -62,9 +61,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async(req, res, next) => {
     try{
-        console.log('req body', req.body)
         const newProduct = await Product.create(req.body)
-        console.log("new product", newProduct)
         res.json(newProduct)
     }
     catch (err){
@@ -82,7 +79,6 @@ router.put('/edit/:productid', async(req, res, next) => {
             returning: true,
             plain: true
         });
-        console.log('EDITED PRODUCT IN API', editedProduct)
         res.json(editedProduct)
     }
     catch(err){

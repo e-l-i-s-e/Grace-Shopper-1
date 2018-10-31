@@ -37,7 +37,7 @@ class Categories extends Component {
             </div>
         )
     })
- 
+
     return (
       <div>
         <button onClick={this.showMenu}>
@@ -66,14 +66,12 @@ class Categories extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('Mapping STATE to PROPS in Root: ', state)
   return {
     categories: state.category
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('Mapping PROPS to STATE in Root')
   return {
     gotAllCategories: () => dispatch(gotAllCategories()),
   }

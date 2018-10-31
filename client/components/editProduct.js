@@ -21,7 +21,6 @@ class EditProduct extends Component {
     }
     componentDidMount(){
       const product = this.props.history.location.state.product;
-      console.log('CDM Product', product)
       this.setState({
             title: product.title,
             description: product.description,
@@ -42,7 +41,6 @@ class EditProduct extends Component {
 
     }
     render(){
-      console.log('EditProduct.js - props', this.props)
         return(
             <EditProductForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
         )
