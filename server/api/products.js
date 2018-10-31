@@ -39,3 +39,20 @@ router.post('/', async(req, res, next) => {
     }
 })
 
+router.put('/edit/:productid', async(req, res, next) => {
+    try{
+        const editedProduct = await Product.update(req.body, {
+            where: {
+                id: req.params.productid
+            },
+            returning: true,
+            plain: true
+        });
+        res.json(editedProduct)
+    }
+    catch(err){
+        console.error(err)
+        next(err)
+    }
+})
+
