@@ -1,10 +1,10 @@
 import React from 'react'
 
 
-const AddProductForm = (props) => {
+const EditProductForm = (props) => {
     return (
         <div>
-            <form id='create-product' onSubmit={props.handleSubmit}>
+            <form id='edit-product' onSubmit={props.handleSubmit}>
                 <label>
                     Product Title
                 </label>
@@ -56,7 +56,7 @@ const AddProductForm = (props) => {
                 />
            
                 <div>
-                    <button type="submit">submit!</button>
+                    <button type="submit">Submit edit!</button>
                 </div>
             </form>
 
@@ -64,4 +64,4 @@ const AddProductForm = (props) => {
     )
 }
 
-export default AddProductForm;
+export default EditProductForm;

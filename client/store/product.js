@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import { runInNewContext } from 'vm';
 
 /**
  * ACTION TYPES
@@ -57,8 +58,15 @@ export const setNewProduct = (product) => {
 
 export const setEditProduct = (editedProduct) => {
   return async(dispatch) => {
-    const {data} = await axios.put(`/api/product/edit/${editedProduct.id}`, editedProduct)
-    dispatch(editProduct(data[1]))
+    try{
+      const {data} = await axios.put(`/api/products/edit/${editedProduct.id}`, editedProduct)
+      dispatch(editProduct(data[1]))
+      history.push('/adminHome')
+    }
+    catch (err){
+      console.error(err)
+    }
+    
   }
 }
 
