@@ -2,8 +2,12 @@ const db = require('../db')
 const Sequelize = require ('sequelize')
 
 const Order = db.define('order', {
+    isCart: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
     total: {
-        type: Sequelize.DECIMAL(10,2),
+        type: Sequelize.INTEGER,
         allowNull: false,
         validate: {
             isEmpty: false
