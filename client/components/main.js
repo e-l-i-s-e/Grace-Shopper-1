@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch} from 'react-router-dom'
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { gotAllProducts } from '../store/product'
-//importing Components:
-import ProductList from './allProducts'
 
 class Main extends Component {
   async componentDidMount(){
@@ -12,14 +9,12 @@ class Main extends Component {
     await this.props.gotAllProducts();
   }
   render() {
-    console.log("heeere", this.props.products)
     const products = this.props.products
     return (
-      // <BrowserRouter>
           <div>
             <main>
               <h3>Scented</h3>
-              <h2>Products</h2>
+
                     {
                         products && products.map(product => {
                             return (
@@ -33,7 +28,6 @@ class Main extends Component {
                     }
             </main>
           </div>
-      // </BrowserRouter>
     )
   }
 }

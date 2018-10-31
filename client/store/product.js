@@ -37,10 +37,6 @@ export const gotAllProducts = () => async dispatch => {
   }
 }
 
-/**
- * REDUCER
- */
-
 export const setNewProduct = (product) => {
     return async (dispatch) => {
         const { data } = await axios.post('/api/products', product)
@@ -58,7 +54,6 @@ export const setEditProduct = (editedProduct) => {
     catch (err){
       console.error(err)
     }
-    
   }
 }
 
