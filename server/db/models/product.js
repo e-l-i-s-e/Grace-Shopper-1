@@ -6,14 +6,14 @@ const Product = db.define('product', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-            isEmpty: false
+            notEmpty: true
         }
     },
     description: {
         type: Sequelize.TEXT,
         allowNull: false,
         validate: {
-            isEmpty: false
+            notEmpty: true
         }
     },
     price: {

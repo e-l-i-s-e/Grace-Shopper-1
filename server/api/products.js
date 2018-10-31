@@ -28,8 +28,9 @@ router.get('/:category', async(req,res,next) => {
 
 router.post('/', async(req, res, next) => {
     try{
+        console.log('req body', req.body)
         const newProduct = await Product.create(req.body)
-        console("new product", newProduct)
+        console.log("new product", newProduct)
         res.json(newProduct)
     }
     catch (err){

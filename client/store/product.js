@@ -23,7 +23,7 @@ const addProduct = (product) => ({type: ADD_PRODUCT, product})
 /**
  * THUNK CREATORS
  */
-const setNewProduct = (product) => {
+export const setNewProduct = (product) => {
     return async (dispatch) => {
         const { data } = await axios.post('/api/products', product)
         dispatch(addProduct(data))

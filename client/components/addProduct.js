@@ -11,8 +11,8 @@ class AddProduct extends Component {
         this.state = {
             title: '',
             description: "",
-            price: 0,
-            inventory: 0,
+            price: "",
+            inventory: "",
             imageUrl: ""  
 
         }
@@ -31,8 +31,8 @@ class AddProduct extends Component {
         this.setState({
             title: '',
             description: "",
-            price: 0,
-            inventory: 0,
+            price: '',
+            inventory: '',
             imageUrl: ""  
         })
 
