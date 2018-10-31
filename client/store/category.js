@@ -9,7 +9,7 @@ const GET_CATEGORY = 'GET_CATEGORY'
 /**
  * INITIAL STATE
  */
-const defaultCategory = {}
+const defaultCategory = []
 
 /**
  * ACTION CREATORS
