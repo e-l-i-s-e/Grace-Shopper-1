@@ -16,8 +16,6 @@ class Main extends Component {
   render() {
     const products = this.props.products
     const categories = this.props.categories
-    console.log("PRODUCTS!!!!", products)
-    console.log("CATEGORIES!!!!!!", categories)
 
     return (
           <div>
@@ -50,7 +48,6 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('Mapping STATE to PROPS in Root: ', state)
   return {
     products: state.product,
 
@@ -62,7 +59,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('Mapping PROPS to STATE in Root')
   return {
     gotAllProducts: () => dispatch(gotAllProducts()),
     gotAllCategories: () => dispatch(gotAllCategories()),
