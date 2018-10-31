@@ -1,16 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Main from './main'
+import {Link} from 'react-router-dom'
 
-/**
- * COMPONENT
- */
 export const AdminHome = props => {
   const {email} = props
 
   return (
     <div>
       <h3>Welcome, {email}</h3>
+      <Link to='/products/add'>Add Product</Link>
+      <Main />
     </div>
   )
 }

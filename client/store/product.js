@@ -22,7 +22,7 @@ const defaultProduct = [];
 const getProduct = product => ({type: GET_PRODUCT, product})
 const removeProduct = () => ({type: REMOVE_PRODUCT})
 const addProduct = (product) => ({type: ADD_PRODUCT, product})
-const editProduct = (editedProduct) => ({type: EDITED_PRODUCT, editedProduct}) 
+const editProduct = (editedProduct) => ({type: EDITED_PRODUCT, editedProduct})
 
 /**
  * THUNK CREATORS
@@ -46,6 +46,7 @@ export const setNewProduct = (product) => {
 export const setEditProduct = (editedProduct) => {
   return async(dispatch) => {
     try{
+      console.log('EDITED PRODUCT', editedProduct);
       const {data} = await axios.put(`/api/products/edit/${editedProduct.id}`, editedProduct)
       dispatch(editProduct(data[1]))
       history.push('/adminHome')
@@ -67,8 +68,8 @@ export default function(state = defaultProduct, action) {
       return [...state, action.product]
     case EDITED_PRODUCT: {
       const newProducts = state.filter(product => product.id!== Number(action.editedProduct.id))
-      return [...newProducts, action.editProduct]
-    } 
+      return [...newProducts, action.editedProduct]
+    }
     case REMOVE_PRODUCT:
       return defaultProduct
     default:
