@@ -5,4 +5,5 @@
  */
 export {default as Navbar} from './navbar'
 export {default as AdminHome} from './adminHome'
+export {default as AddProduct} from './addProduct'
 export {Login, Signup} from './auth-form'
