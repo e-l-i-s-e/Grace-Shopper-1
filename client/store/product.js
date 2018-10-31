@@ -10,16 +10,11 @@ const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const EDITED_PRODUCT = 'EDITED_PRODUCT'
 
-
 /**
  * INITIAL STATE
  */
 
 const defaultProduct = [];
-
-
-
-
 
 /**
  * ACTION CREATORS
@@ -35,6 +30,7 @@ const editProduct = (editedProduct) => ({type: EDITED_PRODUCT, editedProduct})
 export const gotAllProducts = () => async dispatch => {
   try {
     const { data } = await axios.get('/api/products')
+    console.log("DATA!!!!!!!!!!", data)
     dispatch(getProduct(data));
   } catch (err) {
     console.error(err)
@@ -44,11 +40,7 @@ export const gotAllProducts = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = initialState, action) {
-  switch (action.type) {
-    case GET_PRODUCT:
-      return {...state, products: action.products}
-=======
+
 export const setNewProduct = (product) => {
     return async (dispatch) => {
         const { data } = await axios.post('/api/products', product)
@@ -70,16 +62,15 @@ export const setEditProduct = (editedProduct) => {
   }
 }
 
-
 /**
  * REDUCER
  */
 export default function(state = defaultProduct, action) {
   switch (action.type) {
-    case ADD_PRODUCT:
-        return [...state, action.product]
     case GET_PRODUCT:
-      return action.product
+      return [...action.product]
+    case ADD_PRODUCT:
+      return [...state, action.product]
     case EDITED_PRODUCT: {
       const newProducts = state.filter(product => product.id!== Number(action.editedProduct.id))
       return [...newProducts, action.editProduct]
