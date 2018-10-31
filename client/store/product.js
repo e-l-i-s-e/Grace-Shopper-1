@@ -30,7 +30,6 @@ const editProduct = (editedProduct) => ({type: EDITED_PRODUCT, editedProduct})
 export const gotAllProducts = () => async dispatch => {
   try {
     const { data } = await axios.get('/api/products')
-    console.log("DATA!!!!!!!!!!", data)
     dispatch(getProduct(data));
   } catch (err) {
     console.error(err)

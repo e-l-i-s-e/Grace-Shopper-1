@@ -8,6 +8,11 @@ body {
   height: auto;
 }
 
+.menu {
+  position: relative;
+  display: inline-block;
+}
+
 a {
   text-decoration: none;
 }
