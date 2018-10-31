@@ -2,6 +2,12 @@ body {
   font-family: sans-serif;
 }
 
+.img-responsive{
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+}
+
 a {
   text-decoration: none;
 }
