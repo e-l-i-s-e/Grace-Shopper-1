@@ -20,6 +20,7 @@ class Cart extends Component {
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.total = this.total.bind(this)
     }
 
     componentDidMount(){
@@ -40,7 +41,9 @@ class Cart extends Component {
     }
     handleChange(e){
         // need to add to sessionStorage
-        
+        // if (!this.state.isLoggedIn){
+        //     sessionStorage.setItem('orderProduct', this.state)
+        // }
     }
     handleSubmit(e){
         e.preventDefault()
@@ -48,6 +51,12 @@ class Cart extends Component {
         this.setState({
             items: []
         })
+    }
+    total(){
+        return this.state.orderProduct.reduce((sumTotal, orderProduct) => {
+            const productTotal = orderProduct.quantity * orderProduct.price
+            return sumTotal + productTotal
+        }, 0)
     }
     render(){
         if(this.props.user.id && this.props.order){
@@ -76,12 +85,15 @@ class Cart extends Component {
         }
         return(
           <div>
+              <div>
+                  <h2>Total Price: ${this.total()}</h2>
+              </div>
           {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} order={this.order} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user}/>
             )
           }
           <div>
-            <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
+            <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div>
           </div>
         )

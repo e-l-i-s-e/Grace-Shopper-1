@@ -25,21 +25,50 @@ class Main extends Component {
 
   handleChange(evt){
     const productId = Number(evt.target.name);
+    //console.log("HEHEHHE", productId)
     const [ newOrderProduct ] = this.props.products.filter(product => product.id === productId);
+    console.log("newOrderProduct", newOrderProduct)
     newOrderProduct.quantity = evt.target.value;
+
     this.setState({ orderProduct : [...this.state.orderProduct, newOrderProduct] })
   }
 
   handleSubmit(evt){
+    
     evt.preventDefault();
-
-    if (!this.props.user.id){
-      sessionStorage.setItem('orderProduct', JSON.stringify(this.state.orderProduct))
+    
+    const productId = Number(evt.target[0].name)
+    const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
+    const selectedProductInLocalState = this.state.orderProduct.filter(product => product.id === productId);
+    let newOrderProductSession;
+    console.log("selectedProductInLocalState", selectedProductInLocalState)
+    if (!orderProductSession) {
+      //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!) 
+      sessionStorage.setItem('orderProduct', JSON.stringify(selectedProductInLocalState))
+    
     } else {
-      // send info to thunk which will send post request to add to cart
-      this.props.addToSessionCart(this.state.orderProduct[-1])
-    }
+      const [ selectedProductInSessionStorage ] = orderProductSession.filter(product => product.id === productId)
+      //console.log("selectedProductInSessionStorage", selectedProductInSessionStorage)
+      if (selectedProductInSessionStorage.id){
+        //for one specific selectedItem - you want to purchase more of that ONE item (ex: lavendar, added it to cart, want to go back and add more)
+        selectedProductInSessionStorage.quantity += selectedProductInLocalState.quantity
+        console.log("selectedProductInSessionStorage", selectedProductInSessionStorage)
+      
+        newOrderProductSession = orderProductSession.map(orderProduct => {
+          if (orderProduct.id === productId){
+            return selectedProductInSessionStorage
+          } else {
+            return orderProduct
+          }
+        })
+      
+      } else{
+        newOrderProductSession = [...orderProductSession, ...selectedProductInLocalState]
+        console.log('newOrderProductSession', newOrderProductSession)
 
+      }
+      sessionStorage.setItem('orderProduct', JSON.stringify(newOrderProductSession))
+    }
   }
 
   render() {
