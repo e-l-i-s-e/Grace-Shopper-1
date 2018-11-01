@@ -16,7 +16,7 @@ class Cart extends Component {
         super()
         this.state = {
             orderProduct: [],
-            isLoggedIn: false
+            isLoggedIn: false,
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -24,6 +24,7 @@ class Cart extends Component {
 
     componentDidMount(){
         if (this.props.user.id){
+            this.props.gotAllOrders(Number(this.props.user.id))
             this.setState = {
                 orders: this.props.order
             }
@@ -38,15 +39,8 @@ class Cart extends Component {
         }
     }
     handleChange(e){
-        this.setState({
-            [e.target.name]: e.target.value
-        })
         // need to add to sessionStorage
-        if (!this.state.isLoggedIn){
-            sessionStorage.setItem('orderProduct', this.state)
-        } else {
-            
-        }
+        
     }
     handleSubmit(e){
         e.preventDefault()
@@ -56,10 +50,26 @@ class Cart extends Component {
         })
     }
     render(){
+        if(this.props.user.id){
+            
+            console.log("ORDER", this.props.order[0])
+            console.log("ORDERPRODS", this.props.order[0])
+            return(
+                <div>
+                {
+                //   this.props.order && this.props.order.map( (aProduct) => <CartItems key={aProduct.id} order={this.order} orderProduct={aProduct[0].product} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user}/>
+                //   )
+                }
+                <div>
+                  <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
+                </div>
+                </div>
+              )
+        }
         return(
           <div>
           {
-            this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+            this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} order={this.order} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user}/>
             )
           }
           <div>

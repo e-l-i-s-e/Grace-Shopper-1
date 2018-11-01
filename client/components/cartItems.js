@@ -2,8 +2,9 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 const CartItems = (props) => {
+  
   const product = props.orderProduct;
-
+  console.log('PRODUCT', props.orderProduct)
   return (
     <div>
       <li><Link to={`/products/${product.id}`}> {product.title}</Link></li>

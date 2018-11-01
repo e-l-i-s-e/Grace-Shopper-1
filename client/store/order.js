@@ -5,6 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_ORDER = 'GET_ORDER'
+const ADD_CART = 'ADD_CART'
 // const GET_ORDER_PRODUCT = 'GET_ORDER_PRODUCT'
 // const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 // const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -21,15 +22,16 @@ const defaultOrder = [];
  */
 const getOrder = order => ({type: GET_ORDER, order})
 // const getOrderProduct = orderProduct = ({type: GET_ORDER_PRODUCT, orderProduct})
-
+const addCart = order => ({type: ADD_CART, order})
 /**
  * THUNK CREATORS
  */
 
-export const gotAllOrders = () => async dispatch => {
+export const gotAllOrders = (userId) => async dispatch => {
   try {
+    console.log("UsersID!!", userId)
     // const { user } = await axios.get('/auth/me')
-    // const { data } = await axios.get('/api/order')
+    const { data } = await axios.get(`/api/order/${userId}`)
     //  need to figure out how to send user to our front end
     // question??? how to add req.body to a get request?
     dispatch(getOrder(data));
@@ -37,6 +39,7 @@ export const gotAllOrders = () => async dispatch => {
     console.error(err)
   }
 }
+
 
 // export const gotGuestOrder = (orderAndQuantity) => async dispatch => {
 //   try {

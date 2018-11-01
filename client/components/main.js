@@ -6,6 +6,7 @@ import { gotAllProducts } from '../store/product'
 import Categories from './categories'
 import { Link } from 'react-router-dom'
 import SingleProduct from './singleProduct'
+import { addToSessionCart } from '../store/order'
 
 class Main extends Component {
   constructor(props) {
@@ -34,6 +35,9 @@ class Main extends Component {
 
     if (!this.props.user.id){
       sessionStorage.setItem('orderProduct', JSON.stringify(this.state.orderProduct))
+    } else {
+      // send info to thunk which will send post request to add to cart
+      this.props.addToSessionCart(this.state.orderProduct[-1])
     }
 
   }
@@ -81,6 +85,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     gotAllProducts: () => dispatch(gotAllProducts()),
     //gotAllCategories: () => dispatch(gotAllCategories()),
+    addToSessionCart: (order) => dispatch(addToSessionCart(order))
   }
 }
 

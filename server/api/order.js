@@ -21,3 +21,12 @@ router.get('/:userId', async(req, res, next) => {
         next(err)
     }
 })
+
+router.post('/', async(req, res, next) => {
+    try{
+        req.sessions.cart = [...req.session.cart, req.body.order]
+    }
+    catch(err){
+        console.error(err)
+    }
+})
