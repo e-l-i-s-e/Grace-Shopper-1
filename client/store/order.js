@@ -24,12 +24,11 @@ const getOrder = order => ({type: GET_ORDER, order})
 /**
  * THUNK CREATORS
  */
-export const gotAllOrders = () => async dispatch => {
+const user = 1
+export const gotAllOrders = (userId) => async dispatch => {
   try {
     // const { user } = await axios.get('/auth/me')
-    // const { data } = await axios.get('/api/order')
-    //  need to figure out how to send user to our front end
-    // question??? how to add req.body to a get request?
+    const { data } = await axios.get(`/api/order/:${userId}`)
     dispatch(getOrder(data));
   } catch (err) {
     console.error(err)
@@ -54,7 +53,7 @@ export const gotAllOrders = () => async dispatch => {
 //       console.error(err)
 //     }
 //   }
-}
+// }
 
 /**
  * REDUCER
