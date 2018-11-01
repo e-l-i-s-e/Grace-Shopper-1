@@ -13,8 +13,8 @@ router.get('/:userId', async(req, res, next) => {
             },
             include: [ { model: Product } ] 
        })
-      
-       res.json(orders)
+    //   console.log('Orders', orders)
+       res.json(orders[0])
     }
     catch(err){
         console.error(err)

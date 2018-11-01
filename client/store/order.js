@@ -15,7 +15,7 @@ const ADD_CART = 'ADD_CART'
  * INITIAL STATE
  */
 
-const defaultOrder = [];
+const defaultOrder = {};
 
 /**
  * ACTION CREATORS
@@ -75,7 +75,8 @@ export const gotAllOrders = (userId) => async dispatch => {
 export default function(state = defaultOrder, action) {
   switch (action.type) {
     case GET_ORDER:
-      return [...action.order]
+  
+      return {...action.order}
     // case ADD_PRODUCT:
     //   return [...state, action.product]
     // case EDITED_PRODUCT: {

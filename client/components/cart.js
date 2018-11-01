@@ -50,15 +50,23 @@ class Cart extends Component {
         })
     }
     render(){
-        if(this.props.user.id){
+        if(this.props.user.id && this.props.order){
             
-            console.log("ORDER", this.props.order[0])
-            console.log("ORDERPRODS", this.props.order[0])
+            console.log("ORDER", this.props.order)
+            // console.log("ORDERPRODS", this.props.order[0])
             return(
                 <div>
                 {
-                //   this.props.order && this.props.order.map( (aProduct) => <CartItems key={aProduct.id} order={this.order} orderProduct={aProduct[0].product} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user}/>
-                //   )
+                    
+                  this.props.order.products && this.props.order.products.map( 
+                      (aProduct) => <CartItems 
+                      key={aProduct.id} 
+                      order={this.order} 
+                      orderProduct={aProduct} 
+                      handleChange={this.handleChange} 
+                      handleSubmit={this.handleSubmit} 
+                      user={this.user}/>
+                  )
                 }
                 <div>
                   <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
