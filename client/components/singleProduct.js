@@ -8,8 +8,11 @@ const SingleProduct = (props) => {
     <div>
       <li><Link to={`/products/${product.id}`}> {product.title}</Link></li>
       <img src={product.imageUrl} alt="" className="img-responsive" />
+      <div >
+        <p>${product.price}</p>
+      </div>
       <form id='add-button' onSubmit={props.handleSubmit}>
-        <input type="text" name={product.id}  onChange={props.handleChange}/>
+        <input type="text" name={product.id} onChange={props.handleChange}/>
         <button type='submit' value={product.id} >Add to Cart</button>
       </form>
       <div>

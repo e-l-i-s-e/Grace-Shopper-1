@@ -10,16 +10,18 @@ import CartItems from './cartItems'
 // from ORDER PRODUCT (which has all the fields we need)
 // we can eager load or join them if needed
 
-class Cart extends Component {
+class Checkout extends Component {
     constructor(){
         super()
         this.state = {
             orderProduct: [],
-            isLoggedIn: false
+            isLoggedIn: false,
+            email: '',
+            address: '',
+            total: ''
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.total = this.total.bind(this)
     }
 
     componentDidMount(){
@@ -28,8 +30,6 @@ class Cart extends Component {
             /* OR this.setState({isLoggedIn: true}) -- put in IF */
         } else {
             const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
-
-            console.log('orderProduct in CART', orderProduct);
             if (orderProduct) {
               this.setState({orderProduct})
             }
@@ -40,37 +40,40 @@ class Cart extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-        // need to add to sessionStorage
-        // if (!this.state.isLoggedIn){
-        //     sessionStorage.setItem('orderProduct', this.state)
-        // }
     }
     handleSubmit(e){
         e.preventDefault()
         // this.props.setNewProduct(this.state)
         this.setState({
-            items: []
+            orderProduct: [],
+            isLoggedIn: false,
+            email: '',
+            address: ''
         })
     }
-    total(){
-        return this.state.orderProduct.reduce((sumTotal, orderProduct) => {
-            const productTotal = orderProduct.quantity * orderProduct.price
-            return sumTotal + productTotal
-        }, 0)
-    }
     render(){
+        console.log(this.state.orderProduct)
         return(
           <div>
-              <div>
-                  <h2>Total Price: ${this.total()}</h2>
-              </div>
-          {
+          {/* {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
             )
-          }
-          <div>
+          } */}
+          <h2>Checkout!!!!!!</h2>
+          {/* <div>
             <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
-          </div>
+          </div> */}
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                Email:
+                <input type="email" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <label>
+                Address:
+                <input type="email" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
           </div>
         )
     }
@@ -89,4 +92,4 @@ const mapStateToProps = (state) => {
     // }
 // }
 
-export default connect(mapStateToProps, null)(Cart)
+export default connect(mapStateToProps, null)(Checkout)
