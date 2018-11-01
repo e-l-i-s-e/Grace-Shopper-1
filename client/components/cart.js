@@ -52,7 +52,6 @@ class Cart extends Component {
         })
     }
     render(){
-      console.log('STATE', this.state.orderProduct);
         return(
           <div>
           {
