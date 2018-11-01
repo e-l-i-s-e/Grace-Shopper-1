@@ -7,37 +7,49 @@ async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
+const categories = await Promise.all([
+  Category.create({content: "1 Nourishment"}),//5, 6, 9, 10, 12, 13
+  Category.create({content: "2 Blossom"}),//2, 4, 17
+  Category.create({content: "3 You-Do-You"}),//3, 7, 10, 11, 14
+  Category.create({content: "4 I'm feeling lucky!"}),//3, 4, 8, 9, 12, 14, 15, 19
+  Category.create({content: "5 Nature"}), //1, 2, 4, 16, 17, 20
+])
+
 const users = await Promise.all([
   User.create({isAdmin: true, firstName: 'Beyonce', lastName: 'Knowles', email: 'bknowles@email.com', password: '123'}),
+  User.create({isAdmin: true, firstName: 'Justin', lastName: 'Bieber', email: 'jb@email.com', password: 'biebs'}),
+  User.create({isAdmin: false, firstName: 'Drake', lastName: 'Graham', email: 'drake@email.com', password: 'kiki'}),
+  User.create({isAdmin: false, firstName: 'Chimamanda Ngozi', lastName: 'Adichie', email: 'americanah@email.com', password: 'abc'}),
   User.create({isAdmin: false, firstName: 'Lady', lastName: 'Gaga', email: 'ladyG@email.com', password: 'bradley'}),
 ])
 
 const products = await Promise.all([
-  Product.create({title: "After the rain", description: "OMG!!!", price: 5, inventory: 10, imageUrl: 'https://media.mnn.com/assets/images/2017/03/raindrops-plants-smell.jpg.653x0_q80_crop-smart.jpg'}),
+  Product.create({
+    title: "After the rain", description: "OMG!!!", price: 5, inventory: 10, 
+    imageUrl: 'https://media.mnn.com/assets/images/2017/03/raindrops-plants-smell.jpg.653x0_q80_crop-smart.jpg'}),
+    //  .then(product => product.setCategories([categories[5]])),
   Product.create({title: "Lavender", description: "SOOOO RELAXING!!!", price: 1, inventory: 10, imageUrl: 'https://www.newdirectionsaromatics.ca/images/products/main/lavender.jpg'}),
   Product.create({title: "Leather", description: "It's vegan (kind of...)!!!", price: 12, inventory: 10, imageUrl: 'http://3.bp.blogspot.com/-whnhaCVnKpQ/TfJ-rm-kkhI/AAAAAAAAAj0/RaZdNrsN9xo/s1600/Leather.jpg'}),
   Product.create({title: "Jasmine", description: "GREAATTTTTTTTTTTTTT", price: 112, inventory: 10, imageUrl: 'http://www.tomhealy.us/assets/tumblr_inline_mkp16as0uz1qz4rgp.jpg'}),
   Product.create({title: "Baked bread", description: "WOWOWOWOOW", price: 2, inventory: 10, imageUrl: 'https://static01.nyt.com/images/2017/08/08/insider/simple-crusty-bread/simple-crusty-bread-articleLarge.jpg'}),
-  Product.create({title: "Baked cookies", description: "WOWWWWWWWWWWWW", price: 1112, inventory: 10, imageUrl: 'https://images-gmi-pmc.edge-generalmills.com/983f0c5a-2b13-40db-8c92-748b279bcc3f.jpg'})
+  Product.create({title: "Baked cookies", description: "WOWWWWWWWWWWWW", price: 1112, inventory: 10, imageUrl: 'https://images-gmi-pmc.edge-generalmills.com/983f0c5a-2b13-40db-8c92-748b279bcc3f.jpg'}),
+  Product.create({title: "Nail polish", description: "Judgement free zone", price: 1, inventory: 10, imageUrl: 'https://imagesvc.timeincapp.com/v3/mm/image?url=https%3A%2F%2Fcdn-img.instyle.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F684xflex%2Fpublic%2Fimages%2F2015%2F06%2F061615-nail-polish.jpg%3Fitok%3DLmYZ0UaT&w=800&c=sc&poi=face&q=70'}),
+  Product.create({title: "Crisp dollar bills", description: "GREEEEEEN", price: 1, inventory: 10, imageUrl: 'https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i0Jd2j3jQBfA/v1/800x-1.jpg'}),
+  Product.create({title: "Coconut", description: "DO NOT USE FOR COOKING!!! But moisturizer, ok!", price: 1, inventory: 10, imageUrl: 'https://images.agoramedia.com/everydayhealth/gcms/all-about-coconut-722x406.jpg'}),
+  Product.create({title: "Permanent marker", description: "Seriously?", price: 1, inventory: 10, imageUrl: 'https://dharma-www.s3.amazonaws.com/images/eng/products/fullsize/sfp-101.jpg'}),
+  Product.create({title: "Sauteed Garlic", description: "AMAZZZZZINGGGGGGGG!!!", price: 1, inventory: 10, imageUrl: 'https://howtofeedaloon.com/wp-content/uploads/2015/04/porterhouse-sauteed-garlic.jpg'}),
+  Product.create({title: "A new car", description: "Out of this world!!!", price: 1, inventory: 10, imageUrl: 'http://www.todayifoundout.com/wp-content/uploads/2014/12/new-car.jpg'}),
+  Product.create({title: "Chocolate", description: "Cliche much?", price: 1, inventory: 10, imageUrl: 'https://amp.businessinsider.com/images/5a4422b2b0bcd5e3178b70a3-2732-1366.jpg'}),
+  Product.create({title: "Citrus", description: "Oranges, grapefruit, galore!!!", price: 1, inventory: 10, imageUrl: 'https://www.rachaelraymag.com/.image/t_share/MTUwNjM0OTEwODUwMjI5NjI0/dried-citrus-103145847.jpg'}),
+  Product.create({title: "Clothes fresh out of the dryer", description: "Dryer sheets not included", price: 1, inventory: 10, imageUrl: 'https://i.imgflip.com/2fw2je.jpg'}),
+  Product.create({title: "Old books", description: "Priceless", price: 100000, inventory: 10, imageUrl: 'https://flipsy.com/article/wp-content/uploads/2013/05/Old-Vintage-Books.jpg'}),
+  Product.create({title: "Sea breeze", description: "Stay breezy!", price: 1, inventory: 10, imageUrl: 'https://s-ec.bstatic.com/images/hotel/max1024x768/700/70020350.jpg'}),
+  Product.create({title: "Roses", description: "A rose for a rose", price: 1, inventory: 10, imageUrl: 'https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=68949c212865a1a514722f8bcaa364e9&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb'}),
+  Product.create({title: "Baby's hair", description: "Again, judgement free zone...", price: 1, inventory: 10, imageUrl: 'https://www.ntd.tv/inspiring/assets/uploads/2018/01/2442-NTD-baby-640x359.jpg'}),
+  Product.create({title: "Cold mountain air", description: "Serenity", price: 1, inventory: 10, imageUrl: 'http://www.srs.fs.usda.gov/compass/wp-content/uploads/2016/09/09.27.Cold-air-drainage-flows-subsidize-montane-valley-ecosystem-productivity_Eric-Haggart_TimelessMomentsImaging.jpg'}),
 ])
 
-const categories = await Promise.all([
-  Category.create({content: "Nourishment"}),
-  Category.create({content: "Blossom"}),
-  Category.create({content: "You-Do-You"}),
-  Category.create({content: "Assorted"})
-])
-
-// await Promise.all([
-//   After.setCampusId(Saturnalia),
-//   Arya.setCampusId(Plutonium),
-//   //Boba.setCampusId(Saturnalia),
-//   //Grump.setCampusId(Saturnalia),
-//   //Dopey.setCampusId(Mars),
-//   //E.setCampusId(Jupiter),
-//   //Mister.setCampusId(Mercury)
-// ])
-
+  //confirmations
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${categories.length} categories`)
