@@ -27,6 +27,8 @@ class Cart extends Component {
             /* OR this.setState({isLoggedIn: true}) -- put in IF */
         } else {
             const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
+
+            console.log('orderProduct in CART', orderProduct);
             if (orderProduct) {
               this.setState({orderProduct})
             }

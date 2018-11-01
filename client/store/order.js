@@ -64,7 +64,7 @@ export const gotAllOrders = () => async dispatch => {
 //       console.error(err)
 //     }
 //   }
-}
+// }
 
 /**
  * REDUCER
