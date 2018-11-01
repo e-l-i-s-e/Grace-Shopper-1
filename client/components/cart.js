@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
-import product, { setNewProduct } from '../store/product'
+import product from '../store/product'
+import { gotAllOrders } from '../store/order'
 import CartItems from './cartItems'
 
 //add a select item button on the main view page and individual for customer to purchase product
@@ -23,8 +24,9 @@ class Cart extends Component {
 
     componentDidMount(){
         if (this.props.user.id){
-            //populate local state with the session
-            /* OR this.setState({isLoggedIn: true}) -- put in IF */
+            this.setState = {
+                orders: this.props.order
+            }
         } else {
             const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
 
@@ -42,6 +44,8 @@ class Cart extends Component {
         // need to add to sessionStorage
         if (!this.state.isLoggedIn){
             sessionStorage.setItem('orderProduct', this.state)
+        } else {
+            
         }
     }
     handleSubmit(e){
@@ -73,10 +77,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-    // return {
-    //     setNewProduct: (newProduct) => dispatch(setNewProduct(newProduct))
-    // }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        gotAllOrders: (user) => dispatch(gotAllOrders(user))
+    }
+}
 
-export default connect(mapStateToProps, null)(Cart)
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
