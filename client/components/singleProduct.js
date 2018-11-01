@@ -8,6 +8,7 @@ const SingleProduct = (props) => {
     <div>
       <li><Link to={`/products/${product.id}`}> {product.title}</Link></li>
       <img src={product.imageUrl} alt="" className="img-responsive" />
+      <button>Add to Cart</button>
       <div>
       {
         props.isAdmin &&

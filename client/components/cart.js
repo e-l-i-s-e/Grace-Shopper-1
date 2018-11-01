@@ -5,14 +5,18 @@ import { connect } from 'react-redux'
 import { setNewProduct } from '../store/product'
 import AddProductForm from './addProductForm'
 
+//add a select item button on the main view page and individual for customer to purchase product
+//it will either add data to database (validated user) OR to sessionStorage
+// it should be an array of objects - that should contain quanitity (that we keep track of!)
+// from ORDER PRODUCT (which has all the fields we need)
+// we can eager load or join them if needed
+
 class Cart extends Component {
     constructor(){
         super()
         this.state = {
-            title: '',
-            price: "",
-            quantity: "",
-            imageUrl: "",
+            items: [],
+            isLoggedIn: ''
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -21,22 +25,28 @@ class Cart extends Component {
         if (this.props.user.id){
             //populate local state with the session
         } else {
-            //populate cart with local storage
+            const order = sessionStorage.getItem('order')
+            if (order) {
+              this.setState(order)
+            }  
+            this.setState({isLoggedIn: false})
         }
     }
     handleChange(e){
         this.setState({
             [e.target.name]: e.target.value
         })
+        // need to add to sessionStorage 
+        if (!this.state.isLoggedIn){
+            sessionStorage.setItem('order', this.state)
+        } 
     }
     handleSubmit(e){
         e.preventDefault()
         this.props.setNewProduct(this.state)
         this.setState({
-            title: '',
-            price: "",
-            quantity: "",
-            imageUrl: "", 
+            items: [],
+            isLoggedIn: ''
         })
     }
     render(){
