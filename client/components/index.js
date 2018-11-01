@@ -8,6 +8,8 @@ export {default as AdminHome} from './adminHome'
 export {default as AddProduct} from './addProduct'
 export {default as Main} from './main'
 export {default as EditProduct} from './editProduct'
+export {default as Cart} from './cart'
+export {default as Categories} from './categories'
 export {Login, Signup} from './auth-form'
 
 

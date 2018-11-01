@@ -4,13 +4,38 @@ import { connect } from 'react-redux';
 import { gotAllProducts } from '../store/product'
 //import { gotAllCategories } from '../store/category'
 import Categories from './categories'
-
+import { Link } from 'react-router-dom'
 import SingleProduct from './singleProduct'
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = ({
+      orderProduct: [],
+      quantity: 1
+    })
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   async componentDidMount(){
     await this.props.gotAllProducts();
-    await this.props.gotAllCategories();
+  }
+
+  handleChange(evt){
+    const productId = Number(evt.target.name);
+    const [ newOrderProduct ] = this.props.products.filter(product => product.id === productId);
+    newOrderProduct.quantity = evt.target.value;
+    this.setState({ orderProduct : [...this.state.orderProduct, newOrderProduct] })
+  }
+
+  handleSubmit(evt){
+    evt.preventDefault();
+
+    if (!this.props.user.id){
+      sessionStorage.setItem('orderProduct', JSON.stringify(this.state.orderProduct))
+    }
+
   }
 
   render() {
@@ -22,26 +47,19 @@ class Main extends Component {
             <main>
               <h3>Scented</h3>
                   <div>
+                    <Link to='/cart' >Go To Cart</Link>
                     <Categories />
-                    {/* {
-                      categories[0] && categories.map(category => {
-                        return (
-                            <div key={category.id}>
-                            <li><Link to={`/api/categories/${category.id}`}> {category.content}</Link></li>
-                            </div>
-                        )
-                      })
-                    }   */}
                   </div>
                   <div>
                     {
                         products && products.map(product => {
                             return (
-                                <SingleProduct key={product.id} product={product} isAdmin={this.props.isAdmin} />
+                                <SingleProduct key={product.id} product={product}  isAdmin={this.props.isAdmin} handleSubmit={this.handleSubmit} handleChange={this.handleChange} fakeQuantity={this.state.quantity}/>
                             )
                         })
                     }
                   </div>
+
             </main>
           </div>
     )
@@ -53,7 +71,7 @@ const mapStateToProps = (state) => {
     products: state.product,
 
     //categories: state.category,
-
+    user: state.user,
     isAdmin: state.user.isAdmin
 
   }
