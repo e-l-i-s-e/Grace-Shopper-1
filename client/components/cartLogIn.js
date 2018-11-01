@@ -2,24 +2,23 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 
 // importing thunk from product reducer
-import { setNewProduct } from '../store/product'
+import { gotAllOrders } from '../store/order'
 import AddProductForm from './addProductForm'
 
 class Cart extends Component {
     constructor(){
         super()
         this.state = {
-            title: '',
-            price: "",
-            quantity: "",
-            imageUrl: "",
+            orders: []
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     }
     componentDidMount(){
         if (this.props.user.id){
-            //populate local state with the session
+            this.setState = {
+                orders: props.order
+            }
         } else {
             //populate cart with local storage
         }
@@ -40,9 +39,9 @@ class Cart extends Component {
         })
     }
     render(){
-        // return(
-        //     <AddProductForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-        // )
+        return(
+            // <AddProductForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+        )
     }
 }
 
@@ -54,9 +53,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    // return {
-    //     setNewProduct: (newProduct) => dispatch(setNewProduct(newProduct))
-    // }
+    return {
+        gotAllOrders: (user) => dispatch(gotAllOrders(user))
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
