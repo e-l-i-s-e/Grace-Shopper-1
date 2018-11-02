@@ -12,7 +12,7 @@ router.get('/:userId', async(req, res, next) => {
                isCart: true,
             },
             include: [ { model: Product } ],
-            defaults: { total: 0 }
+            defaults: { total: 0, status: 'Created' }
        })
         res.json(orders[0])
     
