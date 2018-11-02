@@ -13,6 +13,9 @@ const Order = db.define('order', {
             notEmpty: false
         }
     },
+    status: {
+        type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed')
+    }
 })
 
 module.exports = Order
