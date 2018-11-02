@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {getSelectedProductThunk} from '../store/selectedProduct'
+import { Link } from 'react-router-dom'
 
 class SelectedProduct extends Component {
     componentDidMount(){
@@ -16,7 +17,7 @@ class SelectedProduct extends Component {
                 <img src={selectedProduct.imageUrl} alt="" className="img-responsive" />
                 <h1>${selectedProduct.price}</h1>    
                 <p>Description: {selectedProduct.description}</p>     
-    
+                <Link to="/products">Back</Link>
             </div> 
         )
     }
