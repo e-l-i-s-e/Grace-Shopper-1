@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
-import product, { setNewProduct } from '../store/product'
+import product from '../store/product'
+import { gotAllOrders } from '../store/order'
 import CartItems from './cartItems'
 
 //add a select item button on the main view page and individual for customer to purchase product
@@ -15,7 +16,7 @@ class Cart extends Component {
         super()
         this.state = {
             orderProduct: [],
-            isLoggedIn: false
+            isLoggedIn: false,
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -24,8 +25,10 @@ class Cart extends Component {
 
     componentDidMount(){
         if (this.props.user.id){
-            //populate local state with the session
-            /* OR this.setState({isLoggedIn: true}) -- put in IF */
+            this.props.gotAllOrders(Number(this.props.user.id))
+            this.setState = {
+                orders: this.props.order
+            }
         } else {
             const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
 
@@ -37,9 +40,6 @@ class Cart extends Component {
         }
     }
     handleChange(e){
-        this.setState({
-            [e.target.name]: e.target.value
-        })
         // need to add to sessionStorage
         // if (!this.state.isLoggedIn){
         //     sessionStorage.setItem('orderProduct', this.state)
@@ -59,13 +59,37 @@ class Cart extends Component {
         }, 0)
     }
     render(){
+        if(this.props.user.id && this.props.order){
+            
+            console.log("ORDER", this.props.order)
+            // console.log("ORDERPRODS", this.props.order[0])
+            return(
+                <div>
+                {
+                    
+                  this.props.order.products && this.props.order.products.map( 
+                      (aProduct) => <CartItems 
+                      key={aProduct.id} 
+                      order={this.order} 
+                      orderProduct={aProduct} 
+                      handleChange={this.handleChange} 
+                      handleSubmit={this.handleSubmit} 
+                      user={this.user}/>
+                  )
+                }
+                <div>
+                  <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
+                </div>
+                </div>
+              )
+        }
         return(
           <div>
               <div>
                   <h2>Total Price: ${this.total()}</h2>
               </div>
           {
-            this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+            this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} order={this.order} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user}/>
             )
           }
           <div>
@@ -83,10 +107,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-    // return {
-    //     setNewProduct: (newProduct) => dispatch(setNewProduct(newProduct))
-    // }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        gotAllOrders: (user) => dispatch(gotAllOrders(user))
+    }
+}
 
-export default connect(mapStateToProps, null)(Cart)
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
