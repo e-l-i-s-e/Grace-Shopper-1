@@ -6,6 +6,7 @@ import { gotAllProducts } from '../store/product'
 import Categories from './categories'
 import { Link } from 'react-router-dom'
 import SingleProduct from './singleProduct'
+import Search from './search'
 
 class Main extends Component {
   constructor(props) {
@@ -24,35 +25,39 @@ class Main extends Component {
 
   handleChange(evt){
     const productId = Number(evt.target.name);
-    //console.log("HEHEHHE", productId)
-    const [ newOrderProduct ] = this.props.products.filter(product => product.id === productId);
-    console.log("newOrderProduct", newOrderProduct)
-    newOrderProduct.quantity = evt.target.value;
+    const [ orderProductToModify ] = this.state.orderProduct.filter(product => product.id === productId);
+    if ( orderProductToModify ){
+      orderProductToModify.quantity += evt.target.value;
+      //replace item in local state with modified one?
 
-    this.setState({ orderProduct : [...this.state.orderProduct, newOrderProduct] })
+    } else {
+      const [ newOrderProduct ] = this.props.products.filter(product => product.id === productId);
+      newOrderProduct.quantity = evt.target.value;
+      this.setState({ orderProduct : [...this.state.orderProduct, newOrderProduct] })
+    }
+
   }
 
   handleSubmit(evt){
-    
+
     evt.preventDefault();
-    
+
     const productId = Number(evt.target[0].name)
     const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
     const selectedProductInLocalState = this.state.orderProduct.filter(product => product.id === productId);
     let newOrderProductSession;
     console.log("selectedProductInLocalState", selectedProductInLocalState)
     if (!orderProductSession) {
-      //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!) 
+      //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!)
       sessionStorage.setItem('orderProduct', JSON.stringify(selectedProductInLocalState))
-    
+
     } else {
       const [ selectedProductInSessionStorage ] = orderProductSession.filter(product => product.id === productId)
-      //console.log("selectedProductInSessionStorage", selectedProductInSessionStorage)
+
       if (selectedProductInSessionStorage.id){
         //for one specific selectedItem - you want to purchase more of that ONE item (ex: lavendar, added it to cart, want to go back and add more)
         selectedProductInSessionStorage.quantity += selectedProductInLocalState.quantity
-        console.log("selectedProductInSessionStorage", selectedProductInSessionStorage)
-      
+
         newOrderProductSession = orderProductSession.map(orderProduct => {
           if (orderProduct.id === productId){
             return selectedProductInSessionStorage
@@ -60,7 +65,7 @@ class Main extends Component {
             return orderProduct
           }
         })
-      
+
       } else{
         newOrderProductSession = [...orderProductSession, ...selectedProductInLocalState]
         console.log('newOrderProductSession', newOrderProductSession)
@@ -81,6 +86,9 @@ class Main extends Component {
                   <div>
                     <Link to='/cart' >Go To Cart</Link>
                     <Categories />
+                  </div>
+                  <div>
+                    <Search />
                   </div>
                   <div>
                     {
