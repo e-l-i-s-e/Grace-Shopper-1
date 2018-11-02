@@ -26,7 +26,7 @@ router.get('/:userId', async(req, res, next) => {
 
 // add an item to the cart - the req.body contains
 // order id, user.id , porduct id and comments
-router.post('/', async(req, res, next) => {
+router.post('/:userId', async(req, res, next) => {
     try{
         await OrderProduct.create(req.body)
         
@@ -36,14 +36,22 @@ router.post('/', async(req, res, next) => {
     }
 })
 
-router.put('/', async(req, res, next) => { //question do we need our userId?
+router.put('/:userId', async(req, res, next) => { //question do we need our userId?
     try{
-
+        const orders =  await Order.find({
+            where: {
+                userId : req.params.userId,
+                isCart: true,
+             }
+            })
+        const orderId = orders[0].id
+        console.log('ORDER ID', orderId)
         OrderProduct.update({
             quantity: req.body.quantity //need to send quantity number through req.body in thunk axios request
         },{
-            where: {orderId: req.body.orderId, productId: req.body.productId} 
+            where: {orderId: orderId, productId: req.body.productId} 
             //need to also send product id and order id 
+            //order id will be the order of the users that has a status of cart
         })
     }
     catch(err){
@@ -51,8 +59,16 @@ router.put('/', async(req, res, next) => { //question do we need our userId?
     }
 })
 
-router.detle('/', async(req, res, next)=> {
+router.delete('/', async(req, res, next)=> {
     try{
+        const orders =  await Order.find({
+            where: {
+                userId : req.params.userId,
+                isCart: true,
+             }
+            })
+        const orderId = orders[0].id
+        console.log('ORDER ID', orderId)
         OrderProduct.destroy({
             where: {
                 orderId: req.body.orderId, productId: req.body.productId
