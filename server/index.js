@@ -60,6 +60,16 @@ const createApp = () => {
       saveUninitialized: false
     })
   )
+
+  // added by anna
+
+  // app.use('/', (req, res, next)=> {
+  //   const cart = []
+  //   if (!req.session.cart){
+  //     req.session.cart = cart
+  //   }
+  // })
+
   app.use(passport.initialize())
   app.use(passport.session())
 
