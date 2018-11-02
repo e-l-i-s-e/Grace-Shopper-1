@@ -45,6 +45,17 @@ export const postToCart = (product) => async dispatch => {
     console.error(err)
   }
 }
+//updates OrderProducts quantity based on changes in cart
+export const changeQuantity = (product) => async dispatch => {
+  try{
+    await axios.put('/api/order', product)
+    // the product needs to include
+    // quantity, orderId and productId
+  }
+  catch(err){
+    console.error(err)
+  }
+}
 
 
 

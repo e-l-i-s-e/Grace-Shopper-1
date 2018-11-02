@@ -35,3 +35,31 @@ router.post('/', async(req, res, next) => {
         console.error(err)
     }
 })
+
+router.put('/', async(req, res, next) => { //question do we need our userId?
+    try{
+
+        OrderProduct.update({
+            quantity: req.body.quantity //need to send quantity number through req.body in thunk axios request
+        },{
+            where: {orderId: req.body.orderId, productId: req.body.productId} 
+            //need to also send product id and order id 
+        })
+    }
+    catch(err){
+        console.error(err)
+    }
+})
+
+router.detle('/', async(req, res, next)=> {
+    try{
+        OrderProduct.destroy({
+            where: {
+                orderId: req.body.orderId, productId: req.body.productId
+            }
+        })
+    }
+    catch(err){
+        console.error(err)
+    }
+})
