@@ -26,19 +26,26 @@ const addCart = order => ({type: ADD_CART, order})
 /**
  * THUNK CREATORS
  */
-
+//gets all orders that are in the current cart of the user
 export const gotAllOrders = (userId) => async dispatch => {
   try {
-    console.log("UsersID!!", userId)
-    // const { user } = await axios.get('/auth/me')
     const { data } = await axios.get(`/api/order/${userId}`)
-    //  need to figure out how to send user to our front end
-    // question??? how to add req.body to a get request?
     dispatch(getOrder(data));
   } catch (err) {
     console.error(err)
   }
 }
+//posts a product into the current cart of the user
+export const postToCart = (product) => async dispatch => {
+  try{
+      await axios.post('/api/order', product)
+  
+  }
+  catch(err){
+    console.error(err)
+  }
+}
+
 
 
 // export const gotGuestOrder = (orderAndQuantity) => async dispatch => {

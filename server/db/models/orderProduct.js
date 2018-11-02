@@ -7,7 +7,7 @@ const OrderProduct = db.define('orderProduct', {
         defaultValue: 0,
         allowNull: false,
         validate: {
-            isEmpty: false
+            notEmpty: true
         }
     },
 })

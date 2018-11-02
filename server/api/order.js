@@ -1,11 +1,11 @@
 const router = require('express').Router()
-const {Order, Product} = require('../db/models')
+const {Order, Product, OrderProduct} = require('../db/models')
 module.exports = router
 
 
 router.get('/:userId', async(req, res, next) => {
     try{
-        console.log('req.params', req.params)
+        
        const orders =  await Order.findAll({
            where: {
                userId : req.params.userId,
@@ -24,7 +24,8 @@ router.get('/:userId', async(req, res, next) => {
 
 router.post('/', async(req, res, next) => {
     try{
-        req.sessions.cart = [...req.session.cart, req.body.order]
+        await OrderProduct.create(req.body)
+        
     }
     catch(err){
         console.error(err)

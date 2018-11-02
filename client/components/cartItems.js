@@ -19,7 +19,10 @@ const CartItems = (props) => {
         <p>${product.price}</p>
       </div>
       <form id='add-button' onSubmit={props.handleSubmit}>
-        <input type="text" name={product.id} value={product.quantity ? product.quantity : 1} onChange={props.handleChange}/>
+        <input 
+        type="text" name={product.id} 
+        value={product.quantity ? product.quantity : 1} 
+        onChange={props.handleChange}/>
       </form>
       </div>
       }
