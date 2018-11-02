@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-//import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { gotAllProducts } from '../store/product'
-//import { gotAllCategories } from '../store/category'
 import Categories from './categories'
-import { Link } from 'react-router-dom'
 import SingleProduct from './singleProduct'
 
 class Main extends Component {
@@ -72,14 +70,13 @@ class Main extends Component {
 
   render() {
     const products = this.props.products
-    //const categories = this.props.categories
 
     return (
           <div>
             <main>
               <h3>Scented</h3>
                   <div>
-                    <Link to='/cart' >Go To Cart</Link>
+                    <Link to='/cart'> Go To Cart </Link>
                     <Categories />
                   </div>
                   <div>
@@ -101,18 +98,14 @@ class Main extends Component {
 const mapStateToProps = (state) => {
   return {
     products: state.product,
-
-    //categories: state.category,
     user: state.user,
     isAdmin: state.user.isAdmin
-
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     gotAllProducts: () => dispatch(gotAllProducts()),
-    //gotAllCategories: () => dispatch(gotAllCategories()),
   }
 }
 

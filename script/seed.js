@@ -1,18 +1,18 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Category} = require('../server/db/models')
+const {User, Product, Category, Order, Review} = require('../server/db/models')
 
 async function seed() {
-  await db.sync({force: true})
+  await db.sync({force: true}) 
   console.log('db synced!')
 
 const categories = await Promise.all([
-  Category.create({content: "1 Nourishment"}),//5, 6, 9, 10, 12, 13
-  Category.create({content: "2 Blossom"}),//2, 4, 17
-  Category.create({content: "3 You-Do-You"}),//3, 7, 10, 11, 14
-  Category.create({content: "4 I'm feeling lucky!"}),//3, 4, 8, 9, 12, 14, 15, 19
-  Category.create({content: "5 Nature"}), //1, 2, 4, 16, 17, 20
+  Category.create({content: "Nourishment"}),//5, 6, 9, 10, 12, 13
+  Category.create({content: "Blossom"}),//2, 4, 17
+  Category.create({content: "You-Do-You"}),//3, 7, 10, 11, 14
+  Category.create({content: "I'm feeling lucky!"}),//3, 4, 8, 9, 12, 14, 15, 19
+  Category.create({content: "Nature"}), //1, 2, 4, 16, 17, 20
 ])
 
 const users = await Promise.all([
@@ -26,7 +26,9 @@ const users = await Promise.all([
 const products = await Promise.all([
   Product.create({
     title: "After the rain", description: "OMG!!!", price: 5, inventory: 10, 
-    imageUrl: 'https://media.mnn.com/assets/images/2017/03/raindrops-plants-smell.jpg.653x0_q80_crop-smart.jpg'}),
+    imageUrl: 'https://media.mnn.com/assets/images/2017/03/raindrops-plants-smell.jpg.653x0_q80_crop-smart.jpg',
+    //plantr seed file
+  }),
     //  .then(product => product.setCategories([categories[5]])),
   Product.create({title: "Lavender", description: "SOOOO RELAXING!!!", price: 1, inventory: 10, imageUrl: 'https://www.newdirectionsaromatics.ca/images/products/main/lavender.jpg'}),
   Product.create({title: "Leather", description: "It's vegan (kind of...)!!!", price: 12, inventory: 10, imageUrl: 'http://3.bp.blogspot.com/-whnhaCVnKpQ/TfJ-rm-kkhI/AAAAAAAAAj0/RaZdNrsN9xo/s1600/Leather.jpg'}),
@@ -49,10 +51,45 @@ const products = await Promise.all([
   Product.create({title: "Cold mountain air", description: "Serenity", price: 1, inventory: 10, imageUrl: 'http://www.srs.fs.usda.gov/compass/wp-content/uploads/2016/09/09.27.Cold-air-drainage-flows-subsidize-montane-valley-ecosystem-productivity_Eric-Haggart_TimelessMomentsImaging.jpg'}),
 ])
 
+const orders = await Promise.all([
+  Order.create({isCart: true, total: 20, status: 'Created'}),
+  Order.create({isCart: true, total: 30, status: 'Processing'}),
+  Order.create({isCart: false, total: 2, status: 'Cancelled'}),
+  Order.create({isCart: false, total: 1, status: 'Completed'}),
+  Order.create({isCart: false, total: 3, status: 'Completed'}),
+  Order.create({isCart: true, total: 20, status: 'Created'}),
+  Order.create({isCart: true, total: 30, status: 'Processing'}),
+  Order.create({isCart: false, total: 2, status: 'Cancelled'}),
+  Order.create({isCart: false, total: 1, status: 'Completed'}),
+  Order.create({isCart: false, total: 3, status: 'Completed'}),
+])
+
+  // await Promise.all([
+  //   products[1].setCateogories([categories[1]])
+  // ])
+
+// const reviews = await Promise.all([
+//   Review.create({ userId: 3, productId: 1, content: 'Heavenly.  Out of this world!!!!!!!!!!!!!!!!'}),
+//   Review.create({ userId: 3, productId: 2, content: 'Is this really vegan??????????????????????' }),
+//   Review.create({ userId: 5, productId: 3, content: 'WOWOWOWOWOOWWWWWWZERZZZZZ JUST WOW!' }),
+//   Review.create({ userId: 5, productId: 4, content: 'I wish they made shampoo out of this stuff!!!!!!!!' }),
+//   Review.create({ userId: 4, productId: 4, content: 'WHY???? JUST WHY???? I am gluten free, dammit!!!!'}),
+// ])
+
+// const reviews = await Promise.all([
+//   Review.create({ content: 'Heavenly.  Out of this world!!!!!!!!!!!!!!!!'}),
+//   Review.create({ content: 'Is this really vegan??????????????????????' }),
+//   Review.create({ content: 'WOWOWOWOWOOWWWWWWZERZZZZZ JUST WOW!' }),
+//   Review.create({ content: 'I wish they made shampoo out of this stuff!!!!!!!!' }),
+//   Review.create({ content: 'WHY???? JUST WHY???? I am gluten free, dammit!!!!'}),
+// ])
+
   //confirmations
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${categories.length} categories`)
+  console.log(`seeded ${orders.length} orders`)
+  //console.log(`seeded ${reviews.length} reviews`)
   console.log(`seeded successfully`)
 }
 
@@ -82,3 +119,132 @@ if (module === require.main) {
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
 module.exports = seed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TRIED USING PLANTR!!!!!!!!
+
+// 'use strict'
+
+// const db = require('../server/db')
+// //const {User, Product, Category, Order, Review} = require('../server/db/models')
+
+// const {
+//   category: Category,
+//   user: User,
+//   product: Product,
+// } = db.models
+
+// const categoryData = [
+//   {content: "Nourishment"},//5, 6, 9, 10, 12, 13
+//   {content: "Blossom"},//2, 4, 17
+// ]
+
+// const userData = [
+//   {isAdmin: true, firstName: 'Beyonce', lastName: 'Knowles', email: 'bknowles@email.com', password: '123'},
+//   {isAdmin: true, firstName: 'Justin', lastName: 'Bieber', email: 'jb@email.com', password: 'biebs'},
+// ]
+
+// const productData = [
+//   {title: "After the rain", description: "OMG!!!", price: 5, inventory: 10, imageUrl: 'https://media.mnn.com/assets/images/2017/03/raindrops-plants-smell.jpg.653x0_q80_crop-smart.jpg'},
+//   {title: "Lavender", description: "SOOOO RELAXING!!!", price: 1, inventory: 10, imageUrl: 'https://www.newdirectionsaromatics.ca/images/products/main/lavender.jpg'},
+//   {title: "Leather", description: "It's vegan (kind of...)!!!", price: 12, inventory: 10, imageUrl: 'http://3.bp.blogspot.com/-whnhaCVnKpQ/TfJ-rm-kkhI/AAAAAAAAAj0/RaZdNrsN9xo/s1600/Leather.jpg'},
+//   {title: "Jasmine", description: "GREAATTTTTTTTTTTTTT", price: 112, inventory: 10, imageUrl: 'http://www.tomhealy.us/assets/tumblr_inline_mkp16as0uz1qz4rgp.jpg'},
+// ]
+
+// // async function seed() {
+// //   await db.sync({force: true})
+// //   console.log('db synced!')
+
+// const seed = async () => {
+//   try {
+//       await db.sync({ force: true })
+//       console.log('Database synced!')
+
+//       const promiseForInsertedData = Promise.all([
+//           // `returning: true` is a postgres option returning representations of
+//           // the new data. Otherwise we get back a success report, not instances.
+//           Category.bulkCreate(categoryData, { returning: true }),
+//           User.bulkCreate(userData, { returning: true }),
+//           Product.bulkCreate(productData, { returning: true })
+//       ])
+
+//       const [ categories, products ] = await promiseForInsertedData
+//       // const [nourishment, blossom] = categories
+//       // const [lavender, leather, jasmine] = products
+
+//       // Here we're using Sequelize's 'Magic' methods to set associations.
+//       // Each one returns a promise, so we must wrap them in Promise.all
+//       // to return a single promise that will resolve when they all complete
+//       await Promise.all([
+//         products[1].setCategories(categories[1]),
+//         // jasmine.setGardener(nourishment),
+//         // leather.setVegetables(blossom),
+//       ])
+//     } catch (e) {
+//       console.log('Disaster! Something went wrong!')
+//       console.log(err)
+//   } finally {
+//       console.log('Closing database connection.')
+//       db.close()
+//   }
+// }
+
+// seed()
+
+
+
+//   // await Promise.all([
+//   //   products[1].setCateogories([categories[1]])
+//   // ])
+
+
+
+//   //confirmations
+//   // console.log(`seeded ${users.length} users`)
+//   // console.log(`seeded ${products.length} products`)
+//   // console.log(`seeded ${categories.length} categories`)
+//   // console.log(`seeded ${orders.length} orders`)
+//   //console.log(`seeded ${reviews.length} reviews`)
+// //  console.log(`seeded successfully`)
+
+
+// // // We've separated the `seed` function from the `runSeed` function.
+// // // This way we can isolate the error handling and exit trapping.
+// // // The `seed` function is concerned only with modifying the database.
+// // async function runSeed() {
+// //   console.log('seeding...')
+// //   try {
+// //     await seed()
+// //   } catch (err) {
+// //     console.error(err)
+// //     process.exitCode = 1
+// //   } finally {
+// //     console.log('closing db connection')
+// //     await db.close()
+// //     console.log('db connection closed')
+// //   }
+// // }
+
+// // // Execute the `seed` function, IF we ran this module directly (`node seed`).
+// // // `Async` functions always return a promise, so we can use `catch` to handle
+// // // any errors that might occur inside of `seed`.
+// // if (module === require.main) {
+// //   runSeed()
+// // }
+
+// // // we export the seed function for testing purposes (see `./seed.spec.js`)
+// // module.exports = seed

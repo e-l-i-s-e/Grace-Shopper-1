@@ -33,7 +33,7 @@ class Categories extends Component {
     const categoryMenu = categories[0] && categories.map(category => {
       return (
           <div key={category.id}>
-          <button><Link to={`/api/categories/${category.id}`}> {category.content}</Link></button>
+          <button><Link to={`/categories/${category.id}`}> {category.content}</Link></button>
           </div>
       )
     })

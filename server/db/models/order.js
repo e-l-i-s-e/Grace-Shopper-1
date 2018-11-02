@@ -10,9 +10,12 @@ const Order = db.define('order', {
         type: Sequelize.INTEGER,
         allowNull: false,
         validate: {
-            isEmpty: false
+            notEmpty: true
         }
     },
+    status: {
+        type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed')
+    }
 })
 
 module.exports = Order
