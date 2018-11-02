@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
+
 
 class Search extends Component {
     constructor(){
@@ -22,8 +25,13 @@ class Search extends Component {
       e.preventDefault();
       let name = this.state.name.toLowerCase();
       name = name[0].toUpperCase() + name.slice(1);
-      const searchResult  = this.props.products.filter(product => product.title === name);
-      this.setState({products: searchResult})
+      const [ searchResult ] = this.props.products.filter(product => product.title === name);
+      const productId = searchResult.id;
+      console.log('product', searchResult);
+      // console.log('props', this.props.context.router);
+      // return <Redirect to={`/products/${productId}`} />
+      this.props.history.push(`/products/${productId}`)
+
     }
 
     render(){
@@ -35,7 +43,7 @@ class Search extends Component {
             </form>
             <div>
               {
-                this.state.products.map(product => {
+                this.state.products && this.state.products.map(product => {
                   return (
                     <div key={product.id}>
                     <li><Link to={`/products/${product.id}`}> {product.title}</Link></li>
@@ -67,4 +75,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps)(Search)
+export default connect(mapStateToProps)(withRouter(Search))
