@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import { gotAllProducts } from '../store/product'
 import Categories from './categories'
 import SingleProduct from './singleProduct'
+import Search from './search'
 import { gotAllOrders, postToCart } from '../store/order'
 
 class Main extends Component {
@@ -21,7 +22,7 @@ class Main extends Component {
     await this.props.gotAllProducts();
     if (this.props.user.id){
       await this.props.gotAllOrders(Number(this.props.user.id))
-    } 
+    }
   }
 
   handleChange(evt){
@@ -43,13 +44,13 @@ class Main extends Component {
     } else {
       const [ newOrderProduct ] = this.props.products.filter(product => product.id === productId);
       newOrderProduct.quantity = newQuantity;
-      const newState = [...this.state.orderProduct, newOrderProduct] 
+      const newState = [...this.state.orderProduct, newOrderProduct]
       this.setState({ orderProduct : newState})
     }
   }
-  
+
   handleSubmit(evt){
-    
+
     evt.preventDefault();
     const productId = Number(evt.target[0].name)
     if(this.props.user.id){
@@ -59,17 +60,17 @@ class Main extends Component {
         orderId: this.props.order.id,
         quantity
       }
-      this.props.postToCart(product)  
-    //use a thunk to send the porduct id and order id 
+      this.props.postToCart(product)
+    //use a thunk to send the porduct id and order id
     // and post it to the product order table
     } else {
       const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
       const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
       let newOrderProductSession;
         if (!orderProductSession) {
-          //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!) 
+          //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!)
           sessionStorage.setItem('orderProduct', JSON.stringify([selectedProductInLocalState]))
-          
+
         } else {
           const [selectedProductInSessionStorage] = orderProductSession.filter(product => product.id === productId)
           if (selectedProductInSessionStorage) {
@@ -99,6 +100,9 @@ class Main extends Component {
                   <div>
                     <Link to='/cart'> Go To Cart </Link>
                     <Categories />
+                  </div>
+                  <div>
+                    <Search />
                   </div>
                   <div>
                     {
