@@ -27,13 +27,13 @@ class Routes extends Component {
         <Route path="/products/:id" component={SelectedProduct} />
         <Route path="/categories/:id" component={SelectedCategory} />
 
-
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/adminHome" component={AdminHome} />
             <Route path="/products/add" component={AddProduct} />
             <Route path="/products/edit" component ={EditProduct} />
+            <Route exact path="/products" component={Main} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
