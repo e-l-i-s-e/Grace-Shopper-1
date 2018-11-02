@@ -40,6 +40,7 @@ class Cart extends Component {
     }
     render(){
         return(
+            <div>Hii</div>
             // <AddProductForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
         )
     }

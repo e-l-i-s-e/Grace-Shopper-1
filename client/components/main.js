@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-//import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { gotAllProducts } from '../store/product'
-//import { gotAllCategories } from '../store/category'
 import Categories from './categories'
-import { Link } from 'react-router-dom'
 import SingleProduct from './singleProduct'
 import Search from './search'
+import { gotAllOrders, postToCart } from '../store/order'
 
 class Main extends Component {
   constructor(props) {
@@ -21,70 +20,85 @@ class Main extends Component {
 
   async componentDidMount(){
     await this.props.gotAllProducts();
+    if (this.props.user.id){
+      await this.props.gotAllOrders(Number(this.props.user.id))
+    }
   }
 
   handleChange(evt){
     const productId = Number(evt.target.name);
-    const [ orderProductToModify ] = this.state.orderProduct.filter(product => product.id === productId);
-    if ( orderProductToModify ){
-      orderProductToModify.quantity += evt.target.value;
-      //replace item in local state with modified one?
-
+    const newQuantity = Number(evt.target.value)
+    const [ orderProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
+    if ( orderProductInLocalState ){
+      orderProductInLocalState.quantity = newQuantity;
+      const newState = this.state.orderProduct.map(product => {
+        if (product.id === productId){
+          return orderProductInLocalState
+        } else {
+          return product
+        }
+      })
+      this.setState({
+        orderProduct: newState
+      })
     } else {
       const [ newOrderProduct ] = this.props.products.filter(product => product.id === productId);
-      newOrderProduct.quantity = evt.target.value;
-      this.setState({ orderProduct : [...this.state.orderProduct, newOrderProduct] })
+      newOrderProduct.quantity = newQuantity;
+      const newState = [...this.state.orderProduct, newOrderProduct]
+      this.setState({ orderProduct : newState})
     }
-
   }
 
   handleSubmit(evt){
 
     evt.preventDefault();
-
     const productId = Number(evt.target[0].name)
-    const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
-    const selectedProductInLocalState = this.state.orderProduct.filter(product => product.id === productId);
-    let newOrderProductSession;
-    console.log("selectedProductInLocalState", selectedProductInLocalState)
-    if (!orderProductSession) {
-      //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!)
-      sessionStorage.setItem('orderProduct', JSON.stringify(selectedProductInLocalState))
-
-    } else {
-      const [ selectedProductInSessionStorage ] = orderProductSession.filter(product => product.id === productId)
-
-      if (selectedProductInSessionStorage.id){
-        //for one specific selectedItem - you want to purchase more of that ONE item (ex: lavendar, added it to cart, want to go back and add more)
-        selectedProductInSessionStorage.quantity += selectedProductInLocalState.quantity
-
-        newOrderProductSession = orderProductSession.map(orderProduct => {
-          if (orderProduct.id === productId){
-            return selectedProductInSessionStorage
-          } else {
-            return orderProduct
-          }
-        })
-
-      } else{
-        newOrderProductSession = [...orderProductSession, ...selectedProductInLocalState]
-        console.log('newOrderProductSession', newOrderProductSession)
-
+    if(this.props.user.id){
+      let quantity = Number(evt.target[0].value)
+      let product = {
+        productId,
+        orderId: this.props.order.id,
+        quantity
       }
-      sessionStorage.setItem('orderProduct', JSON.stringify(newOrderProductSession))
+      this.props.postToCart(product)
+    //use a thunk to send the porduct id and order id
+    // and post it to the product order table
+    } else {
+      const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
+      const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
+      let newOrderProductSession;
+        if (!orderProductSession) {
+          //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!)
+          sessionStorage.setItem('orderProduct', JSON.stringify([selectedProductInLocalState]))
+
+        } else {
+          const [selectedProductInSessionStorage] = orderProductSession.filter(product => product.id === productId)
+          if (selectedProductInSessionStorage) {
+            //for one specific selectedItem - you want to purchase more of that ONE item (ex: lavendar, added it to cart, want to go back and add more)
+            selectedProductInSessionStorage.quantity += selectedProductInLocalState.quantity
+            newOrderProductSession = orderProductSession.map(orderProduct => {
+              if (orderProduct.id === productId) {
+                return selectedProductInSessionStorage
+              } else {
+                return orderProduct
+              }
+            })
+          } else{
+            newOrderProductSession = [...orderProductSession, selectedProductInLocalState]
+          }
+          sessionStorage.setItem('orderProduct', JSON.stringify(newOrderProductSession))
     }
   }
+}
 
   render() {
     const products = this.props.products
-    //const categories = this.props.categories
-
     return (
           <div>
             <main>
               <h3>Scented</h3>
                   <div>
-                    <Link to='/cart' >Go To Cart</Link>
+                    <Link to='/cart'> Go To Cart </Link>
                     <Categories />
                   </div>
                   <div>
@@ -109,20 +123,18 @@ class Main extends Component {
 const mapStateToProps = (state) => {
   return {
     products: state.product,
-
-    //categories: state.category,
+    order: state.order,
     user: state.user,
     isAdmin: state.user.isAdmin
-
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     gotAllProducts: () => dispatch(gotAllProducts()),
-    //gotAllCategories: () => dispatch(gotAllCategories()),
+    gotAllOrders: (user) => dispatch(gotAllOrders(user)),
+    postToCart: (product) => dispatch(postToCart(product))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
-

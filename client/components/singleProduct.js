@@ -13,7 +13,7 @@ const SingleProduct = (props) => {
       </div>
       <form id='add-button' onSubmit={props.handleSubmit}>
         <input type="text" name={product.id} onChange={props.handleChange}/>
-        <button type='submit' value={product.id} >Add to Cart</button>
+        <button type='submit' value={product.id}> Add to Cart </button>
       </form>
       <div>
       {
@@ -27,7 +27,5 @@ const SingleProduct = (props) => {
     </div>
   )
 }
-
-
 
 export default SingleProduct;
