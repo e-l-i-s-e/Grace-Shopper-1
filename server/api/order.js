@@ -6,15 +6,17 @@ module.exports = router
 router.get('/:userId', async(req, res, next) => {
     try{
         
-       const orders =  await Order.findAll({
+       const orders =  await Order.findOrCreate({
            where: {
                userId : req.params.userId,
                isCart: true,
             },
-            include: [ { model: Product } ] 
+            include: [ { model: Product } ],
+            defaults: { total: 0 }
        })
+        res.json(orders[0])
+    
     //   console.log('Orders', orders)
-       res.json(orders[0])
     }
     catch(err){
         console.error(err)
