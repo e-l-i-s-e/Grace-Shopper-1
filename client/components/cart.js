@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
 import product from '../store/product'
-import { gotAllOrders, deleteFromCart, changeQuantity } from '../store/order'
+import { gotAllOrders, deleteFromCart, changeQuantity, getNewPrice } from '../store/order'
 import CartItems from './cartItems'
 
 class Cart extends Component {
@@ -21,6 +21,7 @@ class Cart extends Component {
   componentDidMount(){
     if (this.props.user.id){
         this.props.gotAllOrders(Number(this.props.user.id))
+        this.props.getNewPrice(this.props.order.id)
         
     } else {
         const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
@@ -111,6 +112,9 @@ class Cart extends Component {
             // console.log("ORDERPRODS", this.props.order[0])
             return(
                 <div>
+                  <div>
+                    <h2>Total Price: ${this.props.order.total}</h2>
+                  </div>
                 {
 
                   this.props.order.products && this.props.order.products.map(
@@ -157,7 +161,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     gotAllOrders: (user) => dispatch(gotAllOrders(user)),
     deleteFromCart: (aProduct) => dispatch(deleteFromCart(aProduct)),
-    changeQuantity: (quantity) => dispatch(changeQuantity(quantity))
+    changeQuantity: (quantity) => dispatch(changeQuantity(quantity)),
+    getNewPrice: (orderid) => dispatch(getNewPrice(orderid))
   }
 }
 

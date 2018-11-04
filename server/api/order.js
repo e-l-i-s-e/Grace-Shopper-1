@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const Sequelize = require ('sequelize')
 const {Order, Product, OrderProduct} = require('../db/models')
 module.exports = router
 
@@ -36,28 +37,42 @@ router.post('/', async(req, res, next) => {
             }
         })
         if (!response){
+            // if 0 quantity of the product has not yet been placed
+            // create a new row in orderProduct with the product
+            // and update the orders price
             const newRow = await OrderProduct.create(req.body)
-            console.log('api route whole new row', newRow.dataValues)
+            const quantity=newRow.quantity
+            const newProdId = newRow.productId
+            const { price } = await Product.findById(newProdId)
+            //updating the price in the order
+            await Order.update({total: Sequelize.literal(`total + ${quantity * price}`) },{
+                where: {id: req.body.orderId} 
+            })
             res.json({
                 product: newRow.dataValues,
                 isCreate: true
             })
         } else {
+            // if the product already exists in our cart
+            // then update the instance with new quantity 
+            // and update the orders price
             const currQuantity = response.quantity
             const newRow = await response.update({
                 quantity: currQuantity + req.body.quantity
             },{
                 returning: true,
             })
-            console.log("newRow", newRow.dataValues)
+            const quantity = currQuantity
+            const { price } = await Product.findById(req.body.productId)
+            //updating the price in the order
+            await Order.update({total: Sequelize.literal(`total + (${req.body.quantity * price})`) },{
+                where: {id: req.body.orderId} 
+            })
             res.json({
                 product: newRow.dataValues,
                 isCreate: true
             })
-        }
-       //if response not found then create an instance
-       // if response found then update the instance with new quantity
-        
+        } 
     }
     catch(err){
         console.error(err)
@@ -102,20 +117,44 @@ router.delete('/:userId/:productId', async(req, res, next)=> {
             where: {
                 userId : req.params.userId,
                 isCart: true,
-             }
+             } , include: [ { model: Product } ]
             })
         const orderId = orders.dataValues.id
         const productId = req.params.productId
-        console.log('prodID', productId)
         const deletedRow = await OrderProduct.find({
             where: {
                 orderId, productId
             }
         })
+        // take the deleted row quantity 
+        //and times it by its products price
+        // then update orders total price
+        console.log("ProductId", productId)
+           const index = orders.products.findIndex(product => {
+                return product.dataValues.id === productId
+            })
+
+            const filteredProd = orders.products.filter((arrVal) => {
+                console.log("arrValIds",arrVal.dataValues.id)
+                return Number(arrVal.id) === Number(productId)
+            }) 
+            const reduceTotalBy = filteredProd[0].dataValues.price
+            console.log(orders, orders.total)
+            //must reduce the orders.total with reduce totalby 
+            //and update it to the db
         await deletedRow.destroy()
-        console.log('deletedRow', deletedRow.dataValues)
-    
         res.json(deletedRow)
+    }
+    catch(err){
+        console.error(err)
+        next(err)
+    }
+})
+
+router.get('/price/:orderid', async(req, res, next) =>{
+    try{
+        const response = await Order.findById(req.params.orderid)
+        res.json(response)
     }
     catch(err){
         console.error(err)
