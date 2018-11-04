@@ -37,6 +37,7 @@ router.post('/', async(req, res, next) => {
         })
         if (!response){
             const newRow = await OrderProduct.create(req.body)
+            console.log('api route whole new row', newRow.dataValues)
             res.json({
                 product: newRow.dataValues,
                 isCreate: true
@@ -94,23 +95,30 @@ router.put('/', async(req, res, next) => {
     }
 })
 
-router.delete('/', async(req, res, next)=> {
+router.delete('/:userId/:productId', async(req, res, next)=> {
     try{
+        console.log('userId', req.params.userId)
         const orders =  await Order.find({
             where: {
                 userId : req.params.userId,
                 isCart: true,
              }
             })
-        const orderId = orders[0].id
-        console.log('ORDER ID', orderId)
-        OrderProduct.destroy({
+        const orderId = orders.dataValues.id
+        const productId = req.params.productId
+        console.log('prodID', productId)
+        const deletedRow = await OrderProduct.find({
             where: {
-                orderId, productId: req.body.productId
+                orderId, productId
             }
         })
+        await deletedRow.destroy()
+        console.log('deletedRow', deletedRow.dataValues)
+    
+        res.json(deletedRow)
     }
     catch(err){
         console.error(err)
+        next(err)
     }
 })

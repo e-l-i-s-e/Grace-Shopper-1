@@ -38,7 +38,6 @@ class Cart extends Component {
   
 
     if(this.props.user.id){
-      console.log("IAMAUSER")
       const [productChanging] = this.props.order.products.filter(aProduct => aProduct.id === productId)
       const quantityOfProduct = productChanging.orderProduct.quantity
       let updatedQuanity;
@@ -52,12 +51,11 @@ class Cart extends Component {
         orderId: Number(this.props.order.id),
         userId: Number(this.props.user.id)
       })
-      console.log("CHANGEQUANT")
+      
 
     } else {
       const [orderProductInLocalState] = this.state.orderProduct.filter(product => product.id === productId);
-      console.log('state', this.state.orderProduct )
-      console.log('orderProductInLocalState', orderProductInLocalState)
+
       PlusOrMinus === 'increment'
         ? orderProductInLocalState.quantity++
         : orderProductInLocalState.quantity--;
@@ -79,12 +77,14 @@ class Cart extends Component {
   handleSubmit(evt) {
     evt.preventDefault()
     const productId = Number(evt.target.name);
+    const userId = Number(this.props.user.id)
+    console.log('userId', this.props.user.id)
+    console.log('productId', productId)
     if (this.props.user.id) {
-       this.props.deleteFromCart({
-         userId: this.props.user.id,
-         productId
-       })
-       this.props.gotAllOrders(Number(this.props.user.id)) //not sure if this is necessary to update cart view
+      console.log('2nd productId', productId)
+       const infoForDelete = {productId, userId}
+       this.props.deleteFromCart(infoForDelete)
+        
 
       //Anna will remove items from the logged in user's cart in the database
 

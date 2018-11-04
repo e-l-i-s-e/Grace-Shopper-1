@@ -8,6 +8,7 @@ import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
+const REMOVE_CART = 'REMOVE_CART'
 // const GET_ORDER_PRODUCT = 'GET_ORDER_PRODUCT'
 // const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 // const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -27,6 +28,7 @@ const getOrder = order => ({type: GET_CART, order})
 
 const changeQuantitySuccess = updatedProduct => ({type: CHANGE_QUANTITY, updatedProduct})
 const addToCart = newItem => ({type: ADD_TO_CART, newItem})
+const removeFromCart = item => ({type: REMOVE_CART, item})
 /**
  * THUNK CREATORS
  */
@@ -44,6 +46,7 @@ export const postToCart = (product) => async dispatch => {
   try{
 
       const { data } = await axios.post(`/api/order/`, product)
+      console.log("new row poste", data)
       dispatch(addToCart(data))
       
   }
@@ -65,9 +68,11 @@ export const changeQuantity = (product) => async dispatch => {
     console.error(err)
   }
 }
-export const deleteFromCart = (product) => async dispatch => {
+export const deleteFromCart = (infoForDelete) => async dispatch => {
   try{
-    await axios.delete('/api/order/', product)
+    const { data }  = await axios.delete(`/api/order/${infoForDelete.userId}/${infoForDelete.productId}/`)
+    console.log("DeletedRow", data.productId)
+    dispatch(removeFromCart(data))
   }
   catch(err){
     console.error(err)
@@ -78,30 +83,35 @@ export const deleteFromCart = (product) => async dispatch => {
  * REDUCER
  */
 export default function(state = defaultOrder, action) {
+  const newOrders = {...state}
   switch (action.type) {
     case GET_CART:
       return {...action.order}
     case CHANGE_QUANTITY:
-      const newOrders = {...state}
       const indexOfProduct = state.products.findIndex(aProduct => {
        return aProduct.id === action.updatedProduct.productId
       })
       const newQuantity = action.updatedProduct.quantity
       newOrders.products[indexOfProduct].orderProduct.quantity = newQuantity
       return {...newOrders}
-    case addToCart:
-      const Orders = {...state}
+    case ADD_TO_CART:
       if(action.newItem.isCreate){
-        Orders.products = [...Orders.products, action.newItem.product]
-        return {Orders}
+        newOrders.products = [...newOrders.products, action.newItem.product]
+        return {...newOrders}
       } else{
-        const indexOfProduct = Orders.products.findIndex(aProduct => {
+        const indexOfProduct = newOrders.products.findIndex(aProduct => {
           return aProduct.id === action.newItem.product.productId
          })
          const newQuantity = action.newItem.product.quantity
-         Orders.products[indexOfProduct].orderProduct.quantity = newQuantity
-         return {...Orders}
+         newOrders.products[indexOfProduct].orderProduct.quantity = newQuantity
+         return {...newOrders}
       }
+      case REMOVE_CART:
+      const indexOfDeleted = newOrders.products.findIndex(aProduct => {
+        return aProduct.id === action.item.productId
+       })
+       newOrders.products.splice(indexOfDeleted,1)
+       return{...newOrders}
         
     default:
       return state
