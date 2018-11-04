@@ -11,8 +11,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      orderProduct: [],
-      quantity: 1
+      orderProduct: []
     })
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -23,59 +22,63 @@ class Main extends Component {
     if (this.props.user.id){
       await this.props.gotAllOrders(Number(this.props.user.id))
     }
+    const orderProduct = this.props.products.map(product => {
+      product.quantity = 1;
+      return product
+    })
+    this.setState({orderProduct})
   }
 
   handleChange(evt){
-    const productId = Number(evt.target.name);
-    const newQuantity = Number(evt.target.value)
+    const productId = Number(evt.target.value);
+    const PlusOrMinus = evt.target.name;
     const [ orderProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
-    if ( orderProductInLocalState ){
-      orderProductInLocalState.quantity = newQuantity;
-      const newState = this.state.orderProduct.map(product => {
-        if (product.id === productId){
-          return orderProductInLocalState
-        } else {
-          return product
-        }
-      })
-      this.setState({
-        orderProduct: newState
-      })
-    } else {
-      const [ newOrderProduct ] = this.props.products.filter(product => product.id === productId);
-      newOrderProduct.quantity = newQuantity;
-      const newState = [...this.state.orderProduct, newOrderProduct]
-      this.setState({ orderProduct : newState})
-    }
+
+    PlusOrMinus === 'increment'
+      ? orderProductInLocalState.quantity++
+      : orderProductInLocalState.quantity--;
+
+    const newState = this.state.orderProduct.map(product => {
+      if (product.id === productId){
+        return orderProductInLocalState
+      } else {
+        return product
+      }
+    })
+    this.setState({
+      orderProduct: newState
+    })
   }
 
   handleSubmit(evt){
-
     evt.preventDefault();
-    const productId = Number(evt.target[0].name)
+    const productId = Number(evt.target.name);
+    const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
+    const quantity = selectedProductInLocalState.quantity
+
     if(this.props.user.id){
-      let quantity = Number(evt.target[0].value)
       let product = {
         productId,
         orderId: this.props.order.id,
         quantity
       }
       this.props.postToCart(product)
-    //use a thunk to send the porduct id and order id
-    // and post it to the product order table
+
     } else {
       const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
-      const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
       let newOrderProductSession;
+
         if (!orderProductSession) {
           //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!)
           sessionStorage.setItem('orderProduct', JSON.stringify([selectedProductInLocalState]))
 
         } else {
-          const [selectedProductInSessionStorage] = orderProductSession.filter(product => product.id === productId)
+          const [ selectedProductInSessionStorage ] = orderProductSession.filter(product => product.id === productId)
+
           if (selectedProductInSessionStorage) {
             //for one specific selectedItem - you want to purchase more of that ONE item (ex: lavendar, added it to cart, want to go back and add more)
-            selectedProductInSessionStorage.quantity += selectedProductInLocalState.quantity
+            selectedProductInSessionStorage.quantity += selectedProductInLocalState.quantity;
+
             newOrderProductSession = orderProductSession.map(orderProduct => {
               if (orderProduct.id === productId) {
                 return selectedProductInSessionStorage
@@ -92,7 +95,6 @@ class Main extends Component {
 }
 
   render() {
-    const products = this.props.products
     return (
           <div>
             <main>
@@ -106,9 +108,16 @@ class Main extends Component {
                   </div>
                   <div>
                     {
-                        products && products.map(product => {
+                        this.state.orderProduct &&
+                        this.state.orderProduct.map(orderProduct => {
                             return (
-                                <SingleProduct key={product.id} product={product}  isAdmin={this.props.isAdmin} handleSubmit={this.handleSubmit} handleChange={this.handleChange} fakeQuantity={this.state.quantity}/>
+                                <SingleProduct
+                                  key={orderProduct.id}
+                                  isAdmin={this.props.isAdmin}
+                                  handleSubmit={this.handleSubmit}
+                                  handleChange={this.handleChange}
+                                  orderProduct={orderProduct}
+                                />
                             )
                         })
                     }
