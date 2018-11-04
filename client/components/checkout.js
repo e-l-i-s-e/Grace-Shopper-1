@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import product, { setNewProduct } from '../store/product'
 import CartItems from './cartItems'
 
+
 //add a select item button on the main view page and individual for customer to purchase product
 //it will either add data to database (validated user) OR to sessionStorage
 // it should be an array of objects - that should contain quanitity (that we keep track of!)
@@ -44,6 +45,31 @@ class Checkout extends Component {
     handleSubmit(e){
         e.preventDefault()
         // this.props.setNewProduct(this.state)
+        // const nodemailer = require('nodemailer');
+
+        // var transporter = nodemailer.createTransport({
+        //   service: 'gmail',
+        //   auth: {
+        //     user: 'ScentedShopper@gmail.com',
+        //     pass: 'Scented1809'
+        //   }
+        // });
+
+        // var mailOptions = {
+        //   from: 'ScentedShopper@gmail.com',
+        //   to: `${this.state.email}`,
+        //   subject: 'Your Scented.com order',
+        //   text: 'Thanks for your purchase with Scented!'
+        // };
+
+        // transporter.sendMail(mailOptions, function(error, info){
+        //   if (error) {
+        //     console.log(error);
+        //   } else {
+        //     console.log('Email sent: ' + info.response);
+        //   }
+        // });
+
         this.setState({
             orderProduct: [],
             isLoggedIn: false,
@@ -51,6 +77,7 @@ class Checkout extends Component {
             address: ''
         })
     }
+
     render(){
         console.log(this.state.orderProduct)
         return(
@@ -70,7 +97,7 @@ class Checkout extends Component {
                 </label>
                 <label>
                 Address:
-                <input type="email" value={this.state.value} onChange={this.handleChange} />
+                <input type="text" value={this.state.value} onChange={this.handleChange} />
                 </label>
                 <input type="submit" value="Submit" />
             </form>
@@ -93,3 +120,8 @@ const mapStateToProps = (state) => {
 // }
 
 export default connect(mapStateToProps, null)(Checkout)
+
+
+
+
+
