@@ -6,7 +6,7 @@ import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
  * ACTION TYPES
  */
 const GET_CART = 'GET_CART'
-const ADD_CART = 'ADD_CART'
+const ADD_TO_CART = 'ADD_TO_CART'
 const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 // const GET_ORDER_PRODUCT = 'GET_ORDER_PRODUCT'
 // const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
@@ -26,6 +26,7 @@ const getOrder = order => ({type: GET_CART, order})
 // const getOrderProduct = orderProduct = ({type: GET_ORDER_PRODUCT, orderProduct})
 
 const changeQuantitySuccess = updatedProduct => ({type: CHANGE_QUANTITY, updatedProduct})
+const addToCart = newItem => ({type: ADD_TO_CART, newItem})
 /**
  * THUNK CREATORS
  */
@@ -39,10 +40,11 @@ export const gotAllOrders = (userId) => async dispatch => {
   }
 }
 //posts a product into the current cart of the user
-export const postToCart = (product, userId) => async dispatch => {
+export const postToCart = (product) => async dispatch => {
   try{
 
-      await axios.post(`/api/order/`, product)
+      const { data } = await axios.post(`/api/order/`, product)
+      dispatch(addToCart(data))
       
   }
   catch(err){
@@ -65,42 +67,12 @@ export const changeQuantity = (product) => async dispatch => {
 }
 export const deleteFromCart = (product) => async dispatch => {
   try{
-    await axios.delete('/api/order', product)
+    await axios.delete('/api/order/', product)
   }
   catch(err){
     console.error(err)
   }
 }
-
-
-
-// export const gotGuestOrder = (orderAndQuantity) => async dispatch => {
-//   try {
-//     dispatch(getOrderProduct(orderAndQuantity))
-//   } catch (err) {
-
-//   }
-// }
-
-// export const setNewProduct = (product) => {
-//     return async (dispatch) => {
-//         const { data } = await axios.post('/api/products', product)
-//         dispatch(addProduct(data))
-//     }
-// }
-
-// export const setEditProduct = (editedProduct) => {
-//   return async(dispatch) => {
-//     try{
-//       const {data} = await axios.put(`/api/products/${editedProduct.id}`, editedProduct)
-//       dispatch(editProduct(data[1]))
-//       history.push('/adminHome')
-//     }
-//     catch (err){
-//       console.error(err)
-//     }
-//   }
-// }
 
 /**
  * REDUCER
@@ -111,17 +83,26 @@ export default function(state = defaultOrder, action) {
       return {...action.order}
     case CHANGE_QUANTITY:
       const newOrders = {...state}
-      console.log("state", state)
-      console.log(newOrders)
       const indexOfProduct = state.products.findIndex(aProduct => {
        return aProduct.id === action.updatedProduct.productId
       })
       const newQuantity = action.updatedProduct.quantity
       newOrders.products[indexOfProduct].orderProduct.quantity = newQuantity
-
-      
-      
       return {...newOrders}
+    case addToCart:
+      const Orders = {...state}
+      if(action.newItem.isCreate){
+        Orders.products = [...Orders.products, action.newItem.product]
+        return {Orders}
+      } else{
+        const indexOfProduct = Orders.products.findIndex(aProduct => {
+          return aProduct.id === action.newItem.product.productId
+         })
+         const newQuantity = action.newItem.product.quantity
+         Orders.products[indexOfProduct].orderProduct.quantity = newQuantity
+         return {...Orders}
+      }
+        
     default:
       return state
   }

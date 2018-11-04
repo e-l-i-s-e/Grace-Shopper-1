@@ -36,10 +36,23 @@ router.post('/', async(req, res, next) => {
             }
         })
         if (!response){
-            await OrderProduct.create(req.body)
+            const newRow = await OrderProduct.create(req.body)
+            res.json({
+                product: newRow.dataValues,
+                isCreate: true
+            })
         } else {
             const currQuantity = response.quantity
-            await response.update({quantity: currQuantity + req.body.quantity})
+            const newRow = await response.update({
+                quantity: currQuantity + req.body.quantity
+            },{
+                returning: true,
+            })
+            console.log("newRow", newRow.dataValues)
+            res.json({
+                product: newRow.dataValues,
+                isCreate: true
+            })
         }
        //if response not found then create an instance
        // if response found then update the instance with new quantity
@@ -72,8 +85,6 @@ router.put('/', async(req, res, next) => {
             //need to also send product id and order id 
             //order id will be the order of the users that has a status of cart
         })
-        
-        console.log('NEWW ROWW', newRow[1][0].dataValues.quantity)
         res.json(newRow[1][0].dataValues)
         
     }
