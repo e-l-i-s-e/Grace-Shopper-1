@@ -15,7 +15,7 @@ const CartItems = (props) => {
         </div>
         <Buttons
           product={product}
-          orderProduct={props.orderProduct}
+          orderProduct={props.orderProduct} //?? is this not redundant?
           handleChange={props.handleChange} />
         <button type='submit' name={product.id} onClick={props.handleSubmit}>Remove from Cart</button>
       </div>

@@ -26,36 +26,60 @@ router.get('/:userId', async(req, res, next) => {
 
 // add an item to the cart - the req.body contains
 // order id, user.id , porduct id and comments
-router.post('/:userId', async(req, res, next) => {
+router.post('/', async(req, res, next) => {
     try{
-        await OrderProduct.create(req.body)
+
+       const response = await OrderProduct.find({
+            where: {
+               orderId: req.body.orderId,
+               productId: req.body.productId 
+            }
+        })
+        if (!response){
+            await OrderProduct.create(req.body)
+        } else {
+            const currQuantity = response.quantity
+            await response.update({quantity: currQuantity + req.body.quantity})
+        }
+       //if response not found then create an instance
+       // if response found then update the instance with new quantity
         
     }
     catch(err){
         console.error(err)
+        next(err)
+        
     }
 })
 
-router.put('/:userId', async(req, res, next) => { //question do we need our userId?
+router.put('/', async(req, res, next) => { 
     try{
         const orders =  await Order.find({
             where: {
-                userId : req.params.userId,
-                isCart: true,
+               id : req.body.orderId,
              }
             })
-        const orderId = orders[0].id
-        console.log('ORDER ID', orderId)
-        OrderProduct.update({
-            quantity: req.body.quantity //need to send quantity number through req.body in thunk axios request
+        const orderId = orders.id
+        console.log(req.body.quantity)
+        const newRow = await OrderProduct.update({
+            quantity: req.body.quantity//need to send quantity number through req.body in thunk axios request
+            
         },{
-            where: {orderId: orderId, productId: req.body.productId} 
+            returning: true,
+            where: {
+                orderId, productId: req.body.productId
+            } 
             //need to also send product id and order id 
             //order id will be the order of the users that has a status of cart
         })
+        
+        console.log('NEWW ROWW', newRow[1][0].dataValues.quantity)
+        res.json(newRow[1][0].dataValues)
+        
     }
     catch(err){
         console.error(err)
+        next(err)
     }
 })
 
@@ -71,7 +95,7 @@ router.delete('/', async(req, res, next)=> {
         console.log('ORDER ID', orderId)
         OrderProduct.destroy({
             where: {
-                orderId: req.body.orderId, productId: req.body.productId
+                orderId, productId: req.body.productId
             }
         })
     }

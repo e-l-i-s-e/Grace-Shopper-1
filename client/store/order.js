@@ -1,11 +1,13 @@
 import axios from 'axios'
 import history from '../history'
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 /**
  * ACTION TYPES
  */
-const GET_ORDER = 'GET_ORDER'
+const GET_CART = 'GET_CART'
 const ADD_CART = 'ADD_CART'
+const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 // const GET_ORDER_PRODUCT = 'GET_ORDER_PRODUCT'
 // const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 // const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -20,9 +22,10 @@ const defaultOrder = {};
 /**
  * ACTION CREATORS
  */
-const getOrder = order => ({type: GET_ORDER, order})
+const getOrder = order => ({type: GET_CART, order})
 // const getOrderProduct = orderProduct = ({type: GET_ORDER_PRODUCT, orderProduct})
-const addCart = order => ({type: ADD_CART, order})
+
+const changeQuantitySuccess = updatedProduct => ({type: CHANGE_QUANTITY, updatedProduct})
 /**
  * THUNK CREATORS
  */
@@ -36,10 +39,11 @@ export const gotAllOrders = (userId) => async dispatch => {
   }
 }
 //posts a product into the current cart of the user
-export const postToCart = (product) => async dispatch => {
+export const postToCart = (product, userId) => async dispatch => {
   try{
-      await axios.post('/api/order', product)
-  
+
+      await axios.post(`/api/order/`, product)
+      
   }
   catch(err){
     console.error(err)
@@ -48,9 +52,20 @@ export const postToCart = (product) => async dispatch => {
 //updates OrderProducts quantity based on changes in cart
 export const changeQuantity = (product) => async dispatch => {
   try{
-    await axios.put('/api/order', product)
+    const newRow = await axios.put('/api/order/', product)
+    console.log("NEW ROW", newRow.data)
+   
     // the product needs to include
     // quantity, orderId and productId
+    dispatch(changeQuantitySuccess(newRow.data))
+  }
+  catch(err){
+    console.error(err)
+  }
+}
+export const deleteFromCart = (product) => async dispatch => {
+  try{
+    await axios.delete('/api/order', product)
   }
   catch(err){
     console.error(err)
@@ -92,17 +107,19 @@ export const changeQuantity = (product) => async dispatch => {
  */
 export default function(state = defaultOrder, action) {
   switch (action.type) {
-    case GET_ORDER:
-  
+    case GET_CART:
       return {...action.order}
-    // case ADD_PRODUCT:
-    //   return [...state, action.product]
-    // case EDITED_PRODUCT: {
-    //   const newProducts = state.filter(product => product.id!== Number(action.editedProduct.id))
-    //   return [...newProducts, action.editedProduct]
-    // }
-    // case REMOVE_PRODUCT:
-    //   return defaultProduct
+    case CHANGE_QUANTITY:
+      const newOrders = {...state}
+      console.log("state", state)
+      console.log(newOrders)
+      const indexOfProduct = state.products.findIndex(aProduct => {
+       return aProduct.id === action.updatedProduct.productId
+      })
+      const imageUrl = state.products[indexOfProduct].imageUrl
+      action.updatedProduct.imageUrl = imageUrl
+      newOrders.products.splice(indexOfProduct,1,action.updatedProduct)
+      return {...newOrders}
     default:
       return state
   }
