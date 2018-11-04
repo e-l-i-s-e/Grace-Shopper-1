@@ -44,7 +44,7 @@ class Cart extends Component {
       let updatedQuanity;
       PlusOrMinus === 'increment'
         ? updatedQuanity = quantityOfProduct + 1
-        : updatedQuanity = quantityOfProduct + 1
+        : updatedQuanity = quantityOfProduct - 1
   
       this.props.changeQuantity({
         quantity: Number(updatedQuanity),

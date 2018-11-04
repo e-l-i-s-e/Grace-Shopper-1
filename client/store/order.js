@@ -116,9 +116,11 @@ export default function(state = defaultOrder, action) {
       const indexOfProduct = state.products.findIndex(aProduct => {
        return aProduct.id === action.updatedProduct.productId
       })
-      const imageUrl = state.products[indexOfProduct].imageUrl
-      action.updatedProduct.imageUrl = imageUrl
-      newOrders.products.splice(indexOfProduct,1,action.updatedProduct)
+      const newQuantity = action.updatedProduct.quantity
+      newOrders.products[indexOfProduct].orderProduct.quantity = newQuantity
+
+      
+      
       return {...newOrders}
     default:
       return state
