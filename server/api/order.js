@@ -11,7 +11,7 @@ router.get('/history/:userId', async(req, res, next) => {
                 userId: req.params.userId
             }, include: [ { model: Product } ]
         })
-        console.log(orders)
+        // need to explore how to get quantity from orderProduct table
         res.json(orders)
     }
     catch(err){
