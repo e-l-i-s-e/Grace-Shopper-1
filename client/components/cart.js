@@ -22,7 +22,7 @@ class Cart extends Component {
     if (this.props.user.id){
         this.props.gotAllOrders(Number(this.props.user.id))
         this.props.getNewPrice(Number(this.props.order.id))
-        
+
     } else {
         const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
         if (orderProduct) {
@@ -36,7 +36,7 @@ class Cart extends Component {
     //changing the quantity of items already in the cart
     const productId = Number(evt.target.value);
     const PlusOrMinus = evt.target.name;
-  
+
 
     if(this.props.user.id){
       const [productChanging] = this.props.order.products.filter(aProduct => aProduct.id === productId)
@@ -45,7 +45,7 @@ class Cart extends Component {
       PlusOrMinus === 'increment'
         ? updatedQuanity = quantityOfProduct + 1
         : updatedQuanity = quantityOfProduct - 1
-  
+
       this.props.changeQuantity({
         quantity: Number(updatedQuanity),
         productId: Number(productChanging.id),
@@ -56,7 +56,7 @@ class Cart extends Component {
       this.props.getNewPrice(Number(this.props.order.id))
       // console.log("GOT THE NEW PRICE", this.props.order.total)
       this.props.history.push('/cart/')
-      
+
 
     } else {
       const [orderProductInLocalState] = this.state.orderProduct.filter(product => product.id === productId);
@@ -83,9 +83,9 @@ class Cart extends Component {
     evt.preventDefault()
     const productId = Number(evt.target.name);
     const userId = Number(this.props.user.id)
-   
+
     if (this.props.user.id) {
-      
+
       const infoForDelete = {productId, userId}
       this.props.deleteFromCart(infoForDelete)
       this.props.getNewPrice(Number(this.props.user.id))
@@ -115,7 +115,7 @@ class Cart extends Component {
             // console.log("ORDERPRODS", this.props.order[0])
               // const price = this.total()
         // if(this.props.user.id && this.props.order){
-            
+
         //     console.log("ORDER", this.props.order)
         //     // console.log("ORDERPRODS", this.props.order[0])
         return(
@@ -133,8 +133,8 @@ class Cart extends Component {
                       handleChange={this.handleChange}
                       handleSubmit={this.handleSubmit}
                       user={this.user}/>
-                
-      
+
+
                   )}
                 <div>
                   <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
@@ -145,8 +145,7 @@ class Cart extends Component {
       return (
           <div>
               <div>
-                  {/* <h2>Total Price: ${this.total()}</h2> */}
-                  <h2>Total Price: ${price}</h2>
+                  <h2>Total Price: ${this.total()}</h2>
               </div>
           {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
