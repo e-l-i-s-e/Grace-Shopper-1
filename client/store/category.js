@@ -6,7 +6,7 @@ import history from '../history'
  */
 const GET_CATEGORY = 'GET_CATEGORY'
 const ADD_CATEGORY = 'ADD_CATEGORY'
-// const EDIT_CATEGORIES = 'EDIT_CATEGORIES'
+const EDIT_CATEGORIES = 'EDIT_CATEGORIES'
 // const REMOVE_CATEGORY = 'REMOVE_CATEGORY'
 
 /**
@@ -19,7 +19,7 @@ const defaultCategory = []
  */
 const getCategory = category => ({type: GET_CATEGORY, category})
 const addCategory = category => ({type: ADD_CATEGORY, category})
-// const editCategories = categories=> ({type: EDIT_CATEGORIES,categories})
+const updateCategories = categories=> ({type: EDIT_CATEGORIES,categories})
 // const removeCategory = id => ({type: REMOVE_CATEGORY,id})
 
 /**
@@ -44,15 +44,14 @@ export const postCategory = newCategory => async dispatch => {
 }
 }
 
-// export const editCategories = (categories) => async dispatch =>{
-//   try{
-//     const {data} = await axios.put('/api/categories/edit', categories)
-//     dispatch(editCategories(data))
-//   } catch (err) {
-//     console.error(err)
-//   }
-
-// }
+export const editCategories = (categories) => async dispatch =>{
+  try{
+    const {data} = await axios.put('/api/categories/edit', categories)
+    dispatch(updateCategories(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 // export const removeCategory = categoryId => async dispatch =>  {
 //   try{
@@ -74,8 +73,8 @@ export default function(state = defaultCategory, action) {
       return action.category
     case ADD_CATEGORY:
       return [...state, action.category]
-    // case EDIT_CATEGORIES:
-    //   return action.category
+    case EDIT_CATEGORIES:
+      return action.category
     // case REMOVE_CATEGORY:
     //   return state.filter(category => category.id !== action.categoryId)
     default:

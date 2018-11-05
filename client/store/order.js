@@ -110,7 +110,6 @@ export default function(state = defaultOrder, action) {
   const newOrders = {...state}
   switch (action.type) {
     case GET_CART:
-    case GET_ORDER:
       return {...action.order}
 
     case CHANGE_QUANTITY:

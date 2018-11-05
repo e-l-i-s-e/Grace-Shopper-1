@@ -145,8 +145,8 @@ class Cart extends Component {
       return (
           <div>
               <div>
-                  {/* <h2>Total Price: ${this.total()}</h2> */}
-                  <h2>Total Price: ${price}</h2>
+                  <h2>Total Price: ${this.total()}</h2>
+                  {/* <h2>Total Price: ${price}</h2> */}
               </div>
           {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />

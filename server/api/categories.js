@@ -26,6 +26,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+//to add category 
 router.post('/', async (req, res, next) => {
     try {
         const newCategory = await Category.create(req.body);
@@ -34,3 +35,20 @@ router.post('/', async (req, res, next) => {
         next(err);
     }
 });
+
+router.put('/:categoryid', async(req, res, next) => {
+    try{
+        const editedCategory = await Category.update(req.body, {
+            where: {
+                id: req.params.categoryid
+            },
+            returning: true,
+            plain: true
+        });
+        res.json(editedCategory)
+    }
+    catch(err){
+        console.error(err)
+        next(err)
+    }
+})
