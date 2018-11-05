@@ -13,5 +13,6 @@ export {default as Checkout} from './checkout'
 export {default as Categories} from './categories'
 export {default as SelectedProduct} from './selectedProduct'
 export {default as SelectedCategory} from './selectedCategory'
+export {default as OrderHistory} from './orderHistory'
 
 export {Login, Signup} from './auth-form'

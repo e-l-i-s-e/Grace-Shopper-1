@@ -21,7 +21,7 @@ class Cart extends Component {
   componentDidMount(){
     if (this.props.user.id){
         this.props.gotAllOrders(Number(this.props.user.id))
-        this.props.getNewPrice(this.props.order.id)
+        this.props.getNewPrice(Number(this.props.order.id))
         
     } else {
         const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
@@ -33,8 +33,8 @@ class Cart extends Component {
   }
 
   handleChange(evt) {
+    //changing the quantity of items already in the cart
     const productId = Number(evt.target.value);
-    console.log('productId',evt.target.value)
     const PlusOrMinus = evt.target.name;
   
 
@@ -52,6 +52,10 @@ class Cart extends Component {
         orderId: Number(this.props.order.id),
         userId: Number(this.props.user.id)
       })
+      // console.log("GNA GET THE NEW PRICE", this.props.order.total)
+      this.props.getNewPrice(Number(this.props.order.id))
+      // console.log("GOT THE NEW PRICE", this.props.order.total)
+      this.props.history.push('/cart/')
       
 
     } else {
@@ -79,14 +83,13 @@ class Cart extends Component {
     evt.preventDefault()
     const productId = Number(evt.target.name);
     const userId = Number(this.props.user.id)
-    console.log('userId', this.props.user.id)
-    console.log('productId', productId)
+   
     if (this.props.user.id) {
-      console.log('2nd productId', productId)
-       const infoForDelete = {productId, userId}
-       this.props.deleteFromCart(infoForDelete)
-        
-
+      
+      const infoForDelete = {productId, userId}
+      this.props.deleteFromCart(infoForDelete)
+      this.props.getNewPrice(Number(this.props.user.id))
+      this.props.history.push('/cart/')
       //Anna will remove items from the logged in user's cart in the database
 
     } else {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
+
 
 /**
  * ACTION TYPES
@@ -10,6 +10,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 const REMOVE_CART = 'REMOVE_CART'
 const GET_PRICE = "GET_PRICE"
+const GET_ORDER_HISTORY = 'GET_ORDER_HISTORY'
 // const GET_ORDER_PRODUCT = 'GET_ORDER_PRODUCT'
 // const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 // const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -31,6 +32,7 @@ const changeQuantitySuccess = updatedProduct => ({type: CHANGE_QUANTITY, updated
 const addToCart = newItem => ({type: ADD_TO_CART, newItem})
 const removeFromCart = item => ({type: REMOVE_CART, item})
 const gotNewPrice = total => ({type: GET_PRICE, total})
+const gotOrderHistory = order => ({type: GET_ORDER_HISTORY, order})
 /**
  * THUNK CREATORS
  */
@@ -48,7 +50,6 @@ export const postToCart = (product) => async dispatch => {
   try{
 
       const { data } = await axios.post(`/api/order/`, product)
-      console.log("new row poste", data)
       dispatch(addToCart(data))
       
   }
@@ -85,6 +86,16 @@ export const getNewPrice = (orderid) => async dispatch => {
     const { data } = await axios.get(`/api/order/price/${orderid}`)
     console.log("THE PRICE DATA",data.total)
     dispatch(gotNewPrice(data.total))
+  }
+  catch(err){
+    console.error(err)
+  }
+}
+export const getOrderHistory = (userid) => async dispatch => {
+  try{
+    const {data} = await axios.get(`/api/order/history/${userid}/`)
+    console.log(data)
+    dispatch(gotOrderHistory(data))
   }
   catch(err){
     console.error(err)
@@ -131,6 +142,10 @@ export default function(state = defaultOrder, action) {
        case GET_PRICE:
        newOrders.total = action.total
        return {...newOrders}
+
+       case GET_ORDER_HISTORY:
+
+       return action.order
     default:
       return state
   }

@@ -30,6 +30,7 @@ class Main extends Component {
   }
 
   handleChange(evt){
+    //changing quantity of items before adding to cart
     const productId = Number(evt.target.value);
     const PlusOrMinus = evt.target.name;
     const [ orderProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
@@ -51,6 +52,7 @@ class Main extends Component {
   }
 
   handleSubmit(evt){
+    //add to cart with given quantity
     evt.preventDefault();
     const productId = Number(evt.target.name);
     const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
@@ -63,6 +65,7 @@ class Main extends Component {
         quantity
       }
       this.props.postToCart(product)
+      this.props.history.push('/cart/')
 
     } else {
       const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));

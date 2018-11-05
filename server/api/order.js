@@ -3,6 +3,22 @@ const Sequelize = require ('sequelize')
 const {Order, Product, OrderProduct} = require('../db/models')
 module.exports = router
 
+router.get('/history/:userId', async(req, res, next) => {
+    try{
+        const orders = await Order.findAll({
+            where: {
+                isCart: false,
+                userId: req.params.userId
+            }, include: [ { model: Product } ]
+        })
+        console.log(orders)
+        res.json(orders)
+    }
+    catch(err){
+        console.error(err)
+        next(err)
+    }
+})
 // api route to get cart items or intialize an empty cart
 router.get('/:userId', async(req, res, next) => {
     try{
@@ -83,23 +99,29 @@ router.post('/', async(req, res, next) => {
 
 router.put('/', async(req, res, next) => { 
     try{
-        const orders =  await Order.find({
-            where: {
-               id : req.body.orderId,
-             }
-            })
+        const orders =  await Order.findById(req.body.orderId)
         const orderId = orders.id
-        console.log(req.body.quantity)
+        const beforeUpdate = await OrderProduct.findOne({
+            where: {
+                orderId, productId: req.body.productId
+            }
+        })
+        const beforeUpdateQuantity = beforeUpdate.quantity
         const newRow = await OrderProduct.update({
-            quantity: req.body.quantity//need to send quantity number through req.body in thunk axios request
-            
+            quantity: req.body.quantity
         },{
             returning: true,
             where: {
                 orderId, productId: req.body.productId
             } 
-            //need to also send product id and order id 
-            //order id will be the order of the users that has a status of cart
+        })
+        const { price } = await Product.findById(req.body.productId)
+        // take the quantity of the orderproduct before the update and after
+        // and compute the difference so that the correct price
+        // is updated (increased or decreased)
+        const quantityDiff = newRow[1][0].dataValues.quantity - beforeUpdateQuantity
+        await orders.update({
+            total: Sequelize.literal(`total + (${quantityDiff * price})`) 
         })
         res.json(newRow[1][0].dataValues)
         
@@ -126,22 +148,14 @@ router.delete('/:userId/:productId', async(req, res, next)=> {
                 orderId, productId
             }
         })
+        const removedItemQuantity = deletedRow.dataValues.quantity
         // take the deleted row quantity 
         //and times it by its products price
         // then update orders total price
-        console.log("ProductId", productId)
-           const index = orders.products.findIndex(product => {
-                return product.dataValues.id === productId
-            })
-
-            const filteredProd = orders.products.filter((arrVal) => {
-                console.log("arrValIds",arrVal.dataValues.id)
-                return Number(arrVal.id) === Number(productId)
-            }) 
-            const reduceTotalBy = filteredProd[0].dataValues.price
-            console.log(orders, orders.total)
-            //must reduce the orders.total with reduce totalby 
-            //and update it to the db
+        const { price } = await Product.findById(productId)
+        await orders.update({
+            total: Sequelize.literal(`total - (${removedItemQuantity * price})`) 
+        })
         await deletedRow.destroy()
         res.json(deletedRow)
     }
@@ -161,3 +175,4 @@ router.get('/price/:orderid', async(req, res, next) =>{
         next(err)
     }
 })
+
