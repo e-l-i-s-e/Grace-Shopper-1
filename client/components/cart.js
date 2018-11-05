@@ -5,59 +5,77 @@ import product from '../store/product'
 import { gotAllOrders } from '../store/order'
 import CartItems from './cartItems'
 
-//add a select item button on the main view page and individual for customer to purchase product
-//it will either add data to database (validated user) OR to sessionStorage
-// it should be an array of objects - that should contain quanitity (that we keep track of!)
-// from ORDER PRODUCT (which has all the fields we need)
-// we can eager load or join them if needed
-
 class Cart extends Component {
-    constructor(){
-        super()
-        this.state = {
-            orderProduct: [],
-            isLoggedIn: false,
-        }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.total = this.total.bind(this)
-    }
+  constructor(){
+      super()
+      this.state = {
+          orderProduct: [],
+          isLoggedIn: false,
+      }
+  this.handleChange = this.handleChange.bind(this)
+  this.handleSubmit = this.handleSubmit.bind(this)
+  this.total = this.total.bind(this)
+  }
 
-    componentDidMount(){
-        if (this.props.user.id){
-            this.props.gotAllOrders(Number(this.props.user.id))
-            this.setState = {
-                orders: this.props.order
-            }
-        } else {
-            const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
-
-            console.log('orderProduct in CART', orderProduct);
-            if (orderProduct) {
-              this.setState({orderProduct})
-            }
-            this.setState({isLoggedIn: false})
+  componentDidMount(){
+    if (this.props.user.id){
+        this.props.gotAllOrders(Number(this.props.user.id))
+        this.setState = {
+            orders: this.props.order
         }
+    } else {
+        const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
+        if (orderProduct) {
+          this.setState({orderProduct})
+        }
+        this.setState({isLoggedIn: false})
     }
-    handleChange(e){
-        // need to add to sessionStorage
-        // if (!this.state.isLoggedIn){
-        //     sessionStorage.setItem('orderProduct', this.state)
-        // }
+  }
+
+  handleChange(evt) {
+    const productId = Number(evt.target.value);
+    const PlusOrMinus = evt.target.name;
+    const [orderProductInLocalState] = this.state.orderProduct.filter(product => product.id === productId);
+
+    PlusOrMinus === 'increment'
+      ? orderProductInLocalState.quantity++
+      : orderProductInLocalState.quantity--;
+
+    const newState = this.state.orderProduct.map(product => {
+      if (product.id === productId) {
+        return orderProductInLocalState
+      } else {
+        return product
+      }
+    })
+    sessionStorage.setItem('orderProduct', JSON.stringify(newState))
+    this.setState({
+      orderProduct: newState
+    })
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault()
+    const productId = Number(evt.target.name);
+    if (this.props.user.id) {
+
+      //Anna will remove items from the logged in user's cart in the database
+
+    } else {
+      const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
+      let newOrderProductSession = orderProductSession.filter(prod => prod.id !== productId)
+      sessionStorage.setItem('orderProduct', JSON.stringify(newOrderProductSession))
+      this.setState({ orderProduct: newOrderProductSession })
     }
-    handleSubmit(e){
-        e.preventDefault()
-        // this.props.setNewProduct(this.state)
-        this.setState({
-            items: []
-        })
-    }
-    total(){
-        return this.state.orderProduct.reduce((sumTotal, orderProduct) => {
-            const productTotal = orderProduct.quantity * orderProduct.price
-            return sumTotal + productTotal
-        }, 0)
-    }
+  }
+
+  total() {
+    return this.state.orderProduct.reduce((sumTotal, orderProduct) => {
+      const productTotal = orderProduct.quantity * orderProduct.price
+      return sumTotal + productTotal
+    }, 0)
+  }
+
     render(){
         const price = this.total()
         if(this.props.user.id && this.props.order){
@@ -91,28 +109,28 @@ class Cart extends Component {
                   <h2>Total Price: ${price}</h2>
               </div>
           {
-            this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} order={this.order} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user}/>
+            this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
             )
           }
           <div>
             <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div>
-          </div>
-        )
+        </div>
+      )
     }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        order: state.order,
-        user: state.user
-    }
+  return {
+    order: state.order,
+    user: state.user
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        gotAllOrders: (user) => dispatch(gotAllOrders(user))
-    }
+  return {
+    gotAllOrders: (user) => dispatch(gotAllOrders(user))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
