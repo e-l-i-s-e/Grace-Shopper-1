@@ -17,7 +17,7 @@ const Product = db.define('product', {
         }
     },
     price: {
-        type: Sequelize.DECIMAL(13,2),
+        type: Sequelize.INTEGER,
         allowNull: false,
         // get() {
         //     return () => this.getDataValue('password')
