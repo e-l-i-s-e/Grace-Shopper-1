@@ -24,13 +24,6 @@ class SelectedCategory extends Component {
                     })
                 }
                 </div>
-
-                {/* <h2>The Deets!</h2>
-                <h3>Scent: {selectedProduct.title}</h3>
-                <img src={selectedProduct.imageUrl} alt="" className="img-responsive" />
-                <h1>${selectedProduct.price}</h1>    
-                <p>Description: {selectedProduct.description}</p>      */}
-    
             </div> 
         )
     }

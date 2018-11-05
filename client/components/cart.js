@@ -77,35 +77,37 @@ class Cart extends Component {
   }
 
     render(){
-        // if(this.props.user.id && this.props.order){
-
-        //     console.log("ORDER", this.props.order)
-        //     // console.log("ORDERPRODS", this.props.order[0])
-        //     return(
-        //         <div>
-        //         {
-
-        //           this.props.order.products && this.props.order.products.map(
-        //               (aProduct) => <CartItems
-        //               key={aProduct.id}
-        //               order={this.order}
-        //               orderProduct={aProduct}
-        //               handleChange={this.handleChange}
-        //               handleSubmit={this.handleSubmit}
-        //               user={this.user}/>
-        //           )
-        //         }
-        //         <div>
-        //           <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
-        //         </div>
-        //         </div>
-        //       )
-        // }
-      return (
-        <div>
+        const price = this.total()
+        if(this.props.user.id && this.props.order){
+            
+            console.log("ORDER", this.props.order)
+            // console.log("ORDERPRODS", this.props.order[0])
+            return(
+                <div>
+                {
+                    
+                  this.props.order.products && this.props.order.products.map( 
+                      (aProduct) => <CartItems 
+                      key={aProduct.id} 
+                      order={this.order} 
+                      orderProduct={aProduct} 
+                      handleChange={this.handleChange} 
+                      handleSubmit={this.handleSubmit} 
+                      user={this.user}/>
+                  )
+                }
+                <div>
+                  <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
+                </div>
+                </div>
+              )
+        }
+        return(
           <div>
-            <h2>Total Price: ${this.total()}</h2>
-          </div>
+              <div>
+                  {/* <h2>Total Price: ${this.total()}</h2> */}
+                  <h2>Total Price: ${price}</h2>
+              </div>
           {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
             )

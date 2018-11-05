@@ -7,6 +7,7 @@ const CartItems = (props) => {
 
   return (
     <div>
+      {/* props.orderProduct && */}
       <div>
         <li><Link to={`/products/${product.id}`}>{product.title}</Link></li>
         <img src={product.imageUrl} className="img-responsive" />
