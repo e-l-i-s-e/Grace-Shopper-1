@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
@@ -39,7 +38,7 @@ export const gotAllOrders = (userId) => async dispatch => {
 export const postToCart = (product) => async dispatch => {
   try{
       await axios.post('/api/order', product)
-  
+
   }
   catch(err){
     console.error(err)
@@ -82,7 +81,7 @@ export const postToCart = (product) => async dispatch => {
 export default function(state = defaultOrder, action) {
   switch (action.type) {
     case GET_ORDER:
-  
+
       return {...action.order}
     // case ADD_PRODUCT:
     //   return [...state, action.product]

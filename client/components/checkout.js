@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import {Link} from 'react-router-dom';
-import product, { setNewProduct } from '../store/product'
-import CartItems from './cartItems'
+// import {Link} from 'react-router-dom';
+import  { sendEmail } from '../store/email'
+// import CartItems from './cartItems'
+
 
 //add a select item button on the main view page and individual for customer to purchase product
 //it will either add data to database (validated user) OR to sessionStorage
@@ -37,13 +38,16 @@ class Checkout extends Component {
         }
     }
     handleChange(e){
+      console.log('e.target.value', e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
     }
     handleSubmit(e){
         e.preventDefault()
-        // this.props.setNewProduct(this.state)
+        console.log('handleSubmit', this.state.email)
+        this.props.sendEmail(this.state.email)
+
         this.setState({
             orderProduct: [],
             isLoggedIn: false,
@@ -66,11 +70,11 @@ class Checkout extends Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                 Email:
-                <input type="email" value={this.state.value} onChange={this.handleChange} />
+                <input type="email" name='email' value={this.state.email} onChange={this.handleChange} />
                 </label>
                 <label>
                 Address:
-                <input type="email" value={this.state.value} onChange={this.handleChange} />
+                <input type="text" name='address' value={this.state.address} onChange={this.handleChange} />
                 </label>
                 <input type="submit" value="Submit" />
             </form>
@@ -86,10 +90,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-    // return {
-    //     setNewProduct: (newProduct) => dispatch(setNewProduct(newProduct))
-    // }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        sendEmail: (email) => dispatch(sendEmail(email))
+    }
+}
 
-export default connect(mapStateToProps, null)(Checkout)
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
