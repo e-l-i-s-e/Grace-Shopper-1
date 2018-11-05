@@ -5,7 +5,6 @@ module.exports = router
 // api route to get cart items or intialize an empty cart
 router.get('/:userId', async(req, res, next) => {
     try{
-        
        const orders =  await Order.findOrCreate({
            where: {
                userId : req.params.userId,
@@ -15,8 +14,6 @@ router.get('/:userId', async(req, res, next) => {
             defaults: { total: 0, status: 'Created' }
        })
         res.json(orders[0])
-    
-    //   console.log('Orders', orders)
     }
     catch(err){
         console.error(err)
@@ -28,8 +25,7 @@ router.get('/:userId', async(req, res, next) => {
 // order id, user.id , porduct id and comments
 router.post('/', async(req, res, next) => {
     try{
-        await OrderProduct.create(req.body)
-        
+        await OrderProduct.create(req.body)   
     }
     catch(err){
         console.error(err)

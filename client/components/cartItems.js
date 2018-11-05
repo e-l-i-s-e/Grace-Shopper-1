@@ -11,7 +11,7 @@ const CartItems = (props) => {
     <div>
       {
 
-        props.orderProduct &&
+      props.orderProduct &&
       <div>
       <li><Link to={`/products/${product.id}`}> {product.title}</Link></li>
       <img src={product.imageUrl} alt="" className="img-responsive" />
@@ -30,7 +30,5 @@ const CartItems = (props) => {
 
   )
 }
-
-
 
 export default CartItems;

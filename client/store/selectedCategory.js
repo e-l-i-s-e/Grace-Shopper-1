@@ -22,7 +22,6 @@ const getSelectedCategory = category => ({type: SELECTED_CATEGORY, category})
 export const getSelectedCategoryThunk = (id) => async dispatch => {
   try {
     const { data } = await axios.get(`/api/categories/${id}`)
-    console.log('We have Selected Cateogry Data', data)
     dispatch(getSelectedCategory(data));
   } catch (err) {
     console.error(err)

@@ -59,6 +59,7 @@ class Cart extends Component {
         }, 0)
     }
     render(){
+        const price = this.total()
         if(this.props.user.id && this.props.order){
             
             console.log("ORDER", this.props.order)
@@ -86,7 +87,8 @@ class Cart extends Component {
         return(
           <div>
               <div>
-                  <h2>Total Price: ${this.total()}</h2>
+                  {/* <h2>Total Price: ${this.total()}</h2> */}
+                  <h2>Total Price: ${price}</h2>
               </div>
           {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} order={this.order} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user}/>
