@@ -42,8 +42,8 @@ router.get('/:userId', async(req, res, next) => {
 // order id, user.id , porduct id and comments
 router.post('/', async(req, res, next) => {
     try{
-
-       const response = await OrderProduct.find({
+        // need to refrence the quantity in the req.body
+       const response = await OrderProduct.findOrCreate({
             where: {
                orderId: req.body.orderId,
                productId: req.body.productId 

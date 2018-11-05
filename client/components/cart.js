@@ -113,7 +113,7 @@ class Cart extends Component {
          console.log("ORDER", this.props.order)
          console.log("ORDER on local state", this.state.order)
             // console.log("ORDERPRODS", this.props.order[0])
-              // const price = this.total()
+            //const price = this.total()
         // if(this.props.user.id && this.props.order){
             
         //     console.log("ORDER", this.props.order)
@@ -146,7 +146,7 @@ class Cart extends Component {
           <div>
               <div>
                   {/* <h2>Total Price: ${this.total()}</h2> */}
-                  <h2>Total Price: ${price}</h2>
+                  <h2>Total Price: ${this.total()}</h2>
               </div>
           {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
