@@ -11,14 +11,6 @@ var transporter = nodemailer.createTransport(smtpTransport({
   }
 }));
 
-// const transport = nodemailer.createTransport({
-//   service: 'Gmail',
-//   auth: {
-//       user: 'thisdavejdemo@gmail.com',
-//       pass: 'myGmailPassword',
-//   },
-// });
-
 module.exports = function sendEmail(email) {
   var mailOptions = {
     from: 'ScentedShopper@gmail.com',

@@ -17,7 +17,7 @@ const Product = db.define('product', {
         }
     },
     price: {
-        type: Sequelize.DECIMAL(10,2),
+        type: Sequelize.DECIMAL(13,2),
         allowNull: false,
         // get() {
         //     return () => this.getDataValue('password')
@@ -31,8 +31,8 @@ const Product = db.define('product', {
         type: Sequelize.STRING,
         validate: {
             isUrl: true
-        }
-        //defaultValue: defaultPic
+        },
+        defaultValue: 'http://www.ecocandleco.com/i/NEW/sniffsniff.jpg'
     },
 })
 

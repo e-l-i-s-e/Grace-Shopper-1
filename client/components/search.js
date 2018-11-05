@@ -27,9 +27,6 @@ class Search extends Component {
       name = name[0].toUpperCase() + name.slice(1);
       const [ searchResult ] = this.props.products.filter(product => product.title === name);
       const productId = searchResult.id;
-      console.log('product', searchResult);
-      // console.log('props', this.props.context.router);
-      // return <Redirect to={`/products/${productId}`} />
       this.props.history.push(`/products/${productId}`)
 
     }
