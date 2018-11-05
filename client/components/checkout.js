@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import CheckoutForm from './checkoutForm'
+import TakeMoney from './takeMoney'
+
 import {Link} from 'react-router-dom';
 import product, { setNewProduct } from '../store/product'
 import CartItems from './cartItems'
@@ -18,7 +21,15 @@ class Checkout extends Component {
             orderProduct: [],
             isLoggedIn: false,
             email: '',
-            address: '',
+            firstName: '',
+            lastName: '',
+            streetAddress1: '',
+            streetAddress2: '',
+            city: '',
+            country: '',
+            state: '',
+            zipCode: '',
+            phone: '',
             total: ''
         }
     this.handleChange = this.handleChange.bind(this)
@@ -74,33 +85,37 @@ class Checkout extends Component {
             orderProduct: [],
             isLoggedIn: false,
             email: '',
-            address: ''
+            firstName: '',
+            lastName: '',
+            streetAddress1: '',
+            streetAddress2: '',
+            city: '',
+            country: '',
+            state: '',
+            zipCode: '',
+            phone: '',
+            total: ''
         })
     }
 
     render(){
-        console.log(this.state.orderProduct)
+        console.log("order", this.state.orderProduct)
+        const price = this.props.price
+        console.log("price", price)
+        console.log(this.state.total)
+
         return(
           <div>
           {/* {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
             )
           } */}
-          <h2>Checkout!!!!!!</h2>
           {/* <div>
             <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div> */}
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                Email:
-                <input type="email" value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <label>
-                Address:
-                <input type="text" value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
+
+            <CheckoutForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/> 
+            <TakeMoney />
           </div>
         )
     }
@@ -112,12 +127,6 @@ const mapStateToProps = (state) => {
         user: state.user
     }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-    // return {
-    //     setNewProduct: (newProduct) => dispatch(setNewProduct(newProduct))
-    // }
-// }
 
 export default connect(mapStateToProps, null)(Checkout)
 

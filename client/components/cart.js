@@ -113,7 +113,12 @@ class Cart extends Component {
          console.log("ORDER", this.props.order)
          console.log("ORDER on local state", this.state.order)
             // console.log("ORDERPRODS", this.props.order[0])
-            return(
+              // const price = this.total()
+        // if(this.props.user.id && this.props.order){
+            
+        //     console.log("ORDER", this.props.order)
+        //     // console.log("ORDERPRODS", this.props.order[0])
+        return(
                 <div>
                   <div>
                     <h2>Total Price: ${this.props.order.total}</h2>
@@ -128,19 +133,21 @@ class Cart extends Component {
                       handleChange={this.handleChange}
                       handleSubmit={this.handleSubmit}
                       user={this.user}/>
-                  )
-                }
+                
+      
+                  )}
                 <div>
                   <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
                 </div>
                 </div>
-              )
-        }
+                )
+              }
       return (
-        <div>
           <div>
-            <h2>Total Price: ${this.total()}</h2>
-          </div>
+              <div>
+                  {/* <h2>Total Price: ${this.total()}</h2> */}
+                  <h2>Total Price: ${price}</h2>
+              </div>
           {
             this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
             )

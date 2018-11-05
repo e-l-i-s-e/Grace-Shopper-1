@@ -96,6 +96,7 @@ export const getOrderHistory = (userid) => async dispatch => {
     const {data} = await axios.get(`/api/order/history/${userid}/`)
     console.log(data)
     dispatch(gotOrderHistory(data))
+      await axios.post('/api/order', product)
   }
   catch(err){
     console.error(err)
@@ -109,6 +110,7 @@ export default function(state = defaultOrder, action) {
   const newOrders = {...state}
   switch (action.type) {
     case GET_CART:
+    case GET_ORDER:
       return {...action.order}
 
     case CHANGE_QUANTITY:

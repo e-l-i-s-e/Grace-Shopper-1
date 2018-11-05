@@ -22,7 +22,6 @@ router.get('/history/:userId', async(req, res, next) => {
 // api route to get cart items or intialize an empty cart
 router.get('/:userId', async(req, res, next) => {
     try{
-        
        const orders =  await Order.findOrCreate({
            where: {
                userId : req.params.userId,
@@ -32,8 +31,6 @@ router.get('/:userId', async(req, res, next) => {
             defaults: { total: 0, status: 'Created' }
        })
         res.json(orders[0])
-    
-    //   console.log('Orders', orders)
     }
     catch(err){
         console.error(err)
@@ -125,6 +122,7 @@ router.put('/', async(req, res, next) => {
         })
         res.json(newRow[1][0].dataValues)
         
+        await OrderProduct.create(req.body)   
     }
     catch(err){
         console.error(err)

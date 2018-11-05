@@ -33,7 +33,8 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/adminHome" component={AdminHome} />
             <Route path="/products/add" component={AddProduct} />
-            <Route path="/products/edit" component ={EditProduct} />
+            <Route path="/products/edit" component={EditProduct} />
+            {/* <Route path="/products/:id/reviews/add" component={AddReview} /> */}
             <Route exact path="/products" component={Main} />
             <Route path = '/orders' component = {OrderHistory}/>
           </Switch>

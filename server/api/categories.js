@@ -4,10 +4,13 @@ module.exports = router
 
 // GET /api/ all categories
 // exact route: GET /api/categories
-router.get('/', (req, res, next) => {
-    Category.findAll()
-      .then(categories => res.json(categories))
-      .catch(next)
+router.get('/', async(req, res, next) => {
+    try{
+        const categories = await Category.findAll()
+        res.json(categories)
+    } catch(err){
+        next(err)
+    }
 })
 
 //SINGLE Category (products associated)
