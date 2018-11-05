@@ -22,6 +22,7 @@ const getSelectedProduct = product => ({type: SELECTED_PRODUCT, product})
 export const getSelectedProductThunk = (id) => async dispatch => {
   try {
     const { data } = await axios.get(`/api/products/${id}`)
+    console.log('INTHUNK', data)
     dispatch(getSelectedProduct(data));
   } catch (err) {
     console.error(err)
