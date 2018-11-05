@@ -32,14 +32,15 @@ class Routes extends Component {
             <Route path="/adminHome" component={AdminHome} />
             <Route exact path="/products/add" component={AddProduct} />
             <Route exact path="/products/edit" component ={EditProduct} />
-            <Route exact path="/products" component={Main} />
+            <Route path="/products/:id" component={SelectedProduct} />
+            <Route path="/categories/:id" component={SelectedCategory} />
+            {/* <Route exact path="/products" component={Main} /> */}
             <Route path = '/orders' component = {OrderHistory}/>
           </Switch>
         )}
 
         <Route path="/products/:id" component={SelectedProduct} />
         <Route path="/categories/:id" component={SelectedCategory} />
-        
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
