@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 
 /**
@@ -51,7 +50,7 @@ export const postToCart = (product) => async dispatch => {
 
       const { data } = await axios.post(`/api/order/`, product)
       dispatch(addToCart(data))
-      
+
   }
   catch(err){
     console.error(err)
@@ -62,7 +61,7 @@ export const changeQuantity = (product) => async dispatch => {
   try{
     const newRow = await axios.put('/api/order/', product)
     console.log("NEW ROW", newRow.data)
-   
+
     // the product needs to include
     // quantity, orderId and productId
     dispatch(changeQuantitySuccess(newRow.data))
@@ -110,7 +109,6 @@ export default function(state = defaultOrder, action) {
   const newOrders = {...state}
   switch (action.type) {
     case GET_CART:
-    case GET_ORDER:
       return {...action.order}
 
     case CHANGE_QUANTITY:
@@ -128,7 +126,7 @@ export default function(state = defaultOrder, action) {
       } else{
         const indexOfProduct = newOrders.products.findIndex(aProduct => {
           return aProduct.id === action.newItem.product.productId
-         }) 
+         })
          const newQuantity = action.newItem.product.quantity
          newOrders.products[indexOfProduct].orderProduct.quantity = newQuantity
          return {...newOrders}
@@ -140,7 +138,7 @@ export default function(state = defaultOrder, action) {
        })
        newOrders.products.splice(indexOfDeleted,1)
        return{...newOrders}
-      
+
        case GET_PRICE:
        newOrders.total = action.total
        return {...newOrders}

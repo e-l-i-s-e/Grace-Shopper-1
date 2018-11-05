@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+// import {Link} from 'react-router-dom';
+import  { sendEmail } from '../store/email'
+// import CartItems from './cartItems'
 import CheckoutForm from './checkoutForm'
 import TakeMoney from './takeMoney'
 
@@ -49,37 +52,15 @@ class Checkout extends Component {
         }
     }
     handleChange(e){
+      console.log('e.target.value', e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
     }
     handleSubmit(e){
         e.preventDefault()
-        // this.props.setNewProduct(this.state)
-        // const nodemailer = require('nodemailer');
-
-        // var transporter = nodemailer.createTransport({
-        //   service: 'gmail',
-        //   auth: {
-        //     user: 'ScentedShopper@gmail.com',
-        //     pass: 'Scented1809'
-        //   }
-        // });
-
-        // var mailOptions = {
-        //   from: 'ScentedShopper@gmail.com',
-        //   to: `${this.state.email}`,
-        //   subject: 'Your Scented.com order',
-        //   text: 'Thanks for your purchase with Scented!'
-        // };
-
-        // transporter.sendMail(mailOptions, function(error, info){
-        //   if (error) {
-        //     console.log(error);
-        //   } else {
-        //     console.log('Email sent: ' + info.response);
-        //   }
-        // });
+        console.log('handleSubmit', this.state.email)
+        this.props.sendEmail(this.state.email)
 
         this.setState({
             orderProduct: [],
@@ -114,7 +95,7 @@ class Checkout extends Component {
             <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div> */}
 
-            <CheckoutForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/> 
+            <CheckoutForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
             <TakeMoney />
           </div>
         )
@@ -128,9 +109,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(Checkout)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        sendEmail: (email) => dispatch(sendEmail(email))
+    }
+}
 
-
-
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
