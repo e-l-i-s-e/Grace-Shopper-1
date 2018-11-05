@@ -6,8 +6,27 @@ module.exports = router
 // exact route: GET /api/reviews
 router.get("/", async(req,res,next) => {
     try{
-        const reviews = await Review.findAll()
+        const reviews = await Review.findAll({
+            include: [Product],
+        })
         res.json(reviews)
+    } catch(err){
+        next(err)
+    }
+})
+
+// GET /api/ single review
+// exact route: GET /api/reviews/:id
+router.get('/:productId', async (req, res, next) => {
+    try{
+        const review = await Review.findById({
+          where: {
+            productId: req.params.productId,
+          },
+          //include: [Product],
+    })
+    //const review = await Review.findById(req.params.productId)
+    res.send(review)
     } catch(err){
         next(err)
     }
