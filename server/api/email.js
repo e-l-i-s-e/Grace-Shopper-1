@@ -1,7 +1,6 @@
 const router =  require('express').Router();
 const sendEmail = require('../send-email')
-//const isAdminMW = (req, res, next) => req.user.isAdmin ? next() : res.send('Forbidden')
-const isAdminMW = (req, res, next) => req.user.isAdmin ? next() : res.redirect('/')
+const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.send('Forbidden')
 
 module.exports = router
 

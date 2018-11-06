@@ -1,6 +1,6 @@
 const router =  require('express').Router();
 const { Product, Category, User, Review } = require('../db/models');
-const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.redirect('/') //res.send('Forbidden')
+const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.send('Forbidden')
 module.exports = router
 
 // GET /api/ all products

@@ -1,6 +1,8 @@
 import React from 'react'
+import TakeMoney from './takeMoney'
 
 const CheckoutForm = (props) => {
+    console.log("prrrrrops", props)
     return (
         <div>
         <h2>Checkout!</h2>
@@ -158,7 +160,15 @@ const CheckoutForm = (props) => {
             </div>
 
             <div>
-                <button type="submit">Submit</button>
+                {/* <button type="submit">Submit</button> */}
+                <TakeMoney 
+                    type="submit" 
+                    name={`${props.firstName} ${props.lastName}`} 
+                    customer={`${props.firstName} ${props.lastName}`} 
+                    email={props.email}
+                    description={'Checking Out!'} 
+                    receipt_email='ScentedShopper@gmail.com'
+                    amount={200} />
             </div>
 
           </form>

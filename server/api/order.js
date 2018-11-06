@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const Sequelize = require('sequelize')
 const { Order, Product, OrderProduct } = require('../db/models')
+const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.send('Forbidden')
+
 module.exports = router
 
 router.get('/history/:userId', async (req, res, next) => {

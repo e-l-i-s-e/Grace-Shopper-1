@@ -5,6 +5,7 @@ import  { sendEmail } from '../store/email'
 // import CartItems from './cartItems'
 import CheckoutForm from './checkoutForm'
 import TakeMoney from './takeMoney'
+import {gotAllOrders} from '../store/order'
 
 import {Link} from 'react-router-dom';
 import product, { setNewProduct } from '../store/product'
@@ -43,6 +44,7 @@ class Checkout extends Component {
         if (this.props.user.id){
             //populate local state with the session
             /* OR this.setState({isLoggedIn: true}) -- put in IF */
+            this.props.gotAllOrders(this.props.user.id)
         } else {
             const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
             if (orderProduct) {
@@ -62,29 +64,25 @@ class Checkout extends Component {
         console.log('handleSubmit', this.state.email)
         this.props.sendEmail(this.state.email)
 
-        this.setState({
-            orderProduct: [],
-            isLoggedIn: false,
-            email: '',
-            firstName: '',
-            lastName: '',
-            streetAddress1: '',
-            streetAddress2: '',
-            city: '',
-            country: '',
-            state: '',
-            zipCode: '',
-            phone: '',
-            total: ''
-        })
+        // this.setState({
+        //     orderProduct: [],
+        //     isLoggedIn: false,
+        //     email: '',
+        //     firstName: '',
+        //     lastName: '',
+        //     streetAddress1: '',
+        //     streetAddress2: '',
+        //     city: '',
+        //     country: '',
+        //     state: '',
+        //     zipCode: '',
+        //     phone: '',
+        //     total: ''
+        // })
     }
 
     render(){
-        console.log("order", this.state.orderProduct)
-        const price = this.props.price
-        console.log("price", price)
-        console.log(this.state.total)
-
+        console.log('TOTAL', this.props.order)
         return(
           <div>
           {/* {
@@ -95,8 +93,8 @@ class Checkout extends Component {
             <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div> */}
 
-            <CheckoutForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-            {/* <TakeMoney /> */}
+            <CheckoutForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} /> 
+            {/* <TakeMoney name={'naaaame of user'} description={'checking outt'} amount={2}/> */}
           </div>
         )
     }
@@ -111,7 +109,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        sendEmail: (email) => dispatch(sendEmail(email))
+        sendEmail: (email) => dispatch(sendEmail(email)),
+        gotAllOrders: (userId) => dispatch(gotAllOrders(userId))
     }
 }
 
