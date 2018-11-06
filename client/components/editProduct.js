@@ -63,6 +63,7 @@ class EditProduct extends Component {
     }
 
     render(){
+
         return(
             <div>
             <EditProductForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>

@@ -2,7 +2,6 @@ import React from 'react'
 
 
 const EditCategoryForm = (props) => {
-    console.log("props", props)
     const productId = props.id
     
     const inProdArray = props.categoryProduct.inProd
