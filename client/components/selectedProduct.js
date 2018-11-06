@@ -19,7 +19,7 @@ class SelectedProduct extends Component {
       console.log('USERS', users)
       const {isLoggedIn} = this.props
         return (
-            <div>
+            <div id='selectedProduct'>
                 <h2>The Deets!</h2>
                 <h3>Scent: {selectedProduct.title}</h3>
                 <img src={selectedProduct.imageUrl} alt="" className="img-responsive" />

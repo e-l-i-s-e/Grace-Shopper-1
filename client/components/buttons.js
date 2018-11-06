@@ -28,7 +28,7 @@ const Buttons = (props) => {
           onClick={props.handleChange}
           disabled={
             quantity < product.inventory ? false : true
-          } >+</button>
+          }>+</button>
         </span>
     </div>
   )

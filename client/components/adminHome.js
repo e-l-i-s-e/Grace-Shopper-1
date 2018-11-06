@@ -10,6 +10,8 @@ export const AdminHome = props => {
   return (
     <div>
       <Link to='/products/add'>Add Product</Link>
+      <br />
+      <Link to='/categories/add'>Add Category</Link>
       <Main />
     </div>
   )
