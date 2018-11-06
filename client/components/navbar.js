@@ -13,7 +13,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
     <h1>SCENTED!</h1>
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div class="nav-item">
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
           <Link to="/"> All Scents </Link>
@@ -30,10 +30,10 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
           <h2>Welcome, {user.email}</h2>
         </div>
       ) : (
-        <div>
+        <div class="nav-item">
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
-          <Link to="/products"> All Scents </Link>
+          <Link to="/"> All Scents </Link>
           <Link to="/signup">Sign Up</Link>
           <Categories />
           <Search />
