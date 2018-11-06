@@ -1,5 +1,6 @@
 const router =  require('express').Router();
 const { Product, Category, User, Review } = require('../db/models');
+const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.redirect('/') //res.send('Forbidden')
 module.exports = router
 
 // GET /api/ all products
@@ -24,7 +25,8 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-router.post('/', async(req, res, next) => {
+//ADMIN CAN POST
+router.post('/', isAdminMW, async(req, res, next) => {
     try{
         const newProduct = await Product.create(req.body)
         res.json(newProduct)
@@ -35,7 +37,8 @@ router.post('/', async(req, res, next) => {
     }
 })
 
-router.put('/:productid', async(req, res, next) => {
+//ADMIN CAN EDIT
+router.put('/:productid', isAdminMW, async(req, res, next) => {
     try{
         const editedProduct = await Product.update(req.body, {
             where: {
@@ -54,7 +57,7 @@ router.put('/:productid', async(req, res, next) => {
 
 //Review Routes
 
-//GET reviews related to productId
+//USER can GET reviews related to productId
 router.get('/:productId/reviews', async(req, res, next) => {
     try {
         const reviews = await Review.findAll({
@@ -68,9 +71,10 @@ router.get('/:productId/reviews', async(req, res, next) => {
     }
 })
 
-//POST a review to a product
+//USER can POST a review to a product
 router.post('/:productId/reviews', async(req, res, next) => {
     try {
+        console.log("req.body", req.body)
         let product = Product.findById(req.params.productId)
         let review = await Review.create({
             userId: req.user.id,
@@ -78,11 +82,12 @@ router.post('/:productId/reviews', async(req, res, next) => {
             numStars: req.body.numStars,
             content: req.body.content
         })
-        let reviewProduct = review.setProduct(product)
+        // let reviewProduct = review.setProduct(product)
         if (!product){
             res.sendStatus(404);
         } else {
-            res.status(201).json(reviewProduct)
+            console.log("review", review)
+            res.status(201).json(review)
         }
     } catch(err){
         next(err)

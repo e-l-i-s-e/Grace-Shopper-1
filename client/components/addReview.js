@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { getReviewsThunk, addReviewsThunk} from '../store/reviews'
 import AddReviewForm from './addReviewForm'
+import {withRouter} from "react-router"
 
 class AddReview extends Component {
   constructor() {
@@ -9,7 +10,7 @@ class AddReview extends Component {
     this.state = {
       firstName: '',
       numStars: '',
-      review: ''
+      content: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -21,15 +22,13 @@ class AddReview extends Component {
   }
   handleSubmit(evt){
     evt.preventDefault()  
-    //const id = this.props.match.params.id
     const id = this.props.selectedProduct.id
-    this.props.addReviewsAction(this.state, id)
+    this.props.addReviewsThunk(this.state, id)
     console.log('props', this.props)
-    this.props.history.push(`/products/:id/reviews`)
     this.setState({  
         firstName: '',
         numStars: '',
-        review: ''
+        content: ''
     })
   }
   render() {
@@ -39,18 +38,18 @@ class AddReview extends Component {
 }
 
 
-// const mapState = (state) => {
-//   return {
-//     review: state.review,
-//     selectedProduct: state.selectedProduct
-//   }
-// }
+const mapState = (state) => {
+  return {
+    review: state.review,
+    selectedProduct: state.selectedProduct
+  }
+}
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
     //fetchReviews: (id) => dispatch(getReviewsThunk(id)),
-    writeReviews: (review, id) => dispatch(addReviewsThunk(review, id))
+    addReviewsThunk: (review, id) => dispatch(addReviewsThunk(review, id))
   }
 }
 
-export default connect(null, mapDispatch)(AddReview)
+export default withRouter(connect(mapState, mapDispatch)(AddReview));

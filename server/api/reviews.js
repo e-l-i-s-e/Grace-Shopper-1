@@ -2,7 +2,7 @@ const router =  require('express').Router();
 const { Review, Category, Product } = require('../db/models');
 module.exports = router
 
-// GET /api/ all reviews
+// USER can GET /api/ all reviews
 // exact route: GET /api/reviews
 router.get("/", async(req,res,next) => {
     try{
@@ -15,7 +15,7 @@ router.get("/", async(req,res,next) => {
     }
 })
 
-// GET /api/ single review
+// USER can GET /api/ single review
 // exact route: GET /api/reviews/:id
 router.get('/:productId', async (req, res, next) => {
     try{
@@ -31,16 +31,3 @@ router.get('/:productId', async (req, res, next) => {
         next(err)
     }
 })
-
-// //SINGLE Category (products associated)
-// // GET /api/categories/:id
-// router.get('/:id', async (req, res, next) => {
-//   try{
-//       const category = await Category.findById(req.params.id,{
-//       include: [Product]
-//   })
-//   res.send(category)
-//   } catch(err){
-//       next(err)
-//   }
-// });

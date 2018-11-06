@@ -12,7 +12,7 @@ const CartItems = (props) => {
         <li><Link to={`/products/${product.id}`}>{product.title}</Link></li>
         <img src={product.imageUrl} className="img-responsive" />
         <div>
-          <p>${product.price}</p>
+          <p>${((product.price)/100).toFixed(2)}</p>
         </div>
         <Buttons
           product={product}

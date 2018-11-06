@@ -103,7 +103,7 @@ class Cart extends Component {
        return sumTotal + productTotal
      }, 0)
     }
-    console.log('TOTAL', total)
+    total = ((total)/100).toFixed(2)
     return total ? total : 0
   }
 
@@ -112,12 +112,6 @@ class Cart extends Component {
         if(this.props.user.id && this.props.order){
          console.log("ORDER", this.props.order)
          console.log("ORDER on local state", this.state.order)
-            // console.log("ORDERPRODS", this.props.order[0])
-              // const price = this.total()
-        // if(this.props.user.id && this.props.order){
-
-        //     console.log("ORDER", this.props.order)
-        //     // console.log("ORDERPRODS", this.props.order[0])
         return(
                 <div>
                   <div>
@@ -133,7 +127,6 @@ class Cart extends Component {
                       handleChange={this.handleChange}
                       handleSubmit={this.handleSubmit}
                       user={this.user}/>
-
 
                   )}
                 <div>
