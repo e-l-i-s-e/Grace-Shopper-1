@@ -9,8 +9,6 @@ import TakeMoney from './takeMoney'
 import {Link} from 'react-router-dom';
 import product, { setNewProduct } from '../store/product'
 import CartItems from './cartItems'
-
-
 //add a select item button on the main view page and individual for customer to purchase product
 //it will either add data to database (validated user) OR to sessionStorage
 // it should be an array of objects - that should contain quanitity (that we keep track of!)
@@ -33,7 +31,8 @@ class Checkout extends Component {
             state: '',
             zipCode: '',
             phone: '',
-            total: ''
+            total: '',
+            promoCode: ''
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -52,14 +51,13 @@ class Checkout extends Component {
         }
     }
     handleChange(e){
-      console.log('e.target.value', e.target.value)
         this.setState({
             [e.target.name]: e.target.value
         })
     }
+
     handleSubmit(e){
         e.preventDefault()
-        console.log('handleSubmit', this.state.email)
         this.props.sendEmail(this.state.email)
 
         this.setState({
@@ -75,16 +73,15 @@ class Checkout extends Component {
             state: '',
             zipCode: '',
             phone: '',
-            total: ''
+            total: '',
+            promoCode: ''
         })
+        this.props.history.push('/thank-you')
+
     }
 
     render(){
-        console.log("order", this.state.orderProduct)
         const price = this.props.price
-        console.log("price", price)
-        console.log(this.state.total)
-
         return(
           <div>
           {/* {
@@ -94,7 +91,6 @@ class Checkout extends Component {
           {/* <div>
             <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div> */}
-
             <CheckoutForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
             {/* <TakeMoney /> */}
           </div>
