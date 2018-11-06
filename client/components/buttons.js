@@ -2,6 +2,7 @@ import React from 'react'
 
 const Buttons = (props) => {
   const product = props.product;
+  // console.log('productBUTTON', product.product)
   let quantity = product.quantity || product.orderProduct.quantity;
 
   return (

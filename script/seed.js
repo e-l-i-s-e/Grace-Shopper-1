@@ -13,13 +13,19 @@ const youDoYou = await Category.create({id: 3, content: "You-Do-You"})
 const lucky = await Category.create({id: 4, content: "I'm feeling lucky!"})
 const nature = await Category.create({id: 5, content: "Nature"})
 
-const users = await Promise.all([
-  User.create({isAdmin: true, firstName: 'Beyonce', lastName: 'Knowles', email: 'bknowles@email.com', password: '123'}),
-  User.create({isAdmin: true, firstName: 'Justin', lastName: 'Bieber', email: 'jb@email.com', password: 'biebs'}),
-  User.create({isAdmin: false, firstName: 'Drake', lastName: 'Graham', email: 'drake@email.com', password: 'kiki'}),
-  User.create({isAdmin: false, firstName: 'Chimamanda Ngozi', lastName: 'Adichie', email: 'americanah@email.com', password: 'abc'}),
-  User.create({isAdmin: false, firstName: 'Lady', lastName: 'Gaga', email: 'ladyG@email.com', password: 'bradley'}),
-])
+// const users = await Promise.all([
+//   User.create({isAdmin: true, firstName: 'Beyonce', lastName: 'Knowles', email: 'bknowles@email.com', password: '123'}),
+//   User.create({isAdmin: true, firstName: 'Justin', lastName: 'Bieber', email: 'jb@email.com', password: 'biebs'}),
+//   User.create({isAdmin: false, firstName: 'Drake', lastName: 'Graham', email: 'drake@email.com', password: 'kiki'}),
+//   User.create({isAdmin: false, firstName: 'Chimamanda Ngozi', lastName: 'Adichie', email: 'americanah@email.com', password: 'abc'}),
+//   User.create({isAdmin: false, firstName: 'Lady', lastName: 'Gaga', email: 'ladyG@email.com', password: 'bradley'}),
+// ])
+
+const beyonce = User.create({isAdmin: true, firstName: 'Beyonce', lastName: 'Knowles', email: 'bknowles@email.com', password: '123'})
+const justin = User.create({isAdmin: true, firstName: 'Justin', lastName: 'Bieber', email: 'jb@email.com', password: 'biebs'})
+const drake = User.create({isAdmin: false, firstName: 'Drake', lastName: 'Graham', email: 'drake@email.com', password: 'kiki'})
+const adichie = User.create({isAdmin: false, firstName: 'Chimamanda Ngozi', lastName: 'Adichie', email: 'americanah@email.com', password: 'abc'})
+const ladyG = User.create({isAdmin: false, firstName: 'Lady', lastName: 'Gaga', email: 'ladyG@email.com', password: 'bradley'})
 
 const products = await Promise.all([
   Product.create({
@@ -117,22 +123,30 @@ const products = await Promise.all([
 //   Order.create({isCart: false, total: 3, status: 'Completed'}),
 // ])
 
+// const orders = await Promise.all([
+//   Order.create({isCart: true, total: 12275, status: 'Created', userId: 3}),
+//   Order.create({isCart: false, total: 5053, status: 'Processing', userId: 4}),
+//   Order.create({isCart: false, total: 1234, status: 'Cancelled', userId: 5 }),
+//   Order.create({isCart: false, total: 12345, status: 'Completed', userId: 3}),
+// ])
+
 const orders = await Promise.all([
   Order.create({isCart: true, total: 12275, status: 'Created', userId: 3}),
   Order.create({isCart: false, total: 5053, status: 'Processing', userId: 4}),
-  Order.create({isCart: false, total: 1234, status: 'Cancelled', userId: 5 }),
+  Order.create({isCart: false, total: 1234, status: 'Cancelled', userId: 5}),
   Order.create({isCart: false, total: 12345, status: 'Completed', userId: 3}),
 ])
 
+
 const orderProduct = await Promise.all([
-  OrderProduct.create({quantity: 2, orderId: 1, productId: 1, userId: 3}), //1050
-  OrderProduct.create({quantity: 1, orderId: 1, productId: 3, userId: 3}), //1225
-  OrderProduct.create({quantity: 4, orderId: 1, productId: 5, userId: 3}), //10000
-  OrderProduct.create({quantity: 2, orderId: 2, productId: 20, userId: 4}), //400
-  OrderProduct.create({quantity: 1, orderId: 2, productId: 19, userId: 4}), //1999
-  OrderProduct.create({quantity: 3, orderId: 2, productId: 18, userId: 4}),//2654
-  OrderProduct.create({quantity: 1, orderId: 3, productId: 15, userId: 5}), //1234
-  OrderProduct.create({quantity: 1, orderId: 4, productId: 14, userId: 3}),//12345
+  OrderProduct.create({quantity: 2, orderId: 1, productId: 1}),
+  OrderProduct.create({quantity: 1, orderId: 1, productId: 3}),
+  OrderProduct.create({quantity: 4, orderId: 1, productId: 5}), //10000
+  OrderProduct.create({quantity: 2, orderId: 2, productId: 20}), //400
+  OrderProduct.create({quantity: 1, orderId: 2, productId: 19}), //1999
+  OrderProduct.create({quantity: 3, orderId: 2, productId: 18}),//2654
+  OrderProduct.create({quantity: 1, orderId: 3, productId: 15}), //1234
+  OrderProduct.create({quantity: 1, orderId: 4, productId: 14}),//12345
 ])
 
 const reviews = await Promise.all([
@@ -153,10 +167,10 @@ const reviews = await Promise.all([
 
   //confirmations
   //categories - missing bc removed from the promise.all block
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded ${products.length} products`)
-  console.log(`seeded ${orders.length} orders`)
-  console.log(`seeded ${reviews.length} reviews`)
+  // console.log(`seeded ${users.length} users`)
+  // console.log(`seeded ${products.length} products`)
+  // console.log(`seeded ${orders.length} orders`)
+  // console.log(`seeded ${reviews.length} reviews`)
   console.log(`seeded successfully`)
 }
 

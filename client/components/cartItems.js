@@ -4,7 +4,7 @@ import Buttons from './buttons'
 
 const CartItems = (props) => {
   const product = props.orderProduct;
-
+  console.log('product', product)
   return (
     <div>
       {/* props.orderProduct && */}

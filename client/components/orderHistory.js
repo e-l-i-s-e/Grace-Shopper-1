@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { getOrderHistory } from '../store/order'
 
-class OrderHistory extends Component { 
+class OrderHistory extends Component {
     constructor(){
         super()
 
     }
     componentDidMount(){
         this.props.getOrderHistory(this.props.user.id)
-        console.log(this.props.order)
     }
     render(){
         return (
@@ -36,7 +35,7 @@ class OrderHistory extends Component {
                                     }
                                     <br/>
                                 </div>
-                                
+
                             </div>
                         )
                         // Current order status

@@ -6,6 +6,7 @@ import Categories from './categories'
 import SingleProduct from './singleProduct'
 import Search from './search'
 import { gotAllOrders, postToCart } from '../store/order'
+import { me } from '../store/user'
 
 class Main extends Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class Main extends Component {
 
   async componentDidMount(){
     await this.props.gotAllProducts();
+    await this.props.me()
+
     if (this.props.user.id){
       await this.props.gotAllOrders(Number(this.props.user.id))
     }
@@ -54,20 +57,26 @@ class Main extends Component {
   handleSubmit(evt){
     //add to cart with given quantity
     evt.preventDefault();
+
     const productId = Number(evt.target.name);
     const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
     const quantity = selectedProductInLocalState.quantity
+    console.log('order', this.props.order )
 
     if(this.props.user.id){
+      console.log('in if',  selectedProductInLocalState);
+
       let product = {
-        productId,
+        selectedProductInLocalState,
         orderId: this.props.order.id,
-        quantity
+        productId
       }
+
       this.props.postToCart(product)
-      this.props.history.push('/cart/')
+      // this.props.history.push('/cart/')
 
     } else {
+      console.log('in else');
       const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
       let newOrderProductSession;
 
@@ -145,7 +154,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     gotAllProducts: () => dispatch(gotAllProducts()),
     gotAllOrders: (user) => dispatch(gotAllOrders(user)),
-    postToCart: (product) => dispatch(postToCart(product))
+    postToCart: (product) => dispatch(postToCart(product)),
+    me: () => dispatch(me())
   }
 }
 
