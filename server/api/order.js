@@ -52,8 +52,9 @@ router.post('/', async (req, res, next) => {
       // if 0 quantity of the product has not yet been placed
       // create a new row in orderProduct with the product
       // and update the orders price
+
       await response.update({
-          quantity: 1
+          quantity: req.body.quantity
         },
         { returning: true })
 
