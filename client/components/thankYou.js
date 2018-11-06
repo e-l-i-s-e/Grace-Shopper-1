@@ -6,7 +6,7 @@ import {logout} from '../store'
 import { me } from '../store/user'
 //import {Main} from './main'
 
-const Navbar = ({handleClick, isLoggedIn, user}) => (
+const ThankYou = ({handleClick, isLoggedIn, user}) => (
   <div>
     <h1>SCENTED!</h1>
     <nav>
@@ -14,11 +14,10 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
-          <Link to="/"> All Scents </Link>
+          <Link to="/products"> All Scents </Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
-          <Link to="/cart"> My Cart </Link>
           <Link to="/orders">My Orders</Link>
           <h2>Welcome, {user.email}</h2>
         </div>
@@ -28,7 +27,6 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/products"> All Scents </Link>
-          <Link to="/cart"> My Cart </Link>
         </div>
       )}
     </nav>
@@ -55,12 +53,5 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(ThankYou)
 
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
