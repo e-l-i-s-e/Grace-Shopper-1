@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { gotAllProducts } from '../store/product'
-import Categories from './categories'
 import SingleProduct from './singleProduct'
-import Search from './search'
 import { gotAllOrders, postToCart } from '../store/order'
 import { me } from '../store/user'
 
@@ -110,15 +108,8 @@ class Main extends Component {
     return (
           <div>
             <main>
-              <h3>Scented</h3>
-                  <div>
-                    <Link to='/cart'> Go To Cart </Link>
-                    <Categories />
-                  </div>
-                  <div>
-                    <Search />
-                  </div>
-                  <div>
+              <h3>View All Scents</h3>
+              <div id='products' className='row wrap'>
                     {
                         this.state.orderProduct &&
                         this.state.orderProduct.map(orderProduct => {
@@ -133,8 +124,7 @@ class Main extends Component {
                             )
                         })
                     }
-                  </div>
-
+                    </div>
             </main>
           </div>
     )

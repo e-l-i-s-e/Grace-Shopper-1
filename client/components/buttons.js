@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
 
 const Buttons = (props) => {
   const product = props.product;
@@ -8,7 +9,7 @@ const Buttons = (props) => {
   return (
     <div>
        <span>
-        <button
+        <Button
           type='submit'
           name='decrement'
           value={product.id}
@@ -16,11 +17,11 @@ const Buttons = (props) => {
           onClick={props.handleChange}
           disabled={
             quantity > 1 ? false : true
-          }>-</button>
+          }>-</Button>
         <p>{
           quantity
           }</p>
-        <button
+        <Button
           type='submit'
           name='increment'
           value={product.id}
@@ -28,7 +29,7 @@ const Buttons = (props) => {
           onClick={props.handleChange}
           disabled={
             quantity < product.inventory ? false : true
-          } >+</button>
+          } >+</Button>
         </span>
     </div>
   )

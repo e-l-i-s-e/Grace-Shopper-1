@@ -95,7 +95,7 @@ export default function (state = defaultOrder, action) {
   const newOrders = { ...state }
   switch (action.type) {
     case GET_CART:
-      return { ...action.order }
+      return {...action.order}
 
     case CHANGE_QUANTITY: {
       const newOrderProducts = action.updatedProduct.product.products

@@ -24,9 +24,9 @@ const SingleProduct = (props) => {
   const product = props.orderProduct;
 
   return (
-    <div>
-      <Link to={`/products/${product.id}`}>{product.title}</Link>
+    <div id='singleProduct' className='column'>
       <img src={product.imageUrl} alt="" className="img-responsive" />
+      <Link to={`/products/${product.id}`}>{product.title}</Link>
       <div >
         <p>${((product.price)/100).toFixed(2)}</p>
       </div>
