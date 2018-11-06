@@ -19,6 +19,7 @@ router.get('/:id', async (req, res, next) => {
         const product = await Product.findById(req.params.id,{
             include: [Category, User]
         })
+        console.log("product", product.dataValues.categories)
     res.send(product)
     } catch(err){
         next(err)
@@ -54,6 +55,36 @@ router.put('/:productid', isAdminMW, async(req, res, next) => {
         next(err)
     }
 })
+
+//routes to remove and add categories to a product
+
+router.post('/:productid/:categoryid', async(req,res,next) => {
+    try{
+        const category = await Category.findById(req.params.categoryid)
+        const product = await Product.findById(req.params.productid)
+        product.setCategory([category])
+    } catch(err){
+        console.error(err)
+        next(err)
+    }
+})
+
+router.delete('/:productid/:categoryid', async(req,res,next) => {
+    try{
+        const res = await Product.findById(req.params.id,{
+            include: [Category, User]
+        })
+        console.log("res", res)
+        // const category = await Category.findById(req.params.categoryid)
+        // const product = await Product.findById(req.params.productid)
+        // product.setCategory([])
+    } catch(err){
+        console.error(err)
+        next(err)
+    }
+})
+
+
 
 //Review Routes
 

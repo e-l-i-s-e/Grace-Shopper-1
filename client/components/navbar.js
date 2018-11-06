@@ -5,30 +5,53 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import { me } from '../store/user'
 //import {Main} from './main'
+import Search from './search'
+import Categories from './categories'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div>
     <h1>SCENTED!</h1>
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div className="nav-item">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/"> All Scents </Link>
-          <a href="#" onClick={handleClick}>
+          <ul>
+          <li><Link to="/"> All Scents </Link></li>
+          <li><a href="#" onClick={handleClick}>
             Logout
-          </a>
-          <Link to="/cart"> My Cart </Link>
-          <Link to="/orders">My Orders</Link>
+          </a></li>
+          <li><Link to="/orders">My Orders</Link></li>
+          <li><Categories /></li>
+          <li><Search /></li>
+          <li><div id='container'>
+        <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
+          </div></li>
+          </ul>
+          
           <h2>Welcome, {user.email}</h2>
         </div>
       ) : (
-        <div>
+        <div className="nav-item">
           {/* The navbar will show these links before you log in */}
+<<<<<<< HEAD
+          <ul>
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/"> All Scents </Link></li>
+          <li><Link to="/signup">Sign Up</Link></li>
+          <li><Categories /></li>
+          <li><Search /></li>
+          <li><div id='container'>
+          <Link to='/cart'> <img className='cart-link' src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
+          </div></li>
+          </ul>
+=======
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          <Link to="/products"> All Scents </Link>
-          <Link to="/cart"> My Cart </Link>
+          <Link to="/"> All Scents </Link>
+          <div id='container'>
+        <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
+          </div>
+>>>>>>> master
         </div>
       )}
     </nav>

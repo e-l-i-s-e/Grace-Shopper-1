@@ -47,17 +47,19 @@ class Categories extends Component {
           this.state.showMenu
             ? (
               <div
-                className="menu"
-                ref={(element) => {
-                  this.dropdownMenu = element;
-                }}
+              className="menu"
+              ref={(element) => {
+                this.dropdownMenu = element;
+              }}
               >
-              {categoryMenu}
-              </div>
+              {categoryMenu} 
+              </div> 
             )
             : (
               null
             )
+
+            
         }
       </div>
     );

@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 
 // importing thunk from product reducer
 import { setEditProduct } from '../store/product'
+import { getCatProd, removeCatProd } from '../store/categoryProduct'
 import EditProductForm from './editProductForm'
+import EditCategoryForm from './categoryEditForm'
 
 class EditProduct extends Component {
     constructor(props){
@@ -29,6 +31,7 @@ class EditProduct extends Component {
             imageUrl: product.imageUrl,
             id: product.id
         })
+        this.props.getCatProd(this.state.id)
     }
     handleChange(e){
         this.setState({
@@ -40,17 +43,47 @@ class EditProduct extends Component {
         this.props.setEditProduct(this.state)
 
     }
+
+    minusHandleSubmit(e){
+        e.preventDefault()
+        const productId = this.state.id
+        const categoryId = e.target.key
+        const catProdIds = {categoryId, productId} 
+        //remove thunk with catProdIds passed into it 
+        this.props.removeCatProd(catProdIds)
+    }
+
+    plusHandleSubmit(e){
+        e.preventDefault()
+        const productId = this.state.id
+        const categoryId = e.target.key
+        const catProdIds = {categoryId, productId} 
+        //add thunk with catProdIds passed into it 
+
+    }
+
     render(){
+
         return(
+            <div>
             <EditProductForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+            <EditCategoryForm {...this.state} categoryProduct={this.props.categoryProduct} minusHandleSubmit={this.props.minusHandleSubmit} plusHandleSubmit={this.props.plusHandleSubmit}/>
+            </div>
         )
+    }
+}
+
+const maptStateToProps = (state)=>{
+    return {
+        categoryProduct: state.categoryProduct
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setEditProduct: (editedProduct) => dispatch(setEditProduct(editedProduct))
+        setEditProduct: (editedProduct) => dispatch(setEditProduct(editedProduct)),
+        getCatProd: (productId) =>  dispatch(getCatProd(productId))
     }
 }
 
-export default connect(null, mapDispatchToProps)(EditProduct)
+export default connect(maptStateToProps, mapDispatchToProps)(EditProduct)
