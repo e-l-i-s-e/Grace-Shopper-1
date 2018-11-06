@@ -12,8 +12,10 @@ body {
   width: 100vw; */
 }
 
-a {
+a,
+Link {
   text-decoration: none;
+  color:black;
 }
 
 label {
@@ -26,9 +28,8 @@ form div {
 }
 
 header {
-    background-image: url(./public/bg-scented.jpg);
     width: 100%;
-    padding-bottom: 40%;
+    /* padding-bottom: 40%; */
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -37,30 +38,43 @@ i {
   font-size: 2em;
 }
 
-/* cart {
-  display: inline-block;
-  margin: 1em;
-} */
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+/* border: none;
+padding: 0.5rem 0.75rem;
+font-size: 1rem;
+box-shadow: 3px 3px #80808063;
+cursor: pointer; */
+
+button {
+  border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
+  border-style: solid;
+  border-width: 1px;
+  padding: 1px 7px 2px;
+  list-style-type: none;
+}
+
 
 /* ids */
-/* 
-#backgroundimage {
-  background-image: url("bg-scented.jpg");
-  width: 100vw;
-  height: 100vh; 
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  position: relative;
-}  */
-
 
 #products {
   margin: 2em;
-}
-
-#cart-link {
-  height: 50px;
-  width: 50px;
 }
 
 
@@ -69,35 +83,66 @@ i {
 }
 
 #container {
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
 }
 
 #container img {
-  width: 100%;
+  width: 62%;
 }
+
+
+
   /* classes */
-  .nav-item {
-    height: 1.5em;
-    margin: 0 1.5em 0 0;
-  }
-  
-  .nav-item a {
-    text-decoration: none;
-    font-size: 1.5em;
-    padding: 5px;
-  }
-  
-  .nav-item a:hover {
-    color: lightgray;
-    border-radius: 5px;
-    box-shadow: #d3d3d3;
-  }
+.nav-item {
+  height: 1.5em;
+  margin: 0 1.5em 0 0;
+}
+
+.nav-item a {
+  text-decoration: none;
+  font-size: 1.5em;
+  padding: 5px;
+}
+
+.nav-item a:hover {
+  color: lightgray;
+  border-radius: 5px;
+  box-shadow: #d3d3d3;
+}
+
 .img-responsive{
   height: 200px;
   width: 200px;
   transition: box-shadow 0.5s ease;
   border-radius: 3px;
+}
+
+.thumbnail {
+  display: table-cell;
+  padding: 4px 0 5px;
+  height: 242px;
+  width: 200px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  line-height: 1.42857;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: border 0.2s ease-in-out;
+  -o-transition: border 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out;
+
+}
+
+.thumbnail img {
+  display: table-cell;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: middle;
 }
   
 .menu {

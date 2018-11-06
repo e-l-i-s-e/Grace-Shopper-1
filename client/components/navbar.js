@@ -13,33 +13,36 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
     <h1>SCENTED!</h1>
     <nav>
       {isLoggedIn ? (
-        <div class="nav-item">
+        <div className="nav-item">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/"> All Scents </Link>
-          <a href="#" onClick={handleClick}>
+          <ul>
+          <li><Link to="/"> All Scents </Link></li>
+          <li><a href="#" onClick={handleClick}>
             Logout
-          </a>
-          <Link to="/orders">My Orders</Link>
-          <Categories />
-          <Search />
-          <div id='container'>
+          </a></li>
+          <li><Link to="/orders">My Orders</Link></li>
+          <li><Categories /></li>
+          <li><Search /></li>
+          <li><div id='container'>
         <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
-          </div>
+          </div></li>
+          </ul>
           
           <h2>Welcome, {user.email}</h2>
         </div>
       ) : (
-        <div class="nav-item">
+        <div className="nav-item">
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/"> All Scents </Link>
-          <Link to="/signup">Sign Up</Link>
-          <Categories />
-          <Search />
-          <div id='container'>
-          <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
-          </div>
+          <ul>
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/"> All Scents </Link></li>
+          <li><Link to="/signup">Sign Up</Link></li>
+          <li><Categories /></li>
+          <li><Search /></li>
+          <li><div id='container'>
+          <Link to='/cart'> <img className='cart-link' src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
+          </div></li>
+          </ul>
         </div>
       )}
     </nav>
