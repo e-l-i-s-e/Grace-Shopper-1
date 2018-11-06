@@ -9,7 +9,6 @@ export const AdminHome = props => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
       <Link to='/products/add'>Add Product</Link>
       <br />
       <Link to='/categories/add'>Add Category</Link>

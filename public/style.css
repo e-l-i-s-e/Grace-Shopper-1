@@ -6,6 +6,10 @@
 body {
   font-family: sans-serif;
   background: linear-gradient(#ffffff, #fadadd);
+  /* height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100vw; */
 }
 
 a {

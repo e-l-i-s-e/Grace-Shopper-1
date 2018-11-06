@@ -5,10 +5,8 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import { me } from '../store/user'
 //import {Main} from './main'
-import Search from './search'
-import Categories from './categories'
 
-const Navbar = ({handleClick, isLoggedIn, user}) => (
+const ThankYou = ({handleClick, isLoggedIn, user}) => (
   <div>
     <h1>SCENTED!</h1>
     <nav>
@@ -16,30 +14,19 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
-          <Link to="/"> All Scents </Link>
+          <Link to="/products"> All Scents </Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
           <Link to="/orders">My Orders</Link>
-          <Categories />
-          <Search />
-          <div id='container'>
-        <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
-          </div>
-          
           <h2>Welcome, {user.email}</h2>
         </div>
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
-          <Link to="/products"> All Scents </Link>
           <Link to="/signup">Sign Up</Link>
-          <Categories />
-          <Search />
-          <div id='container'>
-          <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
-          </div>
+          <Link to="/products"> All Scents </Link>
         </div>
       )}
     </nav>
@@ -66,12 +53,5 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(ThankYou)
 
-/**
- * PROP TYPES
- */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}

@@ -23,7 +23,10 @@ class Cart extends Component {
     await this.props.me()
 
     if (this.props.user.id){
-        this.props.gotAllOrders(Number(this.props.user.id))
+
+      await this.props.gotAllOrders(Number(this.props.user.id))
+      console.log('PROPS ORDER', this.props.order)
+      this.setState({orderProduct: this.props.order.products})
 
     } else {
         const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
@@ -38,31 +41,41 @@ class Cart extends Component {
     const productId = Number(evt.target.value);
     const PlusOrMinus = evt.target.name;
     const [orderProductInLocalState] = this.state.orderProduct.filter(product => product.id === productId);
+    console.log('LOCALSTATE', orderProductInLocalState)
 
-    PlusOrMinus === 'increment'
-        ? orderProductInLocalState.quantity++
-        : orderProductInLocalState.quantity--;
-
-    let updatedQuantity = orderProductInLocalState.quantity
-
-    const newState = this.state.orderProduct.map(product => {
-      if (product.id === productId) {
-        return orderProductInLocalState
-      } else {
-        return product
-      }
-    })
+    let newState;
 
     if(this.props.user.id){
+      PlusOrMinus === 'increment'
+      ? orderProductInLocalState.orderProduct.quantity++
+      : orderProductInLocalState.orderProduct.quantity--;
+
+      const updatedQuantity = orderProductInLocalState.orderProduct.quantity;
+      console.log('updatedQuantity', updatedQuantity)
+
+
       this.props.changeQuantity({
         quantity: Number(updatedQuantity),
         productId: Number(orderProductInLocalState.id),
         orderId: Number(this.props.order.id),
         userId: Number(this.props.user.id)
       })
+
     } else {
+      PlusOrMinus === 'increment'
+        ? orderProductInLocalState.quantity++
+        : orderProductInLocalState.quantity--;
+
       sessionStorage.setItem('orderProduct', JSON.stringify(newState))
     }
+
+    newState = this.state.orderProduct.map(product => {
+      if (product.id === productId) {
+        return orderProductInLocalState
+      } else {
+        return product
+      }
+    })
 
     this.setState({
       orderProduct: newState
@@ -135,21 +148,21 @@ class Cart extends Component {
                 </div>
                 )
               }
-      return (
-          <div>
-              <div>
-                  <h2>Total Price: ${this.total()}</h2>
-              </div>
-          {
-            this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
-            )
-          }
-          <div>
-            <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
-          </div>
+    return (
+        <div>
+            <div>
+                <h2>Total Price: ${this.total()}</h2>
+            </div>
+        {
+          this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
+          )
+        }
+        <div>
+          <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
         </div>
-      )
-    }
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
