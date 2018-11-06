@@ -33,10 +33,6 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
         <div class="nav-item">
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
-<<<<<<< HEAD
-=======
-          <Link to="/"> All Scents </Link>
->>>>>>> feature-styling
           <Link to="/signup">Sign Up</Link>
           <Link to="/"> All Scents </Link>
           <div id='container'>
