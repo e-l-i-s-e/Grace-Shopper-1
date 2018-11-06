@@ -21,6 +21,12 @@ const users = await Promise.all([
   User.create({isAdmin: false, firstName: 'Lady', lastName: 'Gaga', email: 'ladyG@email.com', password: 'bradley'}),
 ])
 
+// const beyonce = User.create({isAdmin: true, firstName: 'Beyonce', lastName: 'Knowles', email: 'bknowles@email.com', password: '123'})
+// const justin = User.create({isAdmin: true, firstName: 'Justin', lastName: 'Bieber', email: 'jb@email.com', password: 'biebs'})
+// const drake = User.create({isAdmin: false, firstName: 'Drake', lastName: 'Graham', email: 'drake@email.com', password: 'kiki'})
+// const adichie = User.create({isAdmin: false, firstName: 'Chimamanda Ngozi', lastName: 'Adichie', email: 'americanah@email.com', password: 'abc'})
+// const ladyG = User.create({isAdmin: false, firstName: 'Lady', lastName: 'Gaga', email: 'ladyG@email.com', password: 'bradley'})
+
 const products = await Promise.all([
   Product.create({
     id: 1, title: "After the rain", description: "OMG!!!", price: 525, inventory: 10,
@@ -104,6 +110,7 @@ const products = await Promise.all([
   }).then(product => product.setCategories([nature])),
 ])
 
+
 const orders = await Promise.all([
   Order.create({isCart: true, total: 12275, status: 'Created', userId: 3}),
   Order.create({isCart: false, total: 5053, status: 'Processing', userId: 4}),
@@ -111,9 +118,10 @@ const orders = await Promise.all([
   Order.create({isCart: false, total: 12345, status: 'Completed', userId: 3}),
 ])
 
+
 const orderProduct = await Promise.all([
-  OrderProduct.create({quantity: 2, orderId: 1, productId: 1}), //1050
-  OrderProduct.create({quantity: 1, orderId: 1, productId: 3}), //1225
+  OrderProduct.create({quantity: 2, orderId: 1, productId: 1}),
+  OrderProduct.create({quantity: 1, orderId: 1, productId: 3}),
   OrderProduct.create({quantity: 4, orderId: 1, productId: 5}), //10000
   OrderProduct.create({quantity: 2, orderId: 2, productId: 20}), //400
   OrderProduct.create({quantity: 1, orderId: 2, productId: 19}), //1999

@@ -18,6 +18,8 @@ Product.belongsToMany(Category, {through: 'categoryProduct'})
 User.hasMany(Order)
 Order.belongsTo(User)
 
+
+
 module.exports = {
  User, Order, OrderProduct, Product, Review, Category
 }
