@@ -37,53 +37,36 @@ class Cart extends Component {
   handleChange(evt) {
     const productId = Number(evt.target.value);
     const PlusOrMinus = evt.target.name;
+    const [orderProductInLocalState] = this.state.orderProduct.filter(product => product.id === productId);
 
-    if(this.props.user.id){
-      const [productChanging] = this.props.order.products.filter(aProduct => aProduct.id === productId)
-      const quantityOfProduct = productChanging.orderProduct.quantity
-      let updatedQuanity;
-      PlusOrMinus === 'increment'
-        ? updatedQuanity = quantityOfProduct + 1
-        : updatedQuanity = quantityOfProduct - 1
-
-      this.props.changeQuantity({
-        quantity: Number(updatedQuanity),
-        productId: Number(productChanging.id),
-        orderId: Number(this.props.order.id),
-        userId: Number(this.props.user.id)
-      })
-
-      const newState = this.state.orderProduct.map(product => {
-        if (product.id === productId) {
-          return orderProductInLocalState
-        } else {
-          return product
-        }
-      })
-
-      this.setState({
-        orderProduct: newState
-      })
-
-    } else {
-      const [orderProductInLocalState] = this.state.orderProduct.filter(product => product.id === productId);
-
-      PlusOrMinus === 'increment'
+    PlusOrMinus === 'increment'
         ? orderProductInLocalState.quantity++
         : orderProductInLocalState.quantity--;
 
-      const newState = this.state.orderProduct.map(product => {
-        if (product.id === productId) {
-          return orderProductInLocalState
-        } else {
-          return product
-        }
+    let updatedQuantity = orderProductInLocalState.quantity
+
+    const newState = this.state.orderProduct.map(product => {
+      if (product.id === productId) {
+        return orderProductInLocalState
+      } else {
+        return product
+      }
+    })
+
+    if(this.props.user.id){
+      this.props.changeQuantity({
+        quantity: Number(updatedQuantity),
+        productId: Number(orderProductInLocalState.id),
+        orderId: Number(this.props.order.id),
+        userId: Number(this.props.user.id)
       })
+    } else {
       sessionStorage.setItem('orderProduct', JSON.stringify(newState))
-      this.setState({
-        orderProduct: newState
-      })
     }
+
+    this.setState({
+      orderProduct: newState
+    })
   }
 
   handleSubmit(evt) {
