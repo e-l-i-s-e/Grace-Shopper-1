@@ -33,12 +33,10 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
         <div>
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
-          <Link to="/products"> All Scents </Link>
           <Link to="/signup">Sign Up</Link>
-          <Categories />
-          <Search />
+          <Link to="/"> All Scents </Link>
           <div id='container'>
-          <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
+        <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
           </div>
         </div>
       )}
