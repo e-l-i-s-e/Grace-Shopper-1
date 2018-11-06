@@ -7,13 +7,13 @@ Scented is an e-commerce website for unique scents and smells ��
 To run Scented locally, follow these steps:
 
 [1] Run 'npm install' to install required packages
-[2] Run 'create db scented' to create database
+[2] Run 'create db boilermaker' to create database
 [3] Run 'npm run seed' to seed the database
 [4] Run 'npm run start-dev' to run the program locally
 [5] Navigate to localhost:8080 in your browser
 
 ## Deployed App
-Link
+https://scented.herokuapp.com/
 
 ## Contributers
 * Elise Bonner

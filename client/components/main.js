@@ -61,7 +61,6 @@ class Main extends Component {
     const productId = Number(evt.target.name);
     const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
     const quantity = selectedProductInLocalState.quantity
-    console.log('order', this.props.order )
 
     if(this.props.user.id){
       console.log('in if',  selectedProductInLocalState);
@@ -69,19 +68,21 @@ class Main extends Component {
       let product = {
         selectedProductInLocalState,
         orderId: this.props.order.id,
-        productId
+        productId,
+        quantity
       }
 
       this.props.postToCart(product)
       // this.props.history.push('/cart/')
 
     } else {
-      console.log('in else');
       const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
+      console.log('orderProductSession', orderProductSession);
       let newOrderProductSession;
 
         if (!orderProductSession) {
           //if guest cart is empty then add the ONE item that they cliked on to their cart (which is in LOCAL state!)
+          console.log('selectedProductInLocalState', selectedProductInLocalState);
           sessionStorage.setItem('orderProduct', JSON.stringify([selectedProductInLocalState]))
 
         } else {
