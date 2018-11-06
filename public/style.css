@@ -20,12 +20,6 @@ label {
   display: block;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
-  overflow: auto;
-}
-
 form div {
   margin: 1em;
   display: inline-block;
@@ -83,7 +77,22 @@ i {
   width: 100%;
 }
   /* classes */
-
+  .nav-item {
+    height: 1.5em;
+    margin: 0 1.5em 0 0;
+  }
+  
+  .nav-item a {
+    text-decoration: none;
+    font-size: 1.5em;
+    padding: 5px;
+  }
+  
+  .nav-item a:hover {
+    color: lightgray;
+    border-radius: 5px;
+    box-shadow: #d3d3d3;
+  }
 .img-responsive{
   height: 200px;
   width: 200px;
