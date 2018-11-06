@@ -23,7 +23,7 @@ class SelectedProduct extends Component {
                 <h2>The Deets!</h2>
                 <h3>Scent: {selectedProduct.title}</h3>
                 <img src={selectedProduct.imageUrl} alt="" className="img-responsive" />
-                <h3>${selectedProduct.price}</h3>
+                <h3>${((selectedProduct.price)/100).toFixed(2)}</h3>
                 <h4>Details: {selectedProduct.description}</h4>
 
                 <h5><ins>You might also like</ins></h5>
@@ -48,7 +48,6 @@ class SelectedProduct extends Component {
                     }) : ('Sorry! No reviews yet. Be the first one!')
                 }
                 <br />
-                <br></br>
                 <Link to='/cart'> Go To Cart </Link>
                 <br />
                 <Link to="/products">Back to All Scents</Link>

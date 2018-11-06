@@ -101,10 +101,11 @@ class Cart extends Component {
   }
 
   total() {
-    return this.state.orderProduct.reduce((sumTotal, orderProduct) => {
+    const totalToDisplay = this.state.orderProduct.reduce((sumTotal, orderProduct) => {
       const productTotal = orderProduct.quantity * orderProduct.price
       return sumTotal + productTotal
     }, 0)
+    return ((totalToDisplay)/100).toFixed(2)
   }
 
     render(){
@@ -112,16 +113,10 @@ class Cart extends Component {
         if(this.props.user.id && this.props.order){
          console.log("ORDER", this.props.order)
          console.log("ORDER on local state", this.state.order)
-            // console.log("ORDERPRODS", this.props.order[0])
-              // const price = this.total()
-        // if(this.props.user.id && this.props.order){
-
-        //     console.log("ORDER", this.props.order)
-        //     // console.log("ORDERPRODS", this.props.order[0])
         return(
                 <div>
                   <div>
-                    <h2>Total Price: ${this.props.order.total}</h2>
+                    <h2>Total Price: ${((this.props.order.total)/100).toFixed(2)}</h2>
                   </div>
                 {
 
@@ -133,7 +128,6 @@ class Cart extends Component {
                       handleChange={this.handleChange}
                       handleSubmit={this.handleSubmit}
                       user={this.user}/>
-
 
                   )}
                 <div>

@@ -16,5 +16,6 @@ export {default as SelectedCategory} from './selectedCategory'
 export {default as OrderHistory} from './orderHistory'
 export {default as AddReview} from './addReview'
 export {default as TakeMoney} from './takeMoney'
+export {default as ToastAddedToCart} from './toastNotification'
 
 export {Login, Signup} from './auth-form'

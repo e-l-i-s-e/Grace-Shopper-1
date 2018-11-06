@@ -1,6 +1,24 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import Buttons from './buttons'
+import ToastAddedToCart from './toastNotification'
+//import { ToastConsumer, ToastProvider, withToastManager } from 'react-toast-notifications';
+import { withToastManager } from 'react-toast-notifications';
+
+
+// import { withToastManager } from 'react-toast-notifications';
+
+// const Demo = ({ content, toastManager }) => (
+//   <Button onClick={() => toastManager.add(content, {
+//     appearance: 'error',
+//     autoDismiss: true,
+//   })}>
+//     Add Toast
+//   </Button>
+// );
+
+// export const ToastDemo = withToastManager(Demo);
+
 
 const SingleProduct = (props) => {
   const product = props.orderProduct;
@@ -10,7 +28,7 @@ const SingleProduct = (props) => {
       <Link to={`/products/${product.id}`}>{product.title}</Link>
       <img src={product.imageUrl} alt="" className="img-responsive" />
       <div >
-        <p>${product.price}</p>
+        <p>${((product.price)/100).toFixed(2)}</p>
       </div>
       <div>
         <Buttons
@@ -24,6 +42,7 @@ const SingleProduct = (props) => {
           onClick={props.handleSubmit}
         >
           Add to Cart
+          {/* <ToastAddedToCart /> */}
         </button>
       <div>
       {
@@ -37,5 +56,5 @@ const SingleProduct = (props) => {
     </div>
   )
 }
-
+//export const ToastDemo = withToastManager(SingleProduct);
 export default SingleProduct;

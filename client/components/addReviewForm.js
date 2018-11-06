@@ -13,7 +13,7 @@ const AddReviewForm = (props) => {
             <input 
                 name="firstName" 
                 type="text" 
-                placeholder="Publicly Visible" 
+                placeholder="First Name" 
                 value={props.firstName}
                 onChange={props.handleChange} 
             />
@@ -34,10 +34,10 @@ const AddReviewForm = (props) => {
                 <small>Review:</small>
             </label>
             <input 
-                name="review" 
+                name="content" 
                 type="text" 
                 placeholder="Leave a review" 
-                value={props.review}
+                value={props.content}
                 onChange={props.handleChange} 
             />
 

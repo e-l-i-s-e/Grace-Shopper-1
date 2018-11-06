@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
@@ -33,6 +32,7 @@ export const getReviewsThunk = (productId) => async dispatch => {
 
 export const addReviewsThunk = (review, productId) => async dispatch => {
   try {
+    console.log("review", review)
     const { data } = await axios.post(`/api/products/${productId}/reviews`, review)
     dispatch(addReviewsAction(data));
   } catch (err) {
@@ -48,7 +48,6 @@ export default function(state = defaultReviews, action) {
     case GET_REVIEWS:
       return action.review
     case ADD_REVIEWS:
-      //return action.review
       return [...state, action.review]
     default:
       return state

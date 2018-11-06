@@ -96,7 +96,7 @@ class Checkout extends Component {
           </div> */}
 
             <CheckoutForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-            <TakeMoney />
+            {/* <TakeMoney /> */}
           </div>
         )
     }
