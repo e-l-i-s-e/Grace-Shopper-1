@@ -6,6 +6,10 @@ const Order = db.define('order', {
         type: Sequelize.BOOLEAN,
         defaultValue: false
     },
+    promo: {
+      type: Sequelize.STRING,
+      defaultValue: 'none'
+    },
     total: {
         type: Sequelize.INTEGER,
         allowNull: false,
