@@ -65,7 +65,7 @@ router.get('/:productId/reviews', async(req, res, next) => {
         res.json(reviews)
     } catch(err){
         next(err)
-    }    
+    }
 })
 
 //POST a review to a product
@@ -86,7 +86,7 @@ router.post('/:productId/reviews', async(req, res, next) => {
         }
     } catch(err){
         next(err)
-    }    
+    }
 })
 
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
 import product from '../store/product'
 import { gotAllOrders, deleteFromCart, changeQuantity, getNewPrice } from '../store/order'
+import { me } from '../store/user'
 import CartItems from './cartItems'
 
 class Cart extends Component {
@@ -18,10 +19,11 @@ class Cart extends Component {
   this.total = this.total.bind(this)
   }
 
-  componentDidMount(){
+  async componentDidMount(){
+    await this.props.me()
+
     if (this.props.user.id){
         this.props.gotAllOrders(Number(this.props.user.id))
-        this.props.getNewPrice(Number(this.props.order.id))
 
     } else {
         const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
@@ -33,10 +35,8 @@ class Cart extends Component {
   }
 
   handleChange(evt) {
-    //changing the quantity of items already in the cart
     const productId = Number(evt.target.value);
     const PlusOrMinus = evt.target.name;
-
 
     if(this.props.user.id){
       const [productChanging] = this.props.order.products.filter(aProduct => aProduct.id === productId)
@@ -52,11 +52,18 @@ class Cart extends Component {
         orderId: Number(this.props.order.id),
         userId: Number(this.props.user.id)
       })
-      // console.log("GNA GET THE NEW PRICE", this.props.order.total)
-      this.props.getNewPrice(Number(this.props.order.id))
-      // console.log("GOT THE NEW PRICE", this.props.order.total)
-      this.props.history.push('/cart/')
 
+      const newState = this.state.orderProduct.map(product => {
+        if (product.id === productId) {
+          return orderProductInLocalState
+        } else {
+          return product
+        }
+      })
+
+      this.setState({
+        orderProduct: newState
+      })
 
     } else {
       const [orderProductInLocalState] = this.state.orderProduct.filter(product => product.id === productId);
@@ -101,10 +108,20 @@ class Cart extends Component {
   }
 
   total() {
-    return this.state.orderProduct.reduce((sumTotal, orderProduct) => {
-      const productTotal = orderProduct.quantity * orderProduct.price
-      return sumTotal + productTotal
-    }, 0)
+    const orderProducts = this.props.user.id ? this.props.order.products : this.state.orderProduct
+    console.log('ORDERPROD in TOT', orderProducts)
+    let total;
+    if (orderProducts){
+      total = orderProducts.reduce((sumTotal, orderProduct) => {
+       console.log('orderProduct', orderProduct.orderProduct.quantity);
+       console.log('orderProduct.price',  orderProduct.price);
+       const productTotal = orderProduct.orderProduct.quantity * orderProduct.price
+       console.log('productTotal', productTotal)
+       return sumTotal + productTotal
+     }, 0)
+    }
+    console.log('TOTAL', total)
+    return total ? total : 0
   }
 
     render(){
@@ -121,7 +138,7 @@ class Cart extends Component {
         return(
                 <div>
                   <div>
-                    <h2>Total Price: ${this.props.order.total}</h2>
+                    <h2>Total Price: ${this.total()}</h2>
                   </div>
                 {
 
@@ -171,7 +188,8 @@ const mapDispatchToProps = (dispatch) => {
     gotAllOrders: (user) => dispatch(gotAllOrders(user)),
     deleteFromCart: (aProduct) => dispatch(deleteFromCart(aProduct)),
     changeQuantity: (quantity) => dispatch(changeQuantity(quantity)),
-    getNewPrice: (orderid) => dispatch(getNewPrice(orderid))
+    getNewPrice: (orderid) => dispatch(getNewPrice(orderid)),
+    me: () => dispatch(me())
   }
 }
 
