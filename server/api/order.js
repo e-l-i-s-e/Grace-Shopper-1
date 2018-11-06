@@ -52,8 +52,9 @@ router.post('/', async (req, res, next) => {
       // if 0 quantity of the product has not yet been placed
       // create a new row in orderProduct with the product
       // and update the orders price
+
       await response.update({
-          quantity: 1
+          quantity: req.body.quantity
         },
         { returning: true })
 
@@ -170,7 +171,6 @@ router.put('/', async (req, res, next) => {
 })
 
 router.delete('/:userId/:productId', async (req, res, next) => {
-  console.log('HERE');
   try {
     const orders = await Order.find({
       where: {
@@ -192,13 +192,11 @@ router.delete('/:userId/:productId', async (req, res, next) => {
       sum += product.price * product.orderProduct.quantity;
       return sum
     }, 0)
-    console.log('newTOTAL', newTotal)
     //updating the price in the order
 
     await Order.update({ total: newTotal }, {
       where: { id: req.body.orderId }
     })
-    console.log('HEEEEEERE', newTotal)
     res.json(deletedRow)
   }
   catch (err) {
@@ -211,6 +209,28 @@ router.get('/price/:orderid', async (req, res, next) => {
   try {
     const response = await Order.findById(req.params.orderid)
     res.json(response)
+  }
+  catch (err) {
+    console.error(err)
+    next(err)
+  }
+})
+
+router.put('/price/:orderid', async (req, res, next) => {
+  try {
+    const newTotal = Number(req.body.newTotal) * 100
+    const promoCode = req.body.promoCode
+    const [num, updatedOrder] = await Order.update({
+      total: newTotal,
+      promo: promoCode
+    }, {
+      where: {
+        id: req.body.orderId
+      },
+      returning: true,
+      plain: true
+    })
+    res.json(updatedOrder.dataValues)
   }
   catch (err) {
     console.error(err)

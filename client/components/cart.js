@@ -1,39 +1,42 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import product from '../store/product'
-import { gotAllOrders, deleteFromCart, changeQuantity, getNewPrice } from '../store/order'
+import { gotAllOrders, deleteFromCart, changeQuantity, getNewPrice, applyPromo } from '../store/order'
 import { me } from '../store/user'
 import CartItems from './cartItems'
+import PromoCode from './promoCode'
 
 class Cart extends Component {
-  constructor(){
-      super()
-      this.state = {
-          orderProduct: [],
-          isLoggedIn: false,
-          orders: {}
-      }
-  this.handleChange = this.handleChange.bind(this)
-  this.handleSubmit = this.handleSubmit.bind(this)
-  this.total = this.total.bind(this)
+  constructor() {
+    super()
+    this.state = {
+      orderProduct: [],
+      isLoggedIn: false,
+      orders: {},
+      promoCode: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handlePromoSubmit = this.handlePromoSubmit.bind(this)
+    this.total = this.total.bind(this)
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     await this.props.me()
 
-    if (this.props.user.id){
-
+    if (this.props.user.id) {
       await this.props.gotAllOrders(Number(this.props.user.id))
-      console.log('PROPS ORDER', this.props.order)
-      this.setState({orderProduct: this.props.order.products})
+      this.setState({ orderProduct: this.props.order.products, promoCode: this.props.order.promo })
 
     } else {
-        const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
-        if (orderProduct) {
-          this.setState({orderProduct})
-        }
-        this.setState({isLoggedIn: false})
+      const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
+      if (orderProduct) {
+        this.setState({ orderProduct })
+      }
+
+      this.setState({ isLoggedIn: false })
+
     }
   }
 
@@ -41,18 +44,14 @@ class Cart extends Component {
     const productId = Number(evt.target.value);
     const PlusOrMinus = evt.target.name;
     const [orderProductInLocalState] = this.state.orderProduct.filter(product => product.id === productId);
-    console.log('LOCALSTATE', orderProductInLocalState)
-
     let newState;
 
-    if(this.props.user.id){
+    if (this.props.user.id) {
       PlusOrMinus === 'increment'
-      ? orderProductInLocalState.orderProduct.quantity++
-      : orderProductInLocalState.orderProduct.quantity--;
+        ? orderProductInLocalState.orderProduct.quantity++
+        : orderProductInLocalState.orderProduct.quantity--;
 
       const updatedQuantity = orderProductInLocalState.orderProduct.quantity;
-      console.log('updatedQuantity', updatedQuantity)
-
 
       this.props.changeQuantity({
         quantity: Number(updatedQuantity),
@@ -61,25 +60,51 @@ class Cart extends Component {
         userId: Number(this.props.user.id)
       })
 
+      newState = this.state.orderProduct.map(product => {
+        if (product.id === productId) {
+          return orderProductInLocalState
+        } else {
+          return product
+        }
+      })
+
+      this.setState({
+        orderProduct: newState
+      })
     } else {
       PlusOrMinus === 'increment'
         ? orderProductInLocalState.quantity++
         : orderProductInLocalState.quantity--;
-
+      newState = this.state.orderProduct.map(product => {
+        if (product.id === productId) {
+          return orderProductInLocalState
+        } else {
+          return product
+        }
+      })
       sessionStorage.setItem('orderProduct', JSON.stringify(newState))
+      this.setState({
+        orderProduct: newState
+      })
     }
+  }
 
-    newState = this.state.orderProduct.map(product => {
-      if (product.id === productId) {
-        return orderProductInLocalState
-      } else {
-        return product
+  handlePromoSubmit(e){
+    e.preventDefault()
+    const promoCode = e.target.promoCode.value
+    if(promoCode === 'Luigi50'){
+      this.setState({promoCode})
+
+      const newTotal = this.total(promoCode)
+      if(this.props.order){
+        const applyPromoObj = {
+          newTotal,
+          orderId: Number(this.props.order.id),
+          promoCode
+        }
+        this.props.applyPromo(applyPromoObj)
       }
-    })
-
-    this.setState({
-      orderProduct: newState
-    })
+    }
   }
 
   handleSubmit(evt) {
@@ -88,13 +113,10 @@ class Cart extends Component {
     const userId = Number(this.props.user.id)
 
     if (this.props.user.id) {
-
-      const infoForDelete = {productId, userId}
+      const infoForDelete = { productId, userId }
       this.props.deleteFromCart(infoForDelete)
       this.props.getNewPrice(Number(this.props.user.id))
       this.props.history.push('/cart/')
-      //Anna will remove items from the logged in user's cart in the database
-
     } else {
       const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
       let newOrderProductSession = orderProductSession.filter(prod => prod.id !== productId)
@@ -103,65 +125,90 @@ class Cart extends Component {
     }
   }
 
-  total() {
+  total(promo) {
     const orderProducts = this.props.user.id ? this.props.order.products : this.state.orderProduct
-    console.log('ORDERPROD in TOT', orderProducts)
     let total;
-    if (orderProducts){
+    if (orderProducts) {
       total = orderProducts.reduce((sumTotal, orderProduct) => {
-       console.log('orderProduct', orderProduct.orderProduct.quantity);
-       console.log('orderProduct.price',  orderProduct.price);
-       const productTotal = orderProduct.orderProduct.quantity * orderProduct.price
-       console.log('productTotal', productTotal)
-       return sumTotal + productTotal
-     }, 0)
+        let productTotal;
+        if (this.props.user.id) {
+          productTotal = orderProduct.orderProduct.quantity * orderProduct.price
+        } else {
+          productTotal = orderProduct.quantity * orderProduct.price
+        }
+        return sumTotal + productTotal
+      }, 0)
     }
-    total = ((total)/100).toFixed(2)
-    return total ? total : 0
+    total = ((total) / 100).toFixed(2)
+    if(promo === 'Luigi50' || this.state.promoCode === 'Luigi50') {
+      return (total/2).toFixed(2)
+    } else {
+      return total ? total : 0
+    }
   }
 
-    render(){
-      console.log("OrderProdutc",this.state.orderProduct)
-        if(this.props.user.id && this.props.order){
-         console.log("ORDER", this.props.order)
-         console.log("ORDER on local state", this.state.order)
-        return(
-                <div>
-                  <div>
-                    <h2>Total Price: ${this.total()}</h2>
-                  </div>
-                {
-
-                  this.props.order.products && this.props.order.products.map(
-                      (aProduct) => <CartItems
-                      key={aProduct.id}
-                      order={this.order}
-                      orderProduct={aProduct}
-                      handleChange={this.handleChange}
-                      handleSubmit={this.handleSubmit}
-                      user={this.user}/>
-
-                  )}
-                <div>
-                  <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
-                </div>
-                </div>
-                )
-              }
-    return (
+  render() {
+    if (this.props.user.id && this.props.order) {
+      return (
         <div>
-            <div>
-                <h2>Total Price: ${this.total()}</h2>
-            </div>
-        {
-          this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
-          )
-        }
-        <div>
-          <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
+          <div>
+            <h2>Total Price: ${this.total()}</h2>
+          </div>
+         {
+          this.state.promoCode &&
+          <div>
+            <h2>Promo Code Applied: {this.state.promoCode}</h2>
+          </div>
+         }
+          {
+            this.props.order.products && this.props.order.products.map(
+              (aProduct) => <CartItems
+                key={aProduct.id}
+                order={this.order}
+                orderProduct={aProduct}
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+                user={this.user} />
+
+            )}
+          <div>
+            <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
+          </div>
+          <div>
+          <PromoCode handlePromoSubmit={this.handlePromoSubmit} />
+          </div>
+          <div>
+            <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div>
+          <div>
+            <h2>Total Price: ${this.total()}</h2>
+          </div>
+          {
+          this.state.promoCode &&
+          <div>
+            <h2>Promo Code Applied: {this.state.promoCode}</h2>
+          </div>
+         }
+          <div>
+          {
+            this.state.orderProduct && this.state.orderProduct.map(orderProduct => <CartItems key={product.id} orderProduct={orderProduct} handleChange={this.handleChange} handleSubmit={this.handleSubmit} user={this.user} />
+            )
+          }
+          </div>
+          <div>
+          <PromoCode handlePromoSubmit={this.handlePromoSubmit} promoCode={this.state.promoCode} />
+          </div>
+          <div>
+            <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
+          </div>
+        </div>
+      )
+    }
   }
 }
 
@@ -178,7 +225,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteFromCart: (aProduct) => dispatch(deleteFromCart(aProduct)),
     changeQuantity: (quantity) => dispatch(changeQuantity(quantity)),
     getNewPrice: (orderid) => dispatch(getNewPrice(orderid)),
-    me: () => dispatch(me())
+    me: () => dispatch(me()),
+    applyPromo: (promoObj) => dispatch(applyPromo(promoObj))
   }
 }
 

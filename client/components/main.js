@@ -59,22 +59,19 @@ class Main extends Component {
     const productId = Number(evt.target.name);
     const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
     const quantity = selectedProductInLocalState.quantity
-    console.log('order', this.props.order )
 
     if(this.props.user.id){
-      console.log('in if',  selectedProductInLocalState);
-
       let product = {
         selectedProductInLocalState,
         orderId: this.props.order.id,
-        productId
+        productId,
+        quantity
       }
 
       this.props.postToCart(product)
       // this.props.history.push('/cart/')
 
     } else {
-      console.log('in else');
       const orderProductSession = JSON.parse(sessionStorage.getItem('orderProduct'));
       let newOrderProductSession;
 

@@ -9,7 +9,7 @@ const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 const REMOVE_CART = 'REMOVE_CART'
 const GET_PRICE = "GET_PRICE"
 const GET_ORDER_HISTORY = 'GET_ORDER_HISTORY'
-
+const SET_PRICE = 'SET_PRICE'
 /**
  * INITIAL STATE
  */
@@ -24,6 +24,7 @@ const changeQuantitySuccess = updatedProduct => ({ type: CHANGE_QUANTITY, update
 const addToCart = newItem => ({ type: ADD_TO_CART, newItem })
 const removeFromCart = item => ({ type: REMOVE_CART, item })
 const gotNewPrice = total => ({ type: GET_PRICE, total })
+const setNewPrice = total => ({ type: SET_PRICE, total})
 const gotOrderHistory = order => ({ type: GET_ORDER_HISTORY, order })
 /**
  * THUNK CREATORS
@@ -88,6 +89,19 @@ export const getOrderHistory = (userid) => async dispatch => {
   }
 }
 
+export const applyPromo = ({newTotal, orderId, promoCode}) => async dispatch => {
+  // console.log('NeWTOTAL', newPromoObj)
+  try {
+    const { data } = await axios.put(`/api/order/price/${orderId}`, {newTotal, orderId, promoCode})
+    console.log('DATA', data)
+    dispatch(setNewPrice(data.total))
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+
 /**
  * REDUCER
  */
@@ -119,6 +133,12 @@ export default function (state = defaultOrder, action) {
     case GET_PRICE:
       newOrders.total = action.total
       return { ...newOrders }
+
+    case SET_PRICE: {
+      const newState = {...state};
+      newState.total = action.total
+      return newState
+    }
 
     case GET_ORDER_HISTORY:
 
