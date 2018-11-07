@@ -54,32 +54,37 @@ export const login = (email, password) => async dispatch => {
     } else {
       history.push('/home')
     }
-    
+
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
 }
 
-// export const auth = (email, password, method) => async dispatch => {
-//   let res
-//   try {
-//     res = await axios.post(`/auth/${method}`, {email, password})
-//   } catch (authError) {
-//     return dispatch(getUser({error: authError}))
-//   }
+export const auth = (email, password, method, orderProduct) => async dispatch => {
+  let res;
 
-//   try {
-//     dispatch(getUser(res.data))
-//     if(res.data.isAdmin){
-//       history.push('/adminHome')
-//     } else {
-//       history.push('/home')
-//     }
-    
-//   } catch (dispatchOrHistoryErr) {
-//     console.error(dispatchOrHistoryErr)
-//   }
-// }
+  console.log('orderProd', orderProduct)
+  try {
+    res = await axios.post(`/auth/${method}`, {email, password, orderProduct})
+    // const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
+    // console.log('orderProduct', orderProduct)
+
+  } catch (authError) {
+    return dispatch(getUser({error: authError}))
+  }
+
+  try {
+    dispatch(getUser(res.data))
+    if(res.data.isAdmin){
+      history.push('/adminHome')
+    } else {
+      history.push('/home')
+    }
+
+  } catch (dispatchOrHistoryErr) {
+    console.error(dispatchOrHistoryErr)
+  }
+}
 
 
 export const logout = () => async dispatch => {
