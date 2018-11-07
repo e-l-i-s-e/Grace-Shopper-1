@@ -5,12 +5,13 @@ import  { sendEmail } from '../store/email'
 import { runInNewContext } from 'vm';
 import history from '../history'
 
-//import STRIPE_PUBLISHABLE from './constants/stripe';
-//import PAYMENT_SERVER_URL from './constants/server';
+import STRIPE_PUBLISHABLE from '../constants/stripe'
+import PAYMENT_SERVER_URL from '../constants/server'
 
-const PAYMENT_SERVER_URL = '/api/stripe/'
+// const PAYMENT_SERVER_URL = '/api/stripe/'
+// const PAYMENT_SERVER_URL = '/api/stripe/'
+
 const CURRENCY = 'USD';
-const STRIPE_PUBLISHABLE = 'pk_test_D80U47WaOQUTquFL44fpdXof'
 
 const updateOrder = async orderId => {
   await axios.put(`/api/order/${orderId}`, {isCart: false, status: 'Processing'})
@@ -43,7 +44,14 @@ const onToken = (amount, description, email, orderId) => async token =>{
       errorPayment()
     }
     try{
-      updateOrder(orderId)
+      if (orderId){
+        updateOrder(orderId)
+      } 
+      // else {
+      //   console.log("HEEEYYYYYYY", sessionStorage)
+      //   sessionStorage.clear()
+      // }
+      sessionStorage.clear()
       history.push('/thank-you')
     }
     catch(err){

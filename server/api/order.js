@@ -5,13 +5,13 @@ const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.send('Forbidden
 
 module.exports = router
 
-router.get('/history/:userId', async (req, res, next) => {
+router.get('/history/:userId',  async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       where: {
         isCart: false,
         userId: req.params.userId
-      }, include: [{ model: Product }]
+      }, include: [{ model: Product}],
     })
     // need to explore how to get quantity from orderProduct table
     res.json(orders)
@@ -242,8 +242,6 @@ router.put('/price/:orderid', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    console.log("PARAMMSSS",req.params)
-    console.log("BODDYYY",req.body)
     await Order.update(req.body, {
     where: {
       id: Number(req.params.id)

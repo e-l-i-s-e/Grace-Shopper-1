@@ -1,5 +1,6 @@
 const router =  require('express').Router();
 const { Category, Product } = require('../db/models');
+const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.send('Forbidden')
 module.exports = router
 
 // GET /api/ all categories
@@ -26,8 +27,8 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-//to add category 
-router.post('/', async (req, res, next) => {
+//ADMIN can add category 
+router.post('/', isAdminMW, async (req, res, next) => {
     try {
         const newCategory = await Category.create(req.body);
         res.json(newCategory);
@@ -36,7 +37,8 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-router.put('/:categoryid', async(req, res, next) => {
+//ADMIN can edit category
+router.put('/:categoryid', isAdminMW, async(req, res, next) => {
     try{
         const editedCategory = await Category.update(req.body, {
             where: {

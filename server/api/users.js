@@ -4,7 +4,7 @@ const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.send('Forbidden
 
 module.exports = router
 
-router.get('/', isAdminMW, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though

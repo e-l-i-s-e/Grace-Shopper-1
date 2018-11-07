@@ -4,8 +4,7 @@ const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.send('Forbidden
 
 module.exports = router
 
-//router.post('/', isAdminMW, (req, res, next) => {
-router.post('/', (req, res, next) => {
+router.post('/', isAdminMW, (req, res, next) => {
   try {
     console.log('req.body', req.body.email )
     sendEmail(req.body.email);

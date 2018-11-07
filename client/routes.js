@@ -20,31 +20,34 @@ class Routes extends Component {
 
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route exact path="/" component={Main} />
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/checkout" component={Checkout} />
-        <Route exact path="/thank-you" component={ThankYou}/>
+      {/* Routes placed here are available to all visitors */}
+      <Route path="/login" component={Login} />
+      <Route path="/signup" component={Signup} />
+      <Route exact path="/" component={Main} />
+      <Route exact path="/cart" component={Cart} />
+      <Route exact path="/checkout" component={Checkout} />
+      <Route exact path="/thank-you" component={ThankYou}/>
 
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            {/* <Route path="/adminHome" component={AdminHome} /> */}
-            {/* <Route exact path="/products/add" component={AddProduct} />
-            <Route exact path="/products/edit" component ={EditProduct} /> */}
-            {/* <Route exact path="/categories/add" component={AddCategory} /> */}
-            {/* <Route exact path="/categories/edit" component ={EditCategory} /> */}
-            <Route exact path="/products" component={Main} />
-            <Route path = '/orders' component = {OrderHistory}/>
-          </Switch>
-        )}
-        <Route path="/products/:id" component={SelectedProduct} />
-        <Route path="/categories/:id" component={SelectedCategory} />
-        {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
-      </Switch>
+      {isLoggedIn && (
+        <Switch>
+          {/* Routes placed here are only available after logging in */}
+          <Route path="/adminHome" component={AdminHome} />
+          <Route exact path="/products/add" component={AddProduct} />
+          <Route exact path="/products/edit" component ={EditProduct} />
+          {/* <Route exact path="/categories/add" component={AddCategory} /> */}
+          {/* <Route exact path="/categories/edit" component ={EditCategory} /> */}
+          <Route exact path="/products" component={Main} />
+          <Route path="/products/:id" component={SelectedProduct} />
+          <Route path="/categories/:id" component={SelectedCategory} />
+          <Route path = '/orders' component = {OrderHistory}/>
+        </Switch>
+      )}
+
+      <Route path="/products/:id" component={SelectedProduct} />
+      <Route path="/categories/:id" component={SelectedCategory} />
+      {/* Displays our Login component as a fallback */}
+      <Route component={Login} />
+        </Switch>
     )
   }
 }

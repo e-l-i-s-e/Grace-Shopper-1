@@ -181,14 +181,13 @@ class Cart extends Component {
                 user={this.user} />
 
             )}
-          <div>
+          {/* <div>
             <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
-          </div>
+          </div> */}
           <div>
           <PromoCode handlePromoSubmit={this.handlePromoSubmit} />
           </div>
           <div>
-            {/* <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link> */}
             <Link to={{ pathname: '/checkout', state: {total: this.state.myTotal, myOrderId: this.state.myOrderId}}}><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div>
         </div>
