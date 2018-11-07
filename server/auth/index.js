@@ -18,6 +18,7 @@ router.post('/login', async (req, res, next) => {
       res.status(401).send('Wrong username and/or password')
     } else {
       // find or Create the logged-in user's cart
+
       const [order, wasCreated] = await Order.findOrCreate({
         where: {
           userId: user.id,
@@ -28,7 +29,7 @@ router.post('/login', async (req, res, next) => {
       })
       const orderId = order.id
 
-      if (wasCreated) {
+      if (wasCreated && orderProduct) {
         //if the user did not have a cart, add each item from the sessionStorage cartto the new cart in the database
         orderProduct.forEach(async (product) => {
           //create the Order's associated order Product --
@@ -59,7 +60,7 @@ router.post('/login', async (req, res, next) => {
           where: { id: orderId }
         })
 
-      } else {
+      } else if (orderProduct) {
         // console.log('orderProduct in ELSE', orderProduct);
         orderProduct.forEach(async (product) => {
           const [orderProd, wasCreated] = await OrderProduct.findOrCreate({
