@@ -56,7 +56,8 @@ router.post('/', async (req, res, next) => {
       await response.update({
           quantity: req.body.quantity
         },
-        { returning: true })
+        { returning: true
+      })
 
       const orders = await Order.find({
         where: {
@@ -90,7 +91,7 @@ router.post('/', async (req, res, next) => {
         quantity: incomingQuantity
       }, {
           returning: true,
-        })
+      })
 
       const orders = await Order.find({
         where: {
