@@ -46,6 +46,7 @@ class Checkout extends Component {
             this.props.gotAllOrders(this.props.user.id)
         } else {
             const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
+            console.log(orderProduct)
             if (orderProduct) {
               this.setState({orderProduct})
             }
@@ -78,12 +79,14 @@ class Checkout extends Component {
             total: '',
             promoCode: ''
         })
-        this.props.history.push('/thank-you')
+        // this.props.history.push('/thank-you')
 
     }
 
     render(){
-        const price = this.props.price
+        const total = this.props.location.state
+        //const orderId = this.props.location.state
+        //console.log("TOTAL IN CHECKOUT", orderId)
         return(
           <div>
           {/* {
@@ -93,7 +96,7 @@ class Checkout extends Component {
           {/* <div>
             <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div> */}
-            <CheckoutForm {...this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+            <CheckoutForm {...this.state} total={total} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
             {/* <TakeMoney /> */}
           </div>
         )

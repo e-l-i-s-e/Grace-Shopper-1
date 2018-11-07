@@ -13,11 +13,13 @@ module.exports = router
 router.post('/', (req, res, next) =>{
     //const stripeToken = req.body.stripeToken;
     const stripeToken = req.body.source;
+    
     console.log("req.body", req.body)
     console.log("stripeToken", stripeToken)
 
     stripe.charges.create({
             amount: req.body.amount,
+            customer: req.body.customer,
             currency: "usd",
             description: "Example charge",
             source: stripeToken, 

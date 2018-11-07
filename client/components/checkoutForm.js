@@ -1,8 +1,10 @@
 import React from 'react'
 import TakeMoney from './takeMoney'
+import { postToCart } from '../store/order';
 
 const CheckoutForm = (props) => {
     console.log("prrrrrops", props)
+    console.log("uniiiique orderId", props.total.myOrderId)
     return (
         <div>
         <h2>Checkout!</h2>
@@ -164,11 +166,13 @@ const CheckoutForm = (props) => {
                 <TakeMoney 
                     type="submit" 
                     name={`${props.firstName} ${props.lastName}`} 
-                    customer={`${props.firstName} ${props.lastName}`} 
                     email={props.email}
-                    description={'Checking Out!'} 
+                    description='Checking Out!' 
                     receipt_email='ScentedShopper@gmail.com'
-                    amount={200} />
+                    amount={props.total.total*100} 
+                    customer={props.total.myOrderId}
+                />
+
             </div>
 
           </form>

@@ -240,3 +240,18 @@ router.put('/price/:orderid', async (req, res, next) => {
   }
 })
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    console.log("PARAMMSSS",req.params)
+    console.log("BODDYYY",req.body)
+    await Order.update(req.body, {
+    where: {
+      id: Number(req.params.id)
+    }
+  })
+  }
+  catch(err){
+    console.error(err)
+    next(err)
+  }
+})

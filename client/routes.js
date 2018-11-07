@@ -2,13 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-<<<<<<< HEAD
-import {Login, Signup, AdminHome, AddProduct, EditProduct, AddCategory, EditCategory,
-  Main, Cart, Checkout, SelectedProduct, SelectedCategory, OrderHistory} from './components'
-=======
 import {Login, Signup, AdminHome, AddProduct, EditProduct,
   Main, Cart, Checkout, SelectedProduct, SelectedCategory, OrderHistory, ThankYou} from './components'
->>>>>>> 42a4bef8dbf8082d0b6dc8b9e371e78933e48ba6
 import {me} from './store'
 
 
@@ -36,11 +31,11 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/adminHome" component={AdminHome} />
-            <Route exact path="/products/add" component={AddProduct} />
-            <Route exact path="/products/edit" component ={EditProduct} />
-            <Route exact path="/categories/add" component={AddCategory} />
-            <Route exact path="/categories/edit" component ={EditCategory} />
+            {/* <Route path="/adminHome" component={AdminHome} /> */}
+            {/* <Route exact path="/products/add" component={AddProduct} />
+            <Route exact path="/products/edit" component ={EditProduct} /> */}
+            {/* <Route exact path="/categories/add" component={AddCategory} /> */}
+            {/* <Route exact path="/categories/edit" component ={EditCategory} /> */}
             <Route exact path="/products" component={Main} />
             <Route path = '/orders' component = {OrderHistory}/>
           </Switch>
