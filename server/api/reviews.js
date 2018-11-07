@@ -23,9 +23,7 @@ router.get('/:productId', async (req, res, next) => {
           where: {
             productId: req.params.productId,
           },
-          //include: [Product],
     })
-    //const review = await Review.findById(req.params.productId)
     res.send(review)
     } catch(err){
         next(err)

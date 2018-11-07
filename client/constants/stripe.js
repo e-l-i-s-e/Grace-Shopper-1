@@ -1,0 +1,3 @@
+const STRIPE_PUBLISHABLE = 'pk_test_D80U47WaOQUTquFL44fpdXof'
+ 
+export default STRIPE_PUBLISHABLE;
