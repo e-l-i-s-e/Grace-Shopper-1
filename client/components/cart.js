@@ -29,7 +29,7 @@ class Cart extends Component {
 
     if (this.props.user.id) {
       await this.props.gotAllOrders(Number(this.props.user.id))
-      this.setState({ orderProduct: this.props.order.products, 
+      this.setState({ orderProduct: this.props.order.products,
         promoCode: this.props.order.promo,
         myTotal: this.total(),
         myOrderId: this.props.order.id
@@ -41,11 +41,11 @@ class Cart extends Component {
         this.setState({ orderProduct })
       }
 
-      this.setState({ 
+      this.setState({
         isLoggedIn: false,
         myTotal: this.total(),
        })
-      
+
     }
   }
 
@@ -160,9 +160,9 @@ class Cart extends Component {
     console.log("OUR OURDERRRR ID", this.props.order)
     if (this.props.user.id && this.props.order) {
       return (
-        <div>
-          <div>
-            <h2>Total Price: ${this.total()}</h2>
+        <div className='shopping-cart'>
+          <div className='title'>
+            <h2> Shopping Cart </h2>
           </div>
          {
           this.state.promoCode &&
@@ -181,9 +181,6 @@ class Cart extends Component {
                 user={this.user} />
 
             )}
-          {/* <div>
-            <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
-          </div> */}
           <div>
           <PromoCode handlePromoSubmit={this.handlePromoSubmit} />
           </div>
@@ -194,9 +191,9 @@ class Cart extends Component {
       )
     } else {
       return (
-        <div>
-          <div>
-            <h2>Total Price: ${this.total()}</h2>
+        <div className='shopping-cart'>
+          <div className='title'>
+            <h2>Shopping Cart</h2>
           </div>
           {
           this.state.promoCode &&

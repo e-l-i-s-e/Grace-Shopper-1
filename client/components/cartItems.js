@@ -4,22 +4,21 @@ import Buttons from './buttons'
 
 const CartItems = (props) => {
   const product = props.orderProduct;
-  console.log('product', product)
   return (
-    <div>
+    <div className="cart-item">
       {/* props.orderProduct && */}
-      <div>
+      <ul>
+      <li><button className="delete-btn" type='submit' name={product.id} onClick={props.handleSubmit}>X</button></li>
+        <li><img src={product.imageUrl}/></li>
         <li><Link to={`/products/${product.id}`}>{product.title}</Link></li>
-        <img src={product.imageUrl} className="img-responsive" />
-        <div>
+        <li className="total-price">
           <p>${((product.price)/100).toFixed(2)}</p>
-        </div>
-        <Buttons
+        </li>
+        <li><Buttons
           product={product}
           orderProduct={props.orderProduct} //?? is this not redundant?
-          handleChange={props.handleChange} />
-        <button type='submit' name={product.id} onClick={props.handleSubmit}>Remove from Cart</button>
-      </div>
+          handleChange={props.handleChange} /></li>
+      </ul>
     </div>
   )
 }
