@@ -6,9 +6,9 @@ const Buttons = (props) => {
   let quantity = product.quantity || product.orderProduct.quantity;
 
   return (
-    <div>
+    <div className='btn-quantity'>
        <span>
-        <button
+        <button className="minus-btn"
           type='submit'
           name='decrement'
           value={product.id}
@@ -16,11 +16,9 @@ const Buttons = (props) => {
           onClick={props.handleChange}
           disabled={
             quantity > 1 ? false : true
-          }>-</button>
-        <p>{
-          quantity
-          }</p>
-        <button
+          }> - </button>
+        {quantity}
+        <button className="plus-btn"
           type='submit'
           name='increment'
           value={product.id}
@@ -28,7 +26,7 @@ const Buttons = (props) => {
           onClick={props.handleChange}
           disabled={
             quantity < product.inventory ? false : true
-          }>+</button>
+          }> + </button>
         </span>
     </div>
   )

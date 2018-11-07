@@ -16,10 +16,12 @@ class SelectedProduct extends Component {
       const selectedProduct = this.props.selectedProduct
       const categories= selectedProduct.categories
       const users = selectedProduct.users
-      console.log('USERS', users)
       const {isLoggedIn} = this.props
         return (
-            <div id='selectedProduct'>
+            <div id='aProduct' className='column'>
+                <Link to='/cart' className='next'> Go To Cart &raquo; </Link>
+                <br />
+                <Link to="/" className='previous'>&laquo; Back to All Scents</Link>
                 <h2>The Deets!</h2>
                 <h3>Scent: {selectedProduct.title}</h3>
                 <img src={selectedProduct.imageUrl} alt="" className="img-responsive" />
@@ -35,7 +37,7 @@ class SelectedProduct extends Component {
                     }) : ('Sorry! No categories found.')
                 }
 
-                <h5><ins>Customer Reviews:</ins></h5>
+                <h3><ins>Customer Reviews:</ins></h3>
                 {
                     users && users[0] ? users.map(user => {
                         return (
@@ -47,11 +49,6 @@ class SelectedProduct extends Component {
                         )
                     }) : ('Sorry! No reviews yet. Be the first one!')
                 }
-                <br />
-                <Link to='/cart'> Go To Cart </Link>
-                <br />
-                <Link to="/products">Back to All Scents</Link>
-
                 {/* if the user is not logged-in, they will NOT be able to view the AddReview feature! */}
                 {isLoggedIn ? (
                     <AddReview />

@@ -150,9 +150,9 @@ class Cart extends Component {
   render() {
     if (this.props.user.id && this.props.order) {
       return (
-        <div>
-          <div>
-            <h2>Total Price: ${this.total()}</h2>
+        <div className='shopping-cart'>
+          <div className='title'>
+            <h2> Shopping Cart </h2>
           </div>
          {
           this.state.promoCode &&
@@ -171,22 +171,20 @@ class Cart extends Component {
                 user={this.user} />
 
             )}
-          <div>
-            <button type='submit' onSubmit={this.handleSubmit}>Checkout</button>
-          </div>
-          <div>
-          <PromoCode handlePromoSubmit={this.handlePromoSubmit} />
-          </div>
-          <div>
-            <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
+          <div className='promo-checkout'>
+            <PromoCode handlePromoSubmit={this.handlePromoSubmit} promoCode={this.state.promoCode} />
+            <ul>
+              <li><h2>Total Price: ${this.total()}</h2></li>
+              <li><Link to='/checkout'><button className='checkout' type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link></li>
+            </ul>
           </div>
         </div>
       )
     } else {
       return (
-        <div>
-          <div>
-            <h2>Total Price: ${this.total()}</h2>
+        <div className='shopping-cart'>
+          <div className='title'>
+            <h2>Shopping Cart</h2>
           </div>
           {
           this.state.promoCode &&
@@ -200,11 +198,12 @@ class Cart extends Component {
             )
           }
           </div>
-          <div>
-          <PromoCode handlePromoSubmit={this.handlePromoSubmit} promoCode={this.state.promoCode} />
-          </div>
-          <div>
-            <Link to='/checkout'><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
+          <div className='promo-checkout'>
+            <PromoCode handlePromoSubmit={this.handlePromoSubmit} promoCode={this.state.promoCode} />
+            <ul>
+              <li><h2>Total Price: ${this.total()}</h2></li>
+              <li><Link to='/checkout'><button className='checkout' type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link></li>
+            </ul>
           </div>
         </div>
       )
