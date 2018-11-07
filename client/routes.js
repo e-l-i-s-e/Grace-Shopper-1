@@ -37,9 +37,12 @@ class Routes extends Component {
             <Route exact path="/categories/add" component={AddCategory} />
             <Route exact path="/categories/edit" component ={EditCategory} />
             <Route exact path="/products" component={Main} />
+            <Route path="/products/:id" component={SelectedProduct} />
+            <Route path="/categories/:id" component={SelectedCategory} />
             <Route path = '/orders' component = {OrderHistory}/>
           </Switch>
         )}
+
         <Route path="/products/:id" component={SelectedProduct} />
         <Route path="/categories/:id" component={SelectedCategory} />
         {/* Displays our Login component as a fallback */}
