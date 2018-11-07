@@ -105,7 +105,6 @@ class Main extends Component {
     return (
           <div>
             <main>
-              <h3>View All Scents</h3>
               <div id='products' className='row wrap'>
                     {
                         this.state.orderProduct &&
