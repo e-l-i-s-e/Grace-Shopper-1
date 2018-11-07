@@ -1,6 +1,6 @@
 const router =  require('express').Router();
 const { Product, Category, User, Review } = require('../db/models');
-const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.redirect('/') //res.send('Forbidden')
+const isAdminMW = (req, res, next) => req.isAdmin ? next() : res.send('Forbidden')
 module.exports = router
 
 // GET /api/ all products
@@ -57,8 +57,8 @@ router.put('/:productid', isAdminMW, async(req, res, next) => {
 })
 
 //routes to remove and add categories to a product
-
-router.post('/:productid/:categoryid', async(req,res,next) => {
+//ADMIN CAN ADD CATEGORY
+router.post('/:productid/:categoryid', isAdminMW, async(req,res,next) => {
     try{
         const category = await Category.findById(req.params.categoryid)
         const product = await Product.findById(req.params.productid)
@@ -69,7 +69,8 @@ router.post('/:productid/:categoryid', async(req,res,next) => {
     }
 })
 
-router.delete('/:productid/:categoryid', async(req,res,next) => {
+//ADMIN CAN REMOVE CATEGORY
+router.delete('/:productid/:categoryid', isAdminMW, async(req,res,next) => {
     try{
         const res = await Product.findById(req.params.id,{
             include: [Category, User]

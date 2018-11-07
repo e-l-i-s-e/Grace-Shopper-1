@@ -14,7 +14,9 @@ class Cart extends Component {
       orderProduct: [],
       isLoggedIn: false,
       orders: {},
-      promoCode: ''
+      promoCode: '',
+      myTotal:'',
+      myOrderId: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -27,7 +29,11 @@ class Cart extends Component {
 
     if (this.props.user.id) {
       await this.props.gotAllOrders(Number(this.props.user.id))
-      this.setState({ orderProduct: this.props.order.products, promoCode: this.props.order.promo })
+      this.setState({ orderProduct: this.props.order.products,
+        promoCode: this.props.order.promo,
+        myTotal: this.total(),
+        myOrderId: this.props.order.id
+       })
 
     } else {
       const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
@@ -35,7 +41,10 @@ class Cart extends Component {
         this.setState({ orderProduct })
       }
 
-      this.setState({ isLoggedIn: false })
+      this.setState({
+        isLoggedIn: false,
+        myTotal: this.total(),
+       })
 
     }
   }
@@ -148,6 +157,7 @@ class Cart extends Component {
   }
 
   render() {
+    console.log("OUR OURDERRRR ID", this.props.order)
     if (this.props.user.id && this.props.order) {
       return (
         <div className='shopping-cart'>
@@ -171,12 +181,11 @@ class Cart extends Component {
                 user={this.user} />
 
             )}
-          <div className='promo-checkout'>
-            <PromoCode handlePromoSubmit={this.handlePromoSubmit} promoCode={this.state.promoCode} />
-            <ul>
-              <li><h2>Total Price: ${this.total()}</h2></li>
-              <li><Link to='/checkout'><button className='checkout' type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link></li>
-            </ul>
+          <div>
+          <PromoCode handlePromoSubmit={this.handlePromoSubmit} />
+          </div>
+          <div>
+            <Link to={{ pathname: '/checkout', state: {total: this.state.myTotal, myOrderId: this.state.myOrderId}}}><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div>
         </div>
       )
@@ -198,12 +207,11 @@ class Cart extends Component {
             )
           }
           </div>
-          <div className='promo-checkout'>
-            <PromoCode handlePromoSubmit={this.handlePromoSubmit} promoCode={this.state.promoCode} />
-            <ul>
-              <li><h2>Total Price: ${this.total()}</h2></li>
-              <li><Link to='/checkout'><button className='checkout' type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link></li>
-            </ul>
+          <div>
+          <PromoCode handlePromoSubmit={this.handlePromoSubmit} promoCode={this.state.promoCode} />
+          </div>
+          <div>
+            <Link to={{ pathname: '/checkout', state: {total: this.state.myTotal}}}><button type='submit' onSubmit={this.handleSubmit}>Checkout</button></Link>
           </div>
         </div>
       )

@@ -28,7 +28,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
         <Link id='cart-link' to='/cart'> <img src='http://simpleicon.com/wp-content/uploads/shopping-cart-8.png' /> </Link>
           </div></li> */}
           </ul>
-          
+
           <h2>Welcome, {user.email}</h2>
         </div>
       ) : (

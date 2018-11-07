@@ -21,7 +21,7 @@ class OrderHistory extends Component {
                             <div key={order.id}>
                                 <div>Order {i+1}</div>
                                 <div >{order.status} </div>
-                                <div>created {order.createdAt}</div>
+                                <div>created {order.createdAt.slice(0,10)}</div>
                                 <div>
                                     {
                                         order.products.map(product => {

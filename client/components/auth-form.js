@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {login, newUser} from '../store'
+import { auth } from '../store'
 
 /**
  * COMPONENT
@@ -30,7 +31,7 @@ const AuthForm = props => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <a href="/auth/google">{displayName} with Google</a>
-    </div>   
+    </div>
     )
 }
 
@@ -61,10 +62,12 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
+      const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(login(email, password, formName))
+      dispatch(auth(email, password, formName, orderProduct))
+      sessionStorage.clear();
     }
   }
 }
