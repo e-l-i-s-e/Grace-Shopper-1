@@ -11,7 +11,6 @@ class SelectedCategory extends Component {
     render() {
         const selectedCategory = this.props.selectedCategory
         const productsInCategory = selectedCategory.products
-        console.log("HIII", productsInCategory )
         return (
             <div>
                 <h2>{selectedCategory.content} Scents</h2>
@@ -24,20 +23,18 @@ class SelectedCategory extends Component {
                     })
                 }
                 </div>
-            </div> 
+            </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log('Mapping STATE to PROPS in selectedCategory: ', state)
     return {
         selectedCategory: state.selectedCategory,
     }
 }
-  
+
 const mapDispatchToProps = (dispatch) => {
-    console.log('Mapping PROPS to STATE in selectedCategory')
     return {
         fetchSelectedCategory: id => dispatch(getSelectedCategoryThunk(id)),
     }
