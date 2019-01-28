@@ -14,14 +14,15 @@ const SingleProduct = (props) => {
   const product = props.orderProduct;
 
   return (
+      <Link to={`/products/${product.id}`}>
       <Grid>
         <Row>
           <Col xs={6} md={4}>
           <Thumbnail src={product.imageUrl} alt="242x200" >
 
-          <h3><Link to={`/products/${product.id}`}>
+          <h3>
 
-          {product.title}</Link></h3>
+          {product.title}</h3>
           <div className='price'>${((product.price)/100).toFixed(2)}</div>
           <div className='productbtn'>
             <Buttons product={product} orderProduct={props.orderProduct}
@@ -44,6 +45,7 @@ const SingleProduct = (props) => {
       </Col>
       </Row>
       </Grid>
+      </Link>
   )
 }
 export default SingleProduct;

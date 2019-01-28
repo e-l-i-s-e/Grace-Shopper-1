@@ -5,12 +5,37 @@
 
 body {
   font-family: sans-serif;
-  background: linear-gradient(#ffffff, #fadadd);
-  font-family: 'Roboto', sans-serif;
+  /* background: linear-gradient(#ffffff, #fadadd); */
+  /* background-color: rgb(245, 245, 245); */
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  margin: 0px;
+  /* font-family: 'Roboto', sans-serif; */
   /* height: 100vh;
   padding: 0;
   margin: 0;
   width: 100vw; */
+}
+
+nav {
+  position: fixed;
+  width: 100vw;
+  height: 60px;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.15);
+  overflow: hidden;
+  background-color: rgb(254, 254, 254);
+  overflow: visible;
+  /* display: flex; */
+  /* box-shadow: 0 2px 15px rgba(0,0,0,0.19); */
+  /* background-color: #0b98de; */
+}
+
+hr {
+  margin-top: 15px;
+  width: 100%;
+  height: 2px;
+  border: 0;
+  /* box-shadow: 0 10px 15px rgba(0,0,0,0.19); */
 }
 
 a,
@@ -47,14 +72,14 @@ ul {
   overflow: hidden;
 }
 
-li {
+/* li {
   float: left;
-}
+} */
 
 li a {
   display: block;
   text-align: center;
-  padding: 14px 16px;
+  /* padding: 14px 16px; */
   text-decoration: none;
 }
 
@@ -70,29 +95,34 @@ button {
   border-width: 1px;
   padding: 1px 7px 2px;
   list-style-type: none;
+  font-family: 'Montserrat', sans-serif;
+  color: black;
 }
 
 
 /* ids */
 
 #products {
-  margin: 2em;
+  margin-right: 2rem;
+  margin-left: 5rem;
+  margin-bottom: 2rem;
 }
 
 #aProduct {
   align-items:left;
+
 }
 
 #aProduct #reviews {
   width: 50%;
 }
 
-#aProduct p {  
+#aProduct p {
   margin: 1% 15%;
   float: left;
 }
 
-#aProduct li {  
+#aProduct li {
   margin: 1% 15%;
   float: left;
 }
@@ -158,20 +188,28 @@ button {
 }
 
 .nav-item {
-  height: 1.5em;
+  height: 2.5em;
   margin: 0 1.5em 0 0;
 }
 
-.nav-item a {
+.nav-item li {
+  display: block;
   text-decoration: none;
   font-size: 1em;
-  padding: 4px;
+  /* padding: 4px; */
+  font-weight: bold;
+  float: left;
+  padding-top: 20px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
 }
 
-.nav-item a:hover {
-  color: lightgray;
-  border-radius: 5px;
-  box-shadow: #d3d3d3;
+.nav-item li:not(#search):not(#logo-brand):not(#cart):hover {
+  border-bottom: thin solid;
+  color: rgb(165, 165, 165);
+  /* border-radius: 5px; */
+  /* box-shadow: #d3d3d3; */
 }
 
 .img-responsive{
@@ -188,7 +226,8 @@ button {
   line-height: 1.42857;
   border-radius: 4px;
   box-shadow: 2px 2px 10px #ccc;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background: linear-gradient(#ffffff, #f7e5e6);
   -webkit-transition: border 0.2s ease-in-out;
   -o-transition: border 0.2s ease-in-out;
   transition: border 0.2s ease-in-out;
@@ -215,12 +254,27 @@ button {
 .col-xs-6 a {
   margin-bottom: 0;
 }
-  
+
 .menu {
-  position: relative;
+  position: absolute;
   display: inline-block;
+  opacity: 1;
+  margin-top: 41px;
+  padding-top: 15px;
+  background-color: white;
+  justify-content: left;
 }
 
+.ind-categories {
+  text-align: left;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.ind-categories:hover {
+  background-color: rgb(228, 227, 227);
+}
 .singleProduct{
   margin: 1em;
 }
@@ -236,7 +290,7 @@ button {
   display: flex;
   flex-direction: row;
   padding: 10px;
-  justify-content: center;
+  justify-content: left;
 }
 
 .wrap {
@@ -264,7 +318,7 @@ button {
   margin: 4px 2px;
   cursor: pointer;
 }
-  
+
 .shopping-cart {
   width: 750px;
   margin: 80px auto;
@@ -287,13 +341,13 @@ button {
   border-bottom: 1px solid #E1E8EE;
   font-size: larger;
 }
- 
+
 .item {
   padding: 20px 30px;
   height: 120px;
   display: flex;
 }
- 
+
 .item:nth-child(3) {
   border-top:  1px solid #E1E8EE;
   border-bottom:  1px solid #E1E8EE;
@@ -328,7 +382,7 @@ button {
   color: #43484D;
   font-weight: 300;
 }
- 
+
 button[class*=btn] {
   width: 30px;
   height: 30px;
@@ -343,7 +397,7 @@ button[class*=btn] {
 .plus-btn img {
   margin-top: 2px;
 }
- 
+
 
 .cart-item ul {
   display: flex;
@@ -395,3 +449,174 @@ button[class*=btn] {
   padding-left:39px
 }
 
+/* .brand { */
+  /* max-height: 1px;
+  max-width: 5px */
+
+  /* font-size: 2.5em;
+  font-weight: bold;
+  margin-left: 5%;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none; */
+/* } */
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+#scents {
+  float: right;
+  margin-right: 20px;
+}
+
+#about {
+  float: right;
+  margin-right: 20px;
+}
+
+#categories {
+  float: right;
+  z-index: 100;
+  outline: none;
+}
+
+#search {
+  margin-right: 10px;
+  max-height: 50px;
+  float: right;
+  padding-top: 12px;
+}
+
+#login {
+  float: right;
+  margin-right: 20px;
+}
+
+#cart {
+  margin-right: 75px;
+  float: right;
+}
+
+#logo-brand {
+  margin-left: calc(5rem + 20px);
+  margin-right: 30px;
+  margin-top: 5px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+
+.box-1 {
+    /* margin: 100px auto; */
+    width: 175px;
+    height: 50px;
+}
+
+.container-1{
+  width: 150px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+
+.container-1 input#search-1{
+  width: 175px;
+  height: 35px;
+  font-family: 'Montserrat', sans-serif;
+  background: #ffffff;
+  border: thin solid;
+  /* border-bottom: solid; */
+  font-size: 12pt;
+  float: left;
+  color: rgb(165, 165, 165);
+  padding-left: 35px;
+  border-radius: 5px;
+
+}
+
+.container-1 input#search-1:hover{
+  color: #1d1d1d;
+}
+.container-1 .icon{
+  position: absolute;
+  top: 50%;
+  margin-left: 9px;
+  margin-top: 9px;
+  z-index: 1;
+  color: #4f5b66;
+}
+
+.container-1 .icon{
+  color: #1d1d1d;
+}
+
+#hero {
+  height: 25rem;
+  background-size: 100%;
+  background-image: url('champ-lavande-provence.jpg');
+}
+
+.promo-code {
+  display: block;
+  padding-top: 100px;
+  padding-left: 42%;
+  color: purple;
+  font-size: 20px;
+}
+#promo-2{
+  display: block;
+  padding-top: 1%;
+  padding-left: 42%;
+  color: purple;
+  font-size: 23px
+}
+
+#banner {
+  height: 6rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: black;
+}
+
+#message {
+  display: block;
+  padding-top: 3rem;
+  padding-left: calc(5rem + 20px);
+  padding-bottom: 2rem;
+  color: black;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#categories {
+  border: none;
+  text-decoration: none;
+  font-size: 1em;
+  /* padding: 4px; */
+  font-weight: bold;
+}

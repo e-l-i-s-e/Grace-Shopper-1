@@ -105,6 +105,13 @@ class Main extends Component {
     return (
           <div>
             <main>
+              <div id="hero">
+                <span className="promo-code">FOUR SEASONS SALE</span>
+                <span id="promo-2"><strong>50%</strong> off with code <strong>SCENTEDSHOPPER</strong></span>
+              </div>
+              <div id="banner">
+                <span id="message"> Shop all scents</span>
+              </div>
               <div id='products' className='row wrap'>
                     {
                         this.state.orderProduct &&

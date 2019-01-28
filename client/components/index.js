@@ -20,6 +20,7 @@ export {default as TakeMoney} from './takeMoney'
 export {default as ThankYou} from './thankYou'
 export {default as ToastAddedToCart} from './toastNotification'
 export {default as EditCategory} from './categoryEditForm'
+export {default as About} from './About'
 
 
 export {Login, Signup} from './auth-form'
