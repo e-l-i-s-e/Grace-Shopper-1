@@ -101,7 +101,7 @@ class Cart extends Component {
   handlePromoSubmit(e){
     e.preventDefault()
     const promoCode = e.target.promoCode.value
-    if(promoCode === 'SHOPTOIT'){
+    if(promoCode === 'SCENTEDSHOPPER'){
       this.setState({promoCode})
 
       const newTotal = this.total(promoCode)
