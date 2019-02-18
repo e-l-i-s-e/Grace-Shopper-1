@@ -14,6 +14,7 @@ class Main extends Component {
     })
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
+
   }
 
   async componentDidMount(){
@@ -117,6 +118,7 @@ class Main extends Component {
                         this.state.orderProduct &&
                         this.state.orderProduct.map(orderProduct => {
                             return (
+
                                 <SingleProduct
                                   key={orderProduct.id}
                                   isAdmin={this.props.isAdmin}

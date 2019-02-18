@@ -55,7 +55,7 @@ const Navbar = ({ handleClick, isLoggedIn, user }) => (
               <li id="login"><Link to="/login">Login</Link></li>
               <li id="search"><Search /></li>
             <li id="about"><Categories /></li>
-            <li id="scents"><Link to="/"> All Scents </Link></li>
+            <li id="scents"><Link to="/" > All Scents </Link></li>
              {/* <li id="categories"><Categories /></li> */}
             </ul>
 

@@ -3,8 +3,14 @@
   box-sizing: border-box;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 body {
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   /* background: linear-gradient(#ffffff, #fadadd); */
   /* background-color: rgb(245, 245, 245); */
   font-family: 'Montserrat', sans-serif;
@@ -240,6 +246,10 @@ button {
   transition: background-color 0.2s;
 }
 
+.thumbnail:hover #quickView {
+  visibility: visible;
+}
+
 .thumbnail img {
   padding-top: 5px;
   height: 150px;
@@ -258,7 +268,7 @@ button {
 .menu {
   position: absolute;
   display: inline-block;
-  opacity: 1;
+  opacity: .93;
   margin-top: 41px;
   padding-top: 15px;
   background-color: white;
@@ -442,7 +452,10 @@ button[class*=btn] {
 }
 
 .price{
-  align-items: center
+  align-items: center;
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .productbtn{
@@ -575,9 +588,15 @@ button[class*=btn] {
 }
 
 #hero {
+  display: block;
   height: 25rem;
   background-size: 100%;
   background-image: url('champ-lavande-provence.jpg');
+  max-width: 1750px;
+  min-width: 900px;
+  width: 100%;
+  /* display: flex; */
+  /* justify-content: center; */
 }
 
 .promo-code {
@@ -595,8 +614,20 @@ button[class*=btn] {
   font-size: 23px
 }
 
+#quickView {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  visibility: hidden;
+  /* color: rgb(123, 98, 123); */
+  border-bottom:thin solid;
+  border-radius: 2px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
 #banner {
   height: 6rem;
+  width: 100%;
   margin-top: 1rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -613,10 +644,24 @@ button[class*=btn] {
   font-weight: bold;
 }
 
+#prodTitle {
+  padding: 0px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 #categories {
   border: none;
   text-decoration: none;
   font-size: 1em;
   /* padding: 4px; */
   font-weight: bold;
+}
+
+
+@media only screen and (max-width: 950px) {
+  #hero {
+    display: none;
+  }
 }
