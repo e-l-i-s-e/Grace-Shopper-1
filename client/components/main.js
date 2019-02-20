@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import { gotAllProducts } from '../store/product'
 import SingleProduct from './singleProduct'
 import { gotAllOrders, postToCart } from '../store/order'

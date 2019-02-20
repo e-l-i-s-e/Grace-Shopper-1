@@ -34,28 +34,27 @@ export default class SingleItemModal extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">Individual Item View</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occasionally.
+              is under construction!
             </DialogContentText>
-            <TextField
+            {/* <TextField
               autoFocus
               margin="dense"
               id="name"
               label="Email Address"
               type="email"
               fullWidth
-            />
+            /> */}
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            {/* <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
             <Button onClick={this.handleClose} color="primary">
               Subscribe
-            </Button>
+            </Button> */}
           </DialogActions>
         </Dialog>
       </div>
