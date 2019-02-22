@@ -8,7 +8,7 @@ import AddReview from './addReview'
 class SelectedProduct extends Component {
 
     async componentDidMount(){
-      const id = this.props.match.params.id
+      const id = this.props.productId || this.props.match.params.id
        await this.props.fetchSelectedProduct(id);
 
     }
@@ -19,9 +19,9 @@ class SelectedProduct extends Component {
       const {isLoggedIn} = this.props
         return (
             <div id='aProduct' className='column'>
-                <Link to='/cart' className='next'> Go To Cart &raquo; </Link>
+                {/* <Link to='/cart' className='next'> Go To Cart &raquo; </Link>
                 <br />
-                <Link to="/" className='previous'>&laquo; Back to All Scents</Link>
+                <Link to="/" className='previous'>&laquo; Back to All Scents</Link> */}
                 <h2>The Deets!</h2>
                 <h3>Scent: {selectedProduct.title}</h3>
                 <img src={selectedProduct.imageUrl} alt="" className="img-responsive" />
@@ -32,7 +32,7 @@ class SelectedProduct extends Component {
                 {
                     selectedProduct.categories ? categories.map(index => {
                         return (
-                            <li key={index}><Link to={`/categories/${index.id}`}><small>{index.content}</small></Link></li>
+                            <div  key={index}><Link to={`/categories/${index.id}`}><small>{index.content}</small></Link></div>
                         )
                     }) : ('Sorry! No categories found.')
                 }

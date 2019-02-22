@@ -21,6 +21,7 @@ const SingleProduct = props => {
         <Col xs={6} md={4}>
           <Thumbnail src={product.imageUrl} alt="242x200">
             <SingleItemModal
+              // product={product}
               orderProduct={props.orderProduct}
               handleChange={props.handleChange}
               id={product.id}

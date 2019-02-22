@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+/* #app {
+  width: 100%;
+} */
+
 main {
   display: flex;
   flex-direction: column;
@@ -94,6 +98,9 @@ p {
   margin: 0;
 }
 
+div {
+  font-weight: bold;
+}
 
 button {
   border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
@@ -116,6 +123,8 @@ button {
 
 #aProduct {
   align-items:left;
+  /* padding-top: 100px; */
+  /* width: 100vw; */
 
 }
 
@@ -163,6 +172,11 @@ button {
   margin-inline-end: 0px;
   font-weight: bold;
   text-align: center;
+}
+
+#addItems{
+  display: flex;
+  justify-content: center;
 }
 
 
@@ -330,6 +344,7 @@ button {
 }
 
 .shopping-cart {
+  padding-top: 200px;
   width: 750px;
   margin: 80px auto;
   background: #FFFFFF;
@@ -394,19 +409,41 @@ button {
 }
 
 button[class*=btn] {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   background-color: #F0F0F0;
   border-radius: 19px;
   border: none;
   cursor: pointer;
 }
-.minus-btn img {
+#minus-btn img {
   margin-bottom: 3px;
 }
-.plus-btn img {
-  margin-top: 2px;
+
+#minus-btn {
+  background-color: teal;
+  font-size: 22px;
+  margin-right: 10px;
+  color: white;
+  border-radius: 15px;
+  width: 30px;
 }
+
+#plus-btn img {
+  margin-top: 2px;
+  background-color: teal;
+}
+#plus-btn {
+  background-color: teal;
+  font-size: 22px;
+  margin-left: 10px;
+  color: white;
+  border-radius: 15px;
+  width: 30px;
+}
+
+
+
 
 
 .cart-item ul {
@@ -612,6 +649,46 @@ button[class*=btn] {
   padding-left: 42%;
   color: purple;
   font-size: 23px
+}
+
+#auth {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  width: 100vw;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+#authForm{
+  border: thin solid;
+  border-color: lightgray;
+  width: 250px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  justify-content: space-around;
+  /* color: teal; */
+}
+
+#authForm input {
+  width: 200px;
+}
+
+#authForm h3 {
+  margin: 1em;
+  font-weight: bolder;
+}
+
+#submitButton {
+  font-weight: bold;
+  /* margin-top: 40%; */
+  width: 200px;
+  background-color: teal;
+  color: white;
 }
 
 #quickView {

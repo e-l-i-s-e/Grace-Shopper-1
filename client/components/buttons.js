@@ -1,14 +1,14 @@
 import React from 'react'
 
 const Buttons = (props) => {
-  const product = props.product;
+  const product = props.orderProduct;
   // console.log('productBUTTON', product.product)
   let quantity = product.quantity || product.orderProduct.quantity;
 
   return (
     <div className='btn-quantity'>
        <span>
-        <button className="minus-btn"
+        <button id="minus-btn"
           type='submit'
           name='decrement'
           value={product.id}
@@ -18,7 +18,7 @@ const Buttons = (props) => {
             quantity > 1 ? false : true
           }> - </button>
         {quantity}
-        <button className="plus-btn"
+        <button id="plus-btn"
           type='submit'
           name='increment'
           value={product.id}

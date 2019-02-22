@@ -55,9 +55,14 @@ class Main extends Component {
 
   handleSubmit(evt){
     //add to cart with given quantity
+    console.log('handleSubmit')
+    console.log('selectedProd', this.props.selectedProduct)
     evt.preventDefault();
 
-    const productId = Number(evt.target.name);
+    // const productId = Number(evt.target.name);
+    const productId = Number(this.props.selectedProduct.id);
+    // console.log('productIS', evt.target.name)
+
     const [ selectedProductInLocalState ] = this.state.orderProduct.filter(product => product.id === productId);
     const quantity = selectedProductInLocalState.quantity
 
@@ -141,7 +146,8 @@ const mapStateToProps = (state) => {
     products: state.product,
     order: state.order,
     user: state.user,
-    isAdmin: state.user.isAdmin
+    isAdmin: state.user.isAdmin,
+    selectedProduct: state.selectedProduct
   }
 }
 

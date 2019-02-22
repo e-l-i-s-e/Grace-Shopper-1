@@ -8,7 +8,7 @@ const AddProductForm = (props) => {
                 <label>
                     Product Title
                 </label>
-                <input 
+                <input
                     type="text"
                     name="title"
                     value={props.title}
@@ -18,7 +18,7 @@ const AddProductForm = (props) => {
                 <label>
                     Description
                 </label>
-                <input 
+                <input
                     type="text"
                     name="description"
                     value={props.description}
@@ -28,17 +28,17 @@ const AddProductForm = (props) => {
                 <label>
                     Price
                 </label>
-                <input 
+                <input
                     type="text"
                     name="price"
                     value={props.price}
                     onChange={props.handleChange}
                 />
-            
+
                 <label>
                     Inventory
                 </label>
-                <input 
+                <input
                     type="text"
                     name="inventory"
                     value={props.inventory}
@@ -48,13 +48,13 @@ const AddProductForm = (props) => {
                 <label>
                     ImageUrl
                 </label>
-                <input 
+                <input
                     type="text"
                     name="imageUrl"
                     value={props.imageUrl}
                     onChange={props.handleChange}
                 />
-           
+
                 <div>
                     <button type="submit">submit!</button>
                 </div>
