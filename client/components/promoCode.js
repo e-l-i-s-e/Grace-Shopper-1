@@ -11,7 +11,7 @@ const PromoCode = ({ handlePromoSubmit }) => (
     <form onSubmit={handlePromoSubmit}>
       <div className="form-group">
         <label>
-          <small>Promo Code</small>
+          <h4>Promo Code</h4>
         </label>
         <input
           name="promoCode"
@@ -21,7 +21,7 @@ const PromoCode = ({ handlePromoSubmit }) => (
           // value=''
           // onChange={handlePromoSubmit}
         />
-        <button type='submit'> Apply! </button>
+        <button id="applyBtn" type='submit'> Apply! </button>
       </div>
     </form>
   </div>

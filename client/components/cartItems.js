@@ -8,7 +8,6 @@ const CartItems = (props) => {
     <div className="cart-item">
       {/* props.orderProduct && */}
       <ul>
-      <li><button className="delete-btn" type='submit' name={product.id} onClick={props.handleSubmit}>X</button></li>
         <li><img src={product.imageUrl}/></li>
         <li><Link to={`/products/${product.id}`}>{product.title}</Link></li>
         <li className="total-price">
@@ -18,6 +17,7 @@ const CartItems = (props) => {
           product={product}
           orderProduct={props.orderProduct} //?? is this not redundant?
           handleChange={props.handleChange} /></li>
+        <li><button className="delete-btn" type='submit' name={product.id} onClick={props.handleSubmit}>X</button></li>
       </ul>
     </div>
   )

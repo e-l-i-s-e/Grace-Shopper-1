@@ -6,7 +6,7 @@ const CheckoutForm = (props) => {
     console.log("prrrrrops", props)
     console.log("uniiiique orderId", props.total.myOrderId)
     return (
-        <div>
+        <div id="checkout">
         <h2>Checkout!</h2>
 
           <form onSubmit={props.handleSubmit}>
@@ -78,7 +78,7 @@ const CheckoutForm = (props) => {
             <input
                 name="streetAddress2"
                 type="text"
-                placeholder="Apartment, suite, etc. (optional)"
+                placeholder="Apartment (optional)"
                 className="form-control"
                 value={props.streetAddress2}
                 onChange={props.handleChange}
@@ -163,13 +163,13 @@ const CheckoutForm = (props) => {
 
             <div>
                 {/* <button type="submit">Submit</button> */}
-                <TakeMoney 
-                    type="submit" 
-                    name={`${props.firstName} ${props.lastName}`} 
+                <TakeMoney
+                    type="submit"
+                    name={`${props.firstName} ${props.lastName}`}
                     email={props.email}
-                    description='Checking Out!' 
+                    description='Checking Out!'
                     receipt_email='ScentedShopper@gmail.com'
-                    amount={props.total.total*100} 
+                    amount={props.total.total*100}
                     customer={props.total.myOrderId}
                 />
 

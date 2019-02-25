@@ -28,13 +28,15 @@ class Checkout extends Component {
     }
 
     componentDidMount(){
+      console.log('HERE ')
         if (this.props.user.id){
             //populate local state with the session
             /* OR this.setState({isLoggedIn: true}) -- put in IF */
             this.props.gotAllOrders(this.props.user.id)
         } else {
+
             const orderProduct = JSON.parse(sessionStorage.getItem('orderProduct'));
-            console.log(orderProduct)
+            console.log('orderProd', orderProduct)
             if (orderProduct) {
               this.setState({orderProduct})
             }
@@ -71,8 +73,11 @@ class Checkout extends Component {
 
     render(){
         const total = this.props.location.state
+        // const total = this.props.total
+        console.log('props', this.props)
+        console.log('state', this.state)
         return(
-          <div>
+          <div className="title">
             <CheckoutForm {...this.state} total={total} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
           </div>
         )

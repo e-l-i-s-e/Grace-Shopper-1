@@ -58,6 +58,14 @@ label {
   display: block;
 }
 
+form {
+  font-size: 1em;
+}
+
+input {
+  font-size: .75em;
+}
+
 form div {
   margin: 1em;
   display: inline-block;
@@ -112,6 +120,15 @@ button {
   color: black;
 }
 
+h4 {
+  font-weight: bold;
+  color: black;
+}
+
+h2 {
+  font-weight: bold;
+  color: black;
+}
 
 /* ids */
 
@@ -188,6 +205,42 @@ button {
   width: 50px;
   height: 50px;
   padding: 2em;
+}
+
+#promoApplied h2 {
+  margin-left: 2rem;
+  margin-top: 1.5rem;
+  color: teal;
+  font-size: 1em;
+}
+
+#promoDiv {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: thin solid;
+  color: grey;
+  height: 60%;
+  min-height: 15rem;
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+  border-radius: 6px;
+  margin-left: 2rem;
+}
+
+#promoDiv a {
+  justify-content: flex-end;
+}
+
+#promoDiv span {
+  font-size: 1.5rem;
+}
+
+#displayTotal{
+  margin-top: 2rem;
+  margin-left: 1rem;
+  color: black;
+  font-weight: bold;
 }
 
 #container img {
@@ -344,27 +397,22 @@ button {
 }
 
 .shopping-cart {
-  padding-top: 200px;
-  width: 750px;
-  margin: 80px auto;
+  padding-top: 75px;
+  width: 100vw;
+  height: 60vh;
   background: #FFFFFF;
-  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
-  border-radius: 6px;
   display: flex;
-  flex-direction: column;
 }
 
 .title {
   height: 60px;
   padding: 20px 30px 50px;
-  color: #5E6977;
   font-size: 18px;
   font-weight: 400;
 }
 
 .title h2 {
   border-bottom: 1px solid #E1E8EE;
-  font-size: larger;
 }
 
 .item {
@@ -389,6 +437,7 @@ button {
   Cursor: pointer;
 }
 .delete-btn {
+  padding-top: 15px;
   width: 18px;
   height: 17px;
   background: url(&quot;delete-icn.svg&quot;) no-repeat center;
@@ -409,15 +458,36 @@ button {
 }
 
 button[class*=btn] {
-  width: 50px;
-  height: 50px;
-  background-color: #F0F0F0;
+  width: 30px;
+  height: 30px;
+  /* background-color: red; */
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
   border-radius: 19px;
   border: none;
   cursor: pointer;
 }
+
 #minus-btn img {
   margin-bottom: 3px;
+}
+
+#checkoutBtn {
+  margin-top: 1rem;
+  background-color: teal;
+  color: white;
+  margin: 1em;
+  font-size: 1em;
+  align-content: flex-end;
+  width: 10rem;
+}
+
+#applyBtn {
+  background-color: teal;
+  color: white;
+  font-size: .75em;
+  margin-left: .5rem;
 }
 
 #minus-btn {
@@ -442,9 +512,23 @@ button[class*=btn] {
   width: 30px;
 }
 
+#checkout {
+  padding: 15px;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  border-color: grey;
+  border: thin solid grey;
+  width: 50%;
+  margin-top: 100px;
+}
 
-
-
+.cartItems {
+  display: flex;
+  /* border: thin solid; */
+  /* color: darkgray; */
+  flex-direction: column;
+}
 
 .cart-item ul {
   display: flex;
@@ -460,6 +544,31 @@ button[class*=btn] {
 
 .cart-item li p {
   padding-top: 15px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.cart-item li a {
+  padding-top: 15px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.cart-item li span {
+  padding-top: 15px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+}
+.cart-item li button {
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+}
+.cart-item li button:hover {
+  color: red;
 }
 
 .cart-item ul li img {
